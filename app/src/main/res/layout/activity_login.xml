@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:rotation="180"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_login_bg" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/loginTransparentLayer"
+        android:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/_20sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bg_rounded_corner"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/_18sdp"
+            android:weightSum="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioGroup
+                android:id="@+id/radioGrp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rbLogin"
+                    style="@style/LoginTabRBStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/login_rb_left_selector"
+                    android:checked="true"
+                    android:text="@string/login" />
+
+                <RadioButton
+                    android:id="@+id/rbSignup"
+                    style="@style/LoginTabRBStyle"
+                    android:layout_width="0dp"
+                    android:textColor="@color/unselectedLoginTabColor"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/login_rb_right_selector"
+                    android:text="@string/sign_up" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/llLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible"
+                tools:visibility="visible">
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtLoginMail"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/email_address"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtLoginPassword"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/password"
+                    android:imeOptions="actionDone"
+                    android:inputType="text" />
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/cbRememberMe"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:buttonTint="@color/white"
+                    android:checked="true"
+                    android:text="@string/remember_me"
+                    android:textColor="@color/text_remember_me"
+                    android:textSize="@dimen/_12ssp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dip"
+                    android:gravity="right">
+
+                    <com.flower.basket.orderflower.views.ThemeText
+                        android:id="@+id/tvForgotPassword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:text="@string/forgot_ps"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
+
+                </LinearLayout>
+
+                <com.flower.basket.orderflower.views.ThemeButton
+                    android:id="@+id/btnLogin"
+                    style="@style/LoginButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:text="@string/login_btn" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llSignup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtSignupName"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtSignupMail"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/email_address"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtMobile"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/mobile_no"
+                    android:imeOptions="actionNext"
+                    android:inputType="phone" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtSignupPassword"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/password"
+                    android:imeOptions="actionNext"
+                    android:inputType="textVisiblePassword" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtCommunity"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/community"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtBlock"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/block"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtFlat"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:hint="@string/flat"
+                    android:imeOptions="actionDone"
+                    android:inputType="text" />
+
+                <com.flower.basket.orderflower.views.ThemeButton
+                    android:id="@+id/btnSignup"
+                    style="@style/LoginButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:text="@string/sign_up_btn" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

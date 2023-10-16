@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/transparent" />
+</shape>-->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:bottom="-10dp" android:left="-10dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/login_tab_selected" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+</layer-list>

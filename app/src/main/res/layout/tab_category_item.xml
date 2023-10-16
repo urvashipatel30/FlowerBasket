@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.flower.basket.orderflower.views.ThemeText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tab_text"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/ic_bottom_nav_bg_color"
+    android:singleLine="true"
+    android:textSize="@dimen/_12ssp" />

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/themeColorUltraLight</color>
+    <color name="colorPrimaryDark">@color/themeColorUltraLight</color>
+    <color name="colorAccent">@color/white</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">@android:color/transparent</color>
+
+    <!-- TODO Pink -->
+<!--    <color name="themeColor">#FF446D</color>-->
+<!--    <color name="themeColor">#F98D88</color>-->
+<!--    <color name="themeColorLight">#FFD4D1</color>-->
+
+    <!-- TODO Peach -->
+    <color name="themeColor">#F18E73</color>
+    <color name="themeColorLight">#F8C9BF</color>
+    <color name="themeColorUltraLight">#FBD7C9</color>
+
+    <color name="themeColorLightest">#FEF2F2</color>
+
+    <color name="themeGrey">#A4959C</color>
+
+    <color name="screenBg">@color/white</color>
+
+
+    <!-- TODO Splash -->
+    <color name="splashTitleColor">#CF6956</color>
+    <color name="splashSubTitleColor">@color/white</color>
+
+
+    <!-- TODO Login -->
+<!--    <color name="loginStatusBar">#D1DDEB</color>-->
+    <color name="unselectedLoginTabColor">#FC8AA3</color>
+    <color name="loginStatusBar">#C1D6E7</color>
+    <color name="loginTransparentLayer">#73FFFFFF</color>
+    <color name="login_bg">#BF000000</color>
+    <color name="login_tab_selected">@color/themeColorLight</color>
+
+    <color name="text_hint">#99FFFFFF</color>
+    <color name="loginFieldBorder">@color/white</color>
+    <color name="text_remember_me">#A9FFFFFF</color>
+
+
+    <!-- TODO Dashboard -->
+    <color name="unselectedTabItemBg">@color/themeColorUltraLight</color>
+    <color name="selectedTabItemBg">@color/transparent</color>
+
+    <color name="unselectedTabColor">@color/themeColor</color>
+    <color name="selectedTabColor">@color/themeColor</color>
+
+</resources>
