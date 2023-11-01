@@ -13,16 +13,10 @@
         android:scaleType="centerCrop"
         android:src="@drawable/ic_login_bg" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/loginTransparentLayer"
-        android:visibility="gone" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/_20sdp">
+        android:layout_marginHorizontal="@dimen/screen_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,18 +50,18 @@
                     android:id="@+id/rbSignup"
                     style="@style/LoginTabRBStyle"
                     android:layout_width="0dp"
-                    android:textColor="@color/unselectedLoginTabColor"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:background="@drawable/login_rb_right_selector"
                     android:text="@string/sign_up" />
+                <!--                android:textColor="@color/unselectedLoginTabTextColor"-->
             </RadioGroup>
 
             <LinearLayout
                 android:id="@+id/llLogin"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_13sdp"
                 android:layout_marginTop="@dimen/_20sdp"
                 android:gravity="center"
                 android:orientation="vertical"
@@ -78,8 +72,9 @@
                     android:id="@+id/edtLoginMail"
                     style="@style/LoginFieldsStyle"
                     android:layout_width="match_parent"
+                    android:text="test@gmail.com"
                     android:layout_height="wrap_content"
-                    android:hint="@string/email_address"
+                    android:hint="@string/email_id"
                     android:imeOptions="actionNext"
                     android:inputType="textEmailAddress" />
 
@@ -87,6 +82,7 @@
                     android:id="@+id/edtLoginPassword"
                     style="@style/LoginFieldsStyle"
                     android:layout_width="match_parent"
+                    android:text="123456"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/password"
@@ -99,10 +95,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start|center_vertical"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:buttonTint="@color/white"
+                    android:buttonTint="@color/disabled_checkbox"
                     android:checked="true"
+                    android:enabled="false"
                     android:text="@string/remember_me"
-                    android:textColor="@color/text_remember_me"
+                    android:textColor="@color/disabled_checkbox"
                     android:textSize="@dimen/_12ssp" />
 
                 <LinearLayout
@@ -137,21 +134,70 @@
                 android:id="@+id/llSignup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_13sdp"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone"
                 tools:visibility="gone">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.flower.basket.orderflower.views.ThemeText
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/user_type"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <RadioGroup
+                        android:id="@+id/radioGrpUserTypes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/rbUser"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/userTypeRadioBtnColor"
+                            android:checked="true"
+                            android:fontFamily="@font/pangram_regular"
+                            android:text="@string/user"
+                            android:textColor="@color/userTypeRadioBtnColor"
+                            android:textSize="@dimen/_12ssp" />
+
+                        <RadioButton
+                            android:id="@+id/rbVendor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_20sdp"
+                            android:buttonTint="@color/userTypeRadioBtnColor"
+                            android:fontFamily="@font/pangram_regular"
+                            android:text="@string/vendor"
+                            android:textColor="@color/userTypeRadioBtnColor"
+                            android:textSize="@dimen/_12ssp" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtSignupName"
                     style="@style/LoginFieldsStyle"
                     android:layout_width="match_parent"
+                    android:text="Test"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/name"
-                    android:imeOptions="actionNext" />
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtSignupMail"
@@ -159,19 +205,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/email_address"
+                    android:hint="@string/email_id"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress" />
-
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtMobile"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/mobile_no"
-                    android:imeOptions="actionNext"
-                    android:inputType="phone" />
+                    android:inputType="textEmailAddress"
+                    android:text="test@gmail.com" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtSignupPassword"
@@ -181,7 +218,40 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/password"
                     android:imeOptions="actionNext"
-                    android:inputType="textVisiblePassword" />
+                    android:inputType="textPassword"
+                    android:text="123456" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.flower.basket.orderflower.views.ThemeText
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_square_corner_fields"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:text="+91"
+                        android:textColor="@color/white" />
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtMobile"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/_13sdp"
+                        android:layout_marginStart="@dimen/_7sdp"
+                        android:text="1234567890"
+                        android:layout_weight="1"
+                        android:hint="@string/mobile_no"
+                        android:imeOptions="actionNext"
+                        android:inputType="phone"
+                        android:maxLength="10" />
+
+                </LinearLayout>
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtCommunity"
@@ -189,6 +259,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Sample"
                     android:hint="@string/community"
                     android:imeOptions="actionNext"
                     android:inputType="text" />
@@ -199,6 +270,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:text="B"
                     android:hint="@string/block"
                     android:imeOptions="actionNext"
                     android:inputType="text" />
@@ -209,9 +281,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
+                    android:text="201"
                     android:hint="@string/flat"
                     android:imeOptions="actionDone"
-                    android:inputType="text" />
+                    android:inputType="number" />
 
                 <com.flower.basket.orderflower.views.ThemeButton
                     android:id="@+id/btnSignup"

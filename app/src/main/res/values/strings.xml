@@ -3,17 +3,30 @@
 
     <string name="splash_title"><u>Flower\nBasket</u></string>
     <string name="splash_subtitle">Flowers from the heart</string>
-<!--    <string name="splash_subtitle">basket full of flowers is like, \na garden in your arms.</string>-->
+    <!--    <string name="splash_subtitle">basket full of flowers is like, \na garden in your arms.</string>-->
 
-    <!--Login Screen-->
+    <!-- Dialog -->
+    <string name="please_wait">Please wait…</string>
+    <string name="dialog_alert">Alert</string>
+    <string name="dialog_warning">Warning</string>
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+
+    <!-- Login Screen -->
     <string name="login"><u>Login</u></string>
     <string name="sign_up"><u>Sign Up</u></string>
 
     <string name="login_btn">Login</string>
     <string name="sign_up_btn">Sign Up</string>
 
-    <string name="email_address">Email Address</string>
+    <string name="user">User</string>
+    <string name="vendor">Vendor</string>
+    <string name="user_type">User Type:</string>
+
+    <string name="email_id">Email ID</string>
     <string name="password">Password</string>
+    <string name="account_type">Account Type</string>
     <string name="name">Name</string>
     <string name="mobile_no">Mobile Number</string>
     <string name="community">Community</string>
@@ -23,11 +36,83 @@
     <string name="forgot_ps"><u>Forgot Password?</u></string>
     <string name="remember_me">Remember Me</string>
 
-    <!--Dashboard Screen-->
-    <string name="subscriptions">Subscription</string>
+    <string name="dialog_error_title">Error!</string>
+
+    <string name="verify_email">Verify Email</string>
+    <string name="verify_email_msg">A verification email has been sent to your provided email ID.
+        Click on the verification link to complete the process.</string>
+
+    <string name="error_enter_name">Please, enter name first!</string>
+    <string name="error_enter_email">Please, enter email first!</string>
+    <string name="error_invalid_email">Please, enter valid email!</string>
+
+    <string name="error_enter_password">Please, enter password!</string>
+    <string name="error_invalid_password">Password must be at least 6 characters!</string>
+
+    <string name="error_enter_mobileNumber">Please, enter mobile number first!</string>
+    <string name="error_invalid_mobileNumber">Please, enter valid mobile number!</string>
+
+    <string name="error_enter_community">Please, enter community to get flowers delivered!</string>
+    <string name="error_enter_block">Please, enter block to get flowers delivered!</string>
+    <string name="error_enter_flat">Please, enter flat number to get flowers delivered!</string>
+
+    <string name="error_input_empty">Field cannot be empty!</string>
+    <string name="went_wrong">Something went wrong!</string>
+
+    <!-- Dashboard Screen -->
+    <string name="subscription">Subscription</string>
     <string name="orders">Orders</string>
     <string name="home">Home</string>
     <string name="settings">Settings</string>
     <string name="help">Help</string>
+    <string name="report">Report</string>
+
+    <string name="activation_date">Date of Activation</string>
+    <string name="registered_community"><u>Registered Community</u></string>
+    <string name="order_for_tomorrow"><u>Order For Tomorrow</u></string>
+
+    <!-- Settings Screen -->
+    <string name="my_profile">My Profile</string>
+    <string name="change_profile_pic">Change Profile Picture</string>
+    <string name="change_user_details">Change User Details</string>
+    <string name="change_color_scheme">Change Color Scheme</string>
+    <string name="logout">Logout</string>
+
+    <!-- Subscription Screen -->
+    <string name="subscriptions">Subscriptions</string>
+
+    <string name="daily">Daily</string>
+    <string name="weekly">Weekly</string>
+    <string name="festival">Festival</string>
+
+    <!-- Help Screen -->
+    <string name="post_question"><u>Post a Question</u></string>
+    <string name="what_question">What is your Question?</string>
+    <string name="post">Post</string>
+
+    <string name="error_question_empty">Please enter question to ask!</string>
+
+    <!-- Edit User Detail Screen -->
+    <string name="edit_detail">Edit User Detail</string>
+    <string name="edit_email">Email ID:</string>
+    <string name="edit_name">Name:</string>
+    <string name="edit_mobile_no">Mobile Number:</string>
+    <string name="edit_community">Community:</string>
+    <string name="edit_block">Block:</string>
+    <string name="edit_flat">Flat:</string>
+
+    <string name="update_detail">Update Detail</string>
+    <string name="image_error">Cannot retrieve selected image</string>
+
+    <!-- Permission -->
+    <string name="dialog_settings">SETTINGS</string>
+    <string name="dialog_permission_title">Grant Permissions</string>
+    <string name="dialog_permission_message">App needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="permission_denied">You must allow this permission to use this feature.</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="buy_once">Buy Once</string>
+    <string name="subscribe">Subscribe</string>
 
 </resources>

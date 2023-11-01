@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/screenBg"
+    android:orientation="vertical">
 
-    <com.flower.basket.orderflower.views.ThemeBoldText
-        android:id="@+id/tab_text"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/backLayout"
+                layout="@layout/back_action" />
+
+            <com.flower.basket.orderflower.views.ThemeText
+                style="@style/ScreenTitleStyle"
+                android:text="@string/orders" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/themeColor"
-        android:text="Orders"
-        android:singleLine="true"
-        android:textSize="@dimen/_20ssp" />
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvOrdersForTomorrow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:itemCount="1"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/item_orders_list"
+            tools:spanCount="1" />
+
+    </FrameLayout>
+
+</LinearLayout>

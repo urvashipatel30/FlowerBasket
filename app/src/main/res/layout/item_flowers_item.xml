@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_110sdp"
+    android:layout_marginVertical="@dimen/_7sdp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/item_card_radius"
+    app:cardElevation="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardFlower"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/themeColorLightest"
+            app:cardCornerRadius="@dimen/item_card_radius"
+            app:cardElevation="0dp"
+            app:cardUseCompatPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/ivFlowerPhoto"
+                android:layout_width="match_parent"
+                android:src="@drawable/ic_tropical_flame_kanakambaram"
+                android:layout_height="match_parent" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cardFlower">
+
+            <LinearLayout
+                android:id="@+id/llFlowerDetail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.flower.basket.orderflower.views.ThemeBoldText
+                    android:id="@+id/tvFlowerName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:maxLines="2"
+                    android:text="Flower"
+                    android:textColor="@color/order_ItemTextColor"
+                    android:textSize="@dimen/_15ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvFlowerPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$5.09"
+                    android:textColor="@color/order_ItemTextColor"
+                    android:textSize="@dimen/_11ssp" />
+
+            </LinearLayout>
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:id="@+id/tvFlowerQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_5sdp"
+                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail"
+                android:text="Loose Flowers"
+                android:textColor="@color/order_ItemTextColor"
+                android:textSize="@dimen/_11ssp" />
+
+            <LinearLayout
+                android:id="@+id/llOrderLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginBottom="@dimen/_7sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <com.flower.basket.orderflower.views.ThemeButton
+                    android:id="@+id/btnSubscribe"
+                    style="@style/dialog_button"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_11ssp"
+                    android:paddingHorizontal="0dp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_gravity="center"
+                    android:text="@string/subscribe" />
+
+                <com.flower.basket.orderflower.views.ThemeButton
+                    android:id="@+id/btnBuyOnce"
+                    style="@style/dialog_button"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/_11ssp"
+                    android:paddingHorizontal="0dp"
+                    android:text="@string/buy_once" />
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

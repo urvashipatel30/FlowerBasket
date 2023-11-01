@@ -1,7 +1,6 @@
 package com.flower.basket.orderflower.views
 
 import android.content.Context
-import android.graphics.Typeface
 import android.util.AttributeSet
 import android.widget.EditText
 import androidx.core.content.res.ResourcesCompat

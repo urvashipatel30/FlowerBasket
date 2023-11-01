@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenBg">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/flowerStartGuideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/themeColorLight"
+        app:layout_constraintBottom_toTopOf="@id/flowerStartGuideline"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@color/themeColor"
+        app:layout_constraintTop_toTopOf="@id/flowerStartGuideline" />
+
+    <include
+        android:id="@+id/backLayout"
+        layout="@layout/back_action" />
+
+    <com.flower.basket.orderflower.views.ThemeItalicText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:text="@string/app_name"
+        android:textColor="@color/homeTitleColor"
+        android:textSize="@dimen/_24ssp"
+        app:layout_constraintBottom_toTopOf="@id/editProfile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/editProfile"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        app:layout_constraintBottom_toTopOf="@id/flowerStartGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/flowerStartGuideline">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivEditProfile"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_profile_holder"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivEditPhoto"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:src="@drawable/ic_edit2"
+            app:layout_constraintBottom_toBottomOf="@+id/ivEditProfile"
+            app:layout_constraintEnd_toEndOf="@id/ivEditProfile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editProfile">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/screen_margin"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llEmailID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_email"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/edtEmailID"
+                    style="@style/AppEditableFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:alpha="0.5"
+                    android:hint="@string/email_id"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_name"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtName"
+                    style="@style/AppEditableFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="@string/name"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_mobile_no"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtMobile"
+                    style="@style/AppEditableFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="@string/mobile_no"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llCommunity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_community"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtCommunity"
+                    style="@style/AppEditableFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="@string/community"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBlock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_block"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtBlock"
+                    style="@style/AppEditableFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="@string/block"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llFlat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:orientation="vertical">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edit_flat"
+                    android:textColor="@color/themeColor"
+                    android:textSize="@dimen/_12ssp" />
+
+                <com.flower.basket.orderflower.views.ThemeEditView
+                    android:id="@+id/edtFlat"
+                    style="@style/AppEditableFieldsStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:hint="@string/flat"
+                    android:imeOptions="actionNext"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+            <com.flower.basket.orderflower.views.ThemeButton
+                android:id="@+id/btnSubmit"
+                style="@style/dialog_button"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:paddingHorizontal="@dimen/_18sdp"
+                android:text="@string/update_detail" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

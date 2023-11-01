@@ -1,16 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/screenBg"
+    android:orientation="vertical">
 
-    <com.flower.basket.orderflower.views.ThemeBoldText
-        android:id="@+id/tab_text"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/backLayout"
+                layout="@layout/back_action" />
+
+            <com.flower.basket.orderflower.views.ThemeText
+                style="@style/ScreenTitleStyle"
+                android:text="@string/help" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/themeColor"
-        android:text="Help"
-        android:singleLine="true"
-        android:textSize="@dimen/_20ssp" />
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/_15sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.flower.basket.orderflower.views.ThemeText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/post_question"
+            android:textColor="@color/themeColor"
+            android:textSize="@dimen/_13ssp" />
+
+        <com.flower.basket.orderflower.views.ThemeEditView
+            android:id="@+id/edtQuestion"
+            style="@style/AppEditableFieldsStyle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_95sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:gravity="top|start"
+            android:lines="5"
+            android:hint="@string/what_question"
+            android:imeOptions="actionDone"
+            android:inputType="text" />
+
+        <com.flower.basket.orderflower.views.ThemeButton
+            android:id="@+id/btnPost"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/_15sdp"
+            style="@style/dialog_button"
+            android:text="@string/post" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

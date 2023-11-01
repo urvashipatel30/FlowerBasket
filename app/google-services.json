@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "453395290322",
+    "project_id": "flower-basket-firebase",
+    "storage_bucket": "flower-basket-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453395290322:android:50f38e8cb2a491e1dbf50b",
+        "android_client_info": {
+          "package_name": "com.flower.basket.orderflower"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUOmzj4gJSqCWVD2NTsbiwXFL-01maLxM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
