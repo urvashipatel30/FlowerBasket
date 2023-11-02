@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardItem"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_110sdp"
-    android:layout_marginVertical="@dimen/_7sdp"
-    app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="@dimen/item_card_radius"
-    app:cardElevation="3dp">
+    android:layout_height="@dimen/_120sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,31 +12,57 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardFlower"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             app:cardBackgroundColor="@color/themeColorLightest"
             app:cardCornerRadius="@dimen/item_card_radius"
-            app:cardElevation="0dp"
-            app:cardUseCompatPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            app:cardElevation="@dimen/_4sdp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintDimensionRatio="1:1.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/ivFlowerPhoto"
                 android:layout_width="match_parent"
-                android:src="@drawable/ic_tropical_flame_kanakambaram"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_tropical_flame_kanakambaram" />
 
         </androidx.cardview.widget.CardView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/detailTopGuideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.12" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardDetail"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/item_card_radius"
+            app:cardElevation="@dimen/_3sdp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/detailTopGuideline" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:elevation="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/cardFlower">
+            app:layout_constraintStart_toEndOf="@id/cardFlower"
+            app:layout_constraintTop_toBottomOf="@+id/detailTopGuideline">
 
             <LinearLayout
                 android:id="@+id/llFlowerDetail"
@@ -73,12 +96,12 @@
                 android:id="@+id/tvFlowerQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/_5sdp"
-                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail"
                 android:text="Loose Flowers"
                 android:textColor="@color/order_ItemTextColor"
-                android:textSize="@dimen/_11ssp" />
+                android:textSize="@dimen/_11ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail" />
 
             <LinearLayout
                 android:id="@+id/llOrderLayout"
@@ -92,26 +115,27 @@
                 <com.flower.basket.orderflower.views.ThemeButton
                     android:id="@+id/btnSubscribe"
                     style="@style/dialog_button"
-                    android:layout_weight="1"
-                    android:textSize="@dimen/_11ssp"
-                    android:paddingHorizontal="0dp"
-                    android:layout_marginEnd="@dimen/_8sdp"
                     android:layout_gravity="center"
-                    android:text="@string/subscribe" />
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_weight="1"
+                    android:paddingHorizontal="0dp"
+                    android:text="@string/subscribe"
+                    android:textSize="@dimen/_11ssp" />
 
                 <com.flower.basket.orderflower.views.ThemeButton
                     android:id="@+id/btnBuyOnce"
                     style="@style/dialog_button"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:textSize="@dimen/_11ssp"
                     android:paddingHorizontal="0dp"
-                    android:text="@string/buy_once" />
+                    android:text="@string/buy_once"
+                    android:textSize="@dimen/_11ssp" />
 
             </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.cardview.widget.CardView>
+</FrameLayout>

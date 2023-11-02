@@ -28,14 +28,19 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_marginHorizontal="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginHorizontal="@dimen/_15sdp"
+        android:layout_weight="1"
         android:orientation="vertical">
+
+        <include
+            android:id="@+id/flowerItem"
+            layout="@layout/item_flowers_item" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvOrders"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
