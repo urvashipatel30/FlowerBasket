@@ -17,6 +17,7 @@
             android:orientation="horizontal">
 
             <com.flower.basket.orderflower.views.ThemeText
+                android:id="@+id/tvUsername"
                 style="@style/ScreenTitleStyle"
                 android:layout_marginStart="@dimen/_15sdp"
                 android:text="@string/app_name" />

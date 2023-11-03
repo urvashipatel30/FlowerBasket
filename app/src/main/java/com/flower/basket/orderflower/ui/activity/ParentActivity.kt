@@ -16,7 +16,7 @@ import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
 open class ParentActivity : AppCompatActivity() {
 
-    lateinit var loader: Dialog
+     var loader: Dialog?=null
 
     open fun showDialog(
         activity: Activity,
@@ -47,14 +47,14 @@ open class ParentActivity : AppCompatActivity() {
     }
 
     open fun showLoader(activity: Activity, title: String = "", msg: String = "") {
-//        if (loader == null) {
-        loader = createLoader(activity, "")
-//        }
-        if (!activity.isFinishing && !loader.isShowing) loader.show()
+        if (loader == null) {
+            loader = createLoader(activity, "")
+        }
+        if (!activity.isFinishing && !loader!!.isShowing) loader?.show()
     }
 
     fun dismissLoader() {
-        if (loader != null && loader.isShowing) loader.dismiss()
+        if (loader != null && loader!!.isShowing) loader?.dismiss()
     }
 
     protected open fun createLoader(

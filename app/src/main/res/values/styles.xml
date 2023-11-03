@@ -188,7 +188,8 @@
         <item name="android:paddingBottom">@dimen/_10sdp</item>
         <item name="android:paddingStart">@dimen/_12sdp</item>
         <item name="android:paddingEnd">@dimen/_12sdp</item>
-        <item name="android:textColorHint">@color/editable_text_hint</item>
+<!--        <item name="android:textColorHint">@color/editable_text_hint</item>-->
+        <item name="android:textColorHint">@color/grey_text_hint</item>
         <item name="android:textSize">@dimen/_12ssp</item>
     </style>
 

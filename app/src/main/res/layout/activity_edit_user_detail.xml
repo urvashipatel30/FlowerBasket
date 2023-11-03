@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_email"
-                    android:textColor="@color/themeColor"
+                    android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
                 <com.flower.basket.orderflower.views.ThemeText
@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_name"
-                    android:textColor="@color/themeColor"
+                    android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
@@ -151,18 +151,38 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_mobile_no"
-                    android:textColor="@color/themeColor"
+                    android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtMobile"
-                    style="@style/AppEditableFieldsStyle"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:hint="@string/mobile_no"
-                    android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.flower.basket.orderflower.views.ThemeText
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/rounded_square_corner_theme"
+                        android:gravity="center"
+                        android:paddingHorizontal="@dimen/_10sdp"
+                        android:text="+91"
+                        android:textColor="@color/themeColor" />
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtMobile"
+                        style="@style/AppEditableFieldsStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_12sdp"
+                        android:layout_weight="1"
+                        android:hint="@string/mobile_no"
+                        android:imeOptions="actionNext"
+                        android:inputType="number"
+                        android:maxLength="10" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -177,18 +197,28 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_community"
-                    android:textColor="@color/themeColor"
+                    android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtCommunity"
+                <AutoCompleteTextView
+                    android:id="@+id/autoTextCommunity"
                     style="@style/AppEditableFieldsStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:hint="@string/community"
-                    android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:completionThreshold="1"
+                    android:fontFamily="@font/pangram_regular"
+                    android:hint="@string/search_community" />
+
+                <!--                <com.flower.basket.orderflower.views.ThemeEditView-->
+                <!--                    android:id="@+id/edtCommunity"-->
+                <!--                    style="@style/AppEditableFieldsStyle"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="@dimen/_5sdp"-->
+                <!--                    android:hint="@string/community"-->
+                <!--                    android:imeOptions="actionNext"-->
+                <!--                    android:inputType="text" />-->
 
             </LinearLayout>
 
@@ -203,7 +233,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_block"
-                    android:textColor="@color/themeColor"
+                    android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
@@ -229,7 +259,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/edit_flat"
-                    android:textColor="@color/themeColor"
+                    android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView

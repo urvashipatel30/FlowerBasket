@@ -154,7 +154,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:textAlignment="center"
-                android:textColor="@color/themeColor"
+                android:textColor="@color/dialogMsgColor"
                 android:textSize="@dimen/_12ssp"
                 android:visibility="gone" />
 

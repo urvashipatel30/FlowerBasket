@@ -9,11 +9,13 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSettingsBinding
 import com.flower.basket.orderflower.ui.activity.EditUserDetailActivity
 import com.flower.basket.orderflower.ui.activity.LoginActivity
+import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
 class SettingsFragment : Fragment(), OnClickListener {
 
@@ -45,14 +47,32 @@ class SettingsFragment : Fragment(), OnClickListener {
             }
 
             binding.llLogout -> {
-                AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, false)
-                AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)
+                AppAlertDialog(activity, AppAlertDialog.WARNING_TYPE)
+                    .setTitleText(getString(R.string.confirm))
+                    .setContentText(getString(R.string.confirm_logout))
+                    .setConfirmText(getString(R.string.logout))
+                    .setConfirmClickListener { appAlertDialog ->
 
-                val intent = Intent(activity, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                activity.finish()
+                        AppPreference(activity).setPreference(AppPersistence.keys.TOKEN, "")
+                        AppPreference(activity).setPreference(AppPersistence.keys.USER_DATA, "")
+                        AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, false)
+                        AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)
+
+                        appAlertDialog.dismissWithAnimation()
+
+                        val intent = Intent(activity, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                        startActivity(intent)
+                        activity.finish()
+                    }
+                    .setCancelText(activity.getString(R.string.dialog_cancel))
+                    .setCancelClickListener(object : AppAlertDialog.OnSweetClickListener {
+                        override fun onClick(appAlertDialog: AppAlertDialog) {
+                            appAlertDialog.dismissWithAnimation()
+                        }
+                    })
+                    .show()
             }
         }
     }

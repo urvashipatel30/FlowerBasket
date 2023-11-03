@@ -8,16 +8,25 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.RadioGroup
 import android.widget.RadioGroup.OnCheckedChangeListener
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.network.RetroClient
-import com.flower.basket.orderflower.data.DesignResponse
+import com.flower.basket.orderflower.data.CommunityData
+import com.flower.basket.orderflower.data.CommunityResponse
+import com.flower.basket.orderflower.data.LoginRequest
+import com.flower.basket.orderflower.data.UserData
+import com.flower.basket.orderflower.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityLoginBinding
+import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +36,9 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
     private lateinit var activity: Activity
     private lateinit var binding: ActivityLoginBinding
+
+    private lateinit var communityList: List<CommunityData>
+    private lateinit var selectedCommunity: CommunityData
 
     private var userId = ""
     private var userType = 1
@@ -52,6 +64,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         binding.radioGrpUserTypes.setOnClickListener(this)
 
         setTopTab()
+        getCommunityList()
     }
 
     private fun setTopTab() {
@@ -75,67 +88,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
             binding.btnSignup -> {
                 // Trigger API call if entered valid fields
                 if (isValidFields()) {
-                    RetroClient.apiService.getPostById()
-                        .enqueue(object : Callback<DesignResponse> {
-                            override fun onResponse(
-                                call: Call<DesignResponse>,
-                                response: Response<DesignResponse>
-                            ) {
-                                Log.d("onResponse: ", "response => $response")
-
-                                // if response of registration is not successful
-                                if (!response.isSuccessful) {
-                                    Log.e(
-                                        "onResponse: ",
-                                        "response not Successful => ${response.message()}"
-                                    )
-                                    showDialog(
-                                        activity,
-                                        dialogType = AppAlertDialog.ERROR_TYPE,
-                                        msg = response.message() ?: getString(R.string.went_wrong)
-                                    )
-                                    return
-                                }
-
-                                val userResponse = response.body()
-                                Log.e("onResponse: ", "userResponse => $userResponse")
-
-                                if (userResponse != null) {
-                                    if (userResponse.succeeded) {
-                                        // Handle the retrieved post data
-                                        AppPreference(activity).setPreference(
-                                            AppPersistence.keys.IS_VENDOR,
-                                            true
-                                        )
-                                        AppPreference(activity).setPreference(
-                                            AppPersistence.keys.IS_LOGIN,
-                                            true
-                                        )
-
-                                        val intent = Intent(activity, DashboardActivity::class.java)
-                                        startActivity(intent)
-                                        finish()
-
-                                    } else {
-                                        showDialog(
-                                            activity,
-                                            dialogType = AppAlertDialog.ERROR_TYPE,
-                                            msg = userResponse.messages
-                                        )
-                                    }
-                                }
-                            }
-
-                            override fun onFailure(call: Call<DesignResponse>, t: Throwable) {
-                                // Handle failure
-                                Log.e("onFailure: ", "error => ${t.message}")
-                                showDialog(
-                                    activity,
-                                    dialogType = AppAlertDialog.ERROR_TYPE,
-                                    msg = t.message ?: getString(R.string.went_wrong)
-                                )
-                            }
-                        })
+                    registerUser()
                 }
             }
 
@@ -155,15 +108,261 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 //                    if (binding.cbRememberMe.isChecked) {
 //                        AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, true)
 //                    }
-
-                    AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, true)
-                    AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)
-
-                    val intent = Intent(activity, DashboardActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    loginUser()
                 }
             }
+        }
+    }
+
+    private fun openDashboard(
+        userData: UserData,
+        userResponse: UserResponse
+    ) {
+        Log.e("onResponse: ", "userData => $userData")
+
+        val json = Gson().toJson(userData)
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.TOKEN,
+            userResponse.message
+        )
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.USER_DATA,
+            json
+        )
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.IS_LOGIN,
+            true
+        )
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.IS_VENDOR,
+            userData.userType != 0
+        )
+
+        val intent = Intent(activity, DashboardActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun loginUser() {
+        showLoader(activity)
+
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            val params = LoginRequest(email = email, password = password)
+            Log.e("registerUser: ", "login params => $params")
+
+            RetroClient.apiService.loginUser(params)
+                .enqueue(object : Callback<UserResponse> {
+                    override fun onResponse(
+                        call: Call<UserResponse>,
+                        response: Response<UserResponse>
+                    ) {
+                        dismissLoader()
+                        Log.e("onResponse: ", "response => $response, ${response.isSuccessful}")
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val userResponse = response.body()
+                        Log.e("onResponse: ", "loginResponse => $userResponse")
+
+                        if (userResponse != null) {
+                            if (userResponse.succeeded) {
+                                // Handle the retrieved user data
+                                val userData = userResponse.data
+                                openDashboard(userData, userResponse)
+
+                            } else {
+                                showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = userResponse.message
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                        Log.e("onFailure: ", "error => ${t.message}")
+                        showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
+        }
+    }
+
+    private fun registerUser() {
+        showLoader(activity)
+
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+
+            val params = UserData(
+                userType = userType,
+                email = email,
+                userName = name,
+                password = password,
+                mobileNumber = mobileNumber,
+                communityId = selectedCommunity.id,
+                block = block,
+                flatNo = flat
+            )
+            Log.e("registerUser: ", "userData => $params")
+
+            RetroClient.apiService.registerUser(params)
+                .enqueue(object : Callback<UserResponse> {
+                    override fun onResponse(
+                        call: Call<UserResponse>,
+                        response: Response<UserResponse>
+                    ) {
+                        dismissLoader()
+                        Log.e("onResponse: ", "response => $response, ${response.isSuccessful}")
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val userResponse = response.body()
+                        Log.e("onResponse: ", "userResponse => $userResponse")
+
+                        if (userResponse != null) {
+                            if (userResponse.succeeded) {
+                                // Handle the retrieved user data
+                                val userData = userResponse.data
+
+                                Toast.makeText(
+                                    activity,
+                                    getString(R.string.user_register_success),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                                openDashboard(userData, userResponse)
+
+                            } else {
+                                showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = userResponse.message
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                        Log.e("onFailure: ", "error => ${t.message}")
+                        showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
+        }
+    }
+
+    private fun getCommunityList() {
+        showLoader(activity)
+
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            RetroClient.apiService.getCommunities()
+                .enqueue(object : Callback<CommunityResponse> {
+                    override fun onResponse(
+                        call: Call<CommunityResponse>,
+                        response: Response<CommunityResponse>
+                    ) {
+                        dismissLoader()
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val communityResponse = response.body()
+                        if (communityResponse != null) {
+                            if (communityResponse.succeeded) {
+                                // Handle the retrieved community data
+                                communityList = communityResponse.data
+
+                                // Create an ArrayAdapter using list of community names
+                                val communityNames = communityList.map { it.name }.toTypedArray()
+                                val adapter = ArrayAdapter(
+                                    activity,
+                                    android.R.layout.simple_dropdown_item_1line,
+                                    communityNames
+                                )
+
+                                // Set the ArrayAdapter to the AutoCompleteTextView
+                                binding.autoTextCommunity.setAdapter(adapter)
+
+                                // Set an OnItemClickListener to handle item selection
+                                binding.autoTextCommunity.onItemClickListener =
+                                    AdapterView.OnItemClickListener { _, _, position, _ ->
+
+                                        // Retrieve the selected community based on the selected position
+                                        selectedCommunity = communityList[position]
+                                    }
+
+                            } else {
+                                showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    msg = communityResponse.message
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CommunityResponse>, t: Throwable) {
+                        Log.e("onFailure: ", "error => ${t.message}")
+                        showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
         }
     }
 
@@ -228,7 +427,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         email = binding.edtSignupMail.text.toString()
         password = binding.edtSignupPassword.text.toString()
         mobileNumber = binding.edtMobile.text.toString()
-        community = binding.edtCommunity.text.toString()
+        community = binding.autoTextCommunity.text.toString()
         block = binding.edtBlock.text.toString()
         flat = binding.edtFlat.text.toString()
 

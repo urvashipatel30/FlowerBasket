@@ -334,7 +334,7 @@
                                     android:layout_height="wrap_content"
                                     android:hint="@string/optional"
                                     android:textColor="@color/themeColor"
-                                    android:textColorHint="@color/qty_text_hint"
+                                    android:textColorHint="@color/grey_text_hint"
                                     android:textSize="@dimen/_12ssp" />
 
                                 <ImageView

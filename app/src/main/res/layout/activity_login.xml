@@ -66,28 +66,28 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtLoginMail"
                     style="@style/LoginFieldsStyle"
                     android:layout_width="match_parent"
-                    android:text="test@gmail.com"
                     android:layout_height="wrap_content"
                     android:hint="@string/email_id"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:text="test@gmail.com" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtLoginPassword"
                     style="@style/LoginFieldsStyle"
                     android:layout_width="match_parent"
-                    android:text="123456"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/password"
                     android:imeOptions="actionDone"
-                    android:inputType="text" />
+                    android:inputType="textPassword"
+                    android:text="123456" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/cbRememberMe"
@@ -138,7 +138,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -192,12 +192,12 @@
                     android:id="@+id/edtSignupName"
                     style="@style/LoginFieldsStyle"
                     android:layout_width="match_parent"
-                    android:text="Test"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/name"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="Test" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtSignupMail"
@@ -231,7 +231,7 @@
                     <com.flower.basket.orderflower.views.ThemeText
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_square_corner_fields"
+                        android:background="@drawable/rounded_square_corner_white"
                         android:gravity="center"
                         android:paddingHorizontal="@dimen/_10sdp"
                         android:text="+91"
@@ -244,12 +244,12 @@
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="@dimen/_13sdp"
                         android:layout_marginStart="@dimen/_7sdp"
-                        android:text="1234567890"
                         android:layout_weight="1"
                         android:hint="@string/mobile_no"
                         android:imeOptions="actionNext"
-                        android:inputType="phone"
-                        android:maxLength="10" />
+                        android:inputType="number"
+                        android:maxLength="10"
+                        android:text="1234567890" />
 
                 </LinearLayout>
 
@@ -259,10 +259,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Sample"
                     android:hint="@string/community"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="Sample"
+                    android:visibility="gone" />
+
+                <!-- By setting the android:completionThreshold attribute to 1,
+                    it will display the dropdown as soon as start typing a single character-->
+                <AutoCompleteTextView
+                    android:id="@+id/autoTextCommunity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/LoginFieldsStyle"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:completionThreshold="1"
+                    android:fontFamily="@font/pangram_regular"
+                    android:hint="@string/search_community" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtBlock"
@@ -270,10 +283,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="B"
                     android:hint="@string/block"
                     android:imeOptions="actionNext"
-                    android:inputType="text" />
+                    android:inputType="text"
+                    android:text="B" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtFlat"
@@ -281,10 +294,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_15sdp"
-                    android:text="201"
                     android:hint="@string/flat"
                     android:imeOptions="actionDone"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:text="201" />
 
                 <com.flower.basket.orderflower.views.ThemeButton
                     android:id="@+id/btnSignup"

@@ -47,5 +47,8 @@ class SplashActivity : ParentActivity() {
 
         if (AppPreference(activity).getPreference(AppPersistence.keys.IS_VENDOR) == null)
             AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)
+
+        if (AppPreference(activity).getPreference(AppPersistence.keys.USER_DATA) == null)
+            AppPreference(activity).setPreference(AppPersistence.keys.USER_DATA, "")
     }
 }

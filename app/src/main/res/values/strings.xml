@@ -13,6 +13,10 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
 
+    <string name="error_went_wrong">Something went wrong!</string>
+    <string name="error_no_internet">No Internet</string>
+    <string name="error_internet_msg">Please check internet connection &amp; try again!</string>
+
     <!-- Login Screen -->
     <string name="login"><u>Login</u></string>
     <string name="sign_up"><u>Sign Up</u></string>
@@ -29,6 +33,7 @@
     <string name="account_type">Account Type</string>
     <string name="name">Name</string>
     <string name="mobile_no">Mobile Number</string>
+    <string name="search_community">Search your Community here</string>
     <string name="community">Community</string>
     <string name="block">Block</string>
     <string name="flat">Flat</string>
@@ -57,7 +62,10 @@
     <string name="error_enter_flat">Please, enter flat number to get flowers delivered!</string>
 
     <string name="error_input_empty">Field cannot be empty!</string>
-    <string name="went_wrong">Something went wrong!</string>
+
+    <string name="user_register_success">User registered successfully!</string>
+
+    <string name="failed">Failed!</string>
 
     <!-- Dashboard Screen -->
     <string name="subscription">Subscription</string>
@@ -74,12 +82,17 @@
     <string name="registered_community"><u>Registered Community</u></string>
     <string name="order_for_tomorrow"><u>Order For Tomorrow</u></string>
 
+    <string name="welcome_name">Welcome, %s!</string>
+
     <!-- Settings Screen -->
     <string name="my_profile">My Profile</string>
     <string name="change_profile_pic">Change Profile Picture</string>
     <string name="change_user_details">Change User Details</string>
     <string name="change_color_scheme">Change Color Scheme</string>
     <string name="logout">Logout</string>
+
+    <string name="confirm">Confirm</string>
+    <string name="confirm_logout">Are you sure want to logout?</string>
 
     <!-- Subscription Screen -->
     <string name="subscriptions">Subscriptions</string>
@@ -130,5 +143,6 @@
     <string name="select_days"><u>Select Days</u></string>
     <string name="order">Order</string>
     <string name="optional">Optional</string>
+
 
 </resources>

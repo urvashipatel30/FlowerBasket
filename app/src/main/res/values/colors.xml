@@ -89,28 +89,38 @@
     <color name="day_unselectedColor">#8C000000</color>
     <color name="day_selectedColor">@color/themeColor</color>
 
-    <color name="qty_text_hint">#55000000</color>
+    <color name="grey_text_hint">#55000000</color>
 
 
     <!-- TODO Dialog -->
     <color name="dialogBgColor">@color/white</color>
-    <color name="dialogTitleColor">#EF7959</color>
+    <color name="dialogTitleColor">#EF7D5E</color>
+    <color name="dialogMsgColor">#EF7D5E</color>
 
     <color name="float_transparent">#00000000</color>
     <color name="dialog_bg_color">@color/semiTransparent_black</color>
     <color name="button_text_color">#FFFFFF</color>
     <!--    <color name="gray_btn_bg_color">#D0D0D0</color>-->
     <!--    <color name="gray_btn_bg_pressed_color">#B6B6B6</color>-->
+
     <color name="gray_btn_bg_color">#9A9DA4</color>
     <color name="gray_btn_bg_pressed_color">#7F8287</color>
+
     <color name="dialog_btn_bg_color">@color/themeColor</color>
     <color name="dialog_btn_bg_pressed_color">#DD5A20</color>
+
     <color name="red_btn_bg_color">#DD6B55</color>
     <color name="red_btn_bg_pressed_color">#CD5B55</color>
-    <color name="error_stroke_color">#F27474</color>
+
+<!--    <color name="error_stroke_color">#F27474</color>-->
+    <color name="error_stroke_color">#F47A58</color>
     <color name="success_stroke_color">#A5DC86</color>
+
     <color name="trans_success_stroke_color">#33A5DC86</color>
-    <color name="warning_stroke_color">#F8BB86</color>
+    <color name="warning_stroke_color">#EF7D5E</color>
+<!--    <color name="warning_stroke_color">#F5A089</color>-->
+<!--    <color name="warning_stroke_color">#F8BB86</color>-->
+
     <color name="text_color">#575757</color>
     <color name="material_blue_grey_80">#ff37474f</color>
     <color name="material_blue_grey_90">#ff263238</color>

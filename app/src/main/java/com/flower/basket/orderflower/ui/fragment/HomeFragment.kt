@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentHomeBinding
 import com.flower.basket.orderflower.ui.activity.FlowerDetailsActivity
 
@@ -25,6 +27,9 @@ class HomeFragment : Fragment() {
 
         activity = requireActivity()
         Log.e("onCreateView: ", "Home activity => $activity")
+
+        val userDetails = AppPreference(activity).getUserDetails()
+        binding.tvUsername.text = getString(R.string.welcome_name, userDetails?.userName)
 
         binding.flowerItem.cardItem.setOnClickListener {
             val intent = Intent(activity, FlowerDetailsActivity::class.java)

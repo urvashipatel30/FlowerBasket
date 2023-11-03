@@ -8,7 +8,7 @@ import com.google.gson.Gson
 class AppPersistence private constructor(context: Context) {
 
     enum class keys {
-        IS_LOGIN, IS_VENDOR
+        IS_LOGIN,  TOKEN, IS_VENDOR, USER_DATA
     }
 
     private val sharedPreferences: SharedPreferences
