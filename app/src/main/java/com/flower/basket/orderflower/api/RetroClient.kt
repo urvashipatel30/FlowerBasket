@@ -1,4 +1,4 @@
-package com.flower.basket.orderflower.api.network
+package com.flower.basket.orderflower.api
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

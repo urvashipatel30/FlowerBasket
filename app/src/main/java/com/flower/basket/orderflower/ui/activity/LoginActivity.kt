@@ -15,11 +15,12 @@ import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.api.network.RetroClient
+import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.CommunityData
 import com.flower.basket.orderflower.data.CommunityResponse
 import com.flower.basket.orderflower.data.LoginRequest
 import com.flower.basket.orderflower.data.UserData
+import com.flower.basket.orderflower.data.UserRequest
 import com.flower.basket.orderflower.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
@@ -122,8 +123,8 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
         val json = Gson().toJson(userData)
         AppPreference(activity).setPreference(
-            AppPersistence.keys.TOKEN,
-            userResponse.message
+            AppPersistence.keys.AUTH_TOKEN,
+            userData.authToken
         )
         AppPreference(activity).setPreference(
             AppPersistence.keys.USER_DATA,
@@ -213,7 +214,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
 
-            val params = UserData(
+            val params = UserRequest(
                 userType = userType,
                 email = email,
                 userName = name,

@@ -14,7 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.api.network.RetroClient
+import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.CommunityData
 import com.flower.basket.orderflower.data.CommunityResponse
 import com.flower.basket.orderflower.data.UserData

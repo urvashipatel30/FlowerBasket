@@ -53,7 +53,7 @@ class SettingsFragment : Fragment(), OnClickListener {
                     .setConfirmText(getString(R.string.logout))
                     .setConfirmClickListener { appAlertDialog ->
 
-                        AppPreference(activity).setPreference(AppPersistence.keys.TOKEN, "")
+                        AppPreference(activity).setPreference(AppPersistence.keys.AUTH_TOKEN, "")
                         AppPreference(activity).setPreference(AppPersistence.keys.USER_DATA, "")
                         AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, false)
                         AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)

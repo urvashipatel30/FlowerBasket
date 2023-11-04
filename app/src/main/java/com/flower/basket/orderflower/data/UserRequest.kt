@@ -1,6 +1,6 @@
 package com.flower.basket.orderflower.data
 
-data class UserData(
+data class UserRequest(
     val userType: Int = 0,
     val email: String,
     val userName: String,
@@ -9,7 +9,5 @@ data class UserData(
     val mobileNumber: String,
     val communityId: Int,
     val block: String,
-    val flatNo: String,
-    val authToken: String = "",
-    val registeredDate: String = ""
+    val flatNo: String
 )
