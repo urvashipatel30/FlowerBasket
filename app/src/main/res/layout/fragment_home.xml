@@ -34,14 +34,9 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/flowerItem"
-            layout="@layout/item_flowers_item" />
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvOrders"
+            android:id="@+id/rvFlowers"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"

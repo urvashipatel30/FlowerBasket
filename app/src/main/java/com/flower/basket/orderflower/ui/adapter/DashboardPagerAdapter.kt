@@ -1,4 +1,4 @@
-package com.flower.basket.orderflower.adapter
+package com.flower.basket.orderflower.ui.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

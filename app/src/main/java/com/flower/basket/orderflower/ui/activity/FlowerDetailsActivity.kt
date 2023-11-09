@@ -10,10 +10,14 @@ import android.view.View.OnClickListener
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.adapter.DaysAdapter
+import com.flower.basket.orderflower.ui.adapter.DaysAdapter
 import com.flower.basket.orderflower.data.Day
+import com.flower.basket.orderflower.data.FlowerData
 import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
+import com.flower.basket.orderflower.utils.BuyOption
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -24,6 +28,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     private lateinit var binding: ActivityFlowerDetailsBinding
 
     private var buyOption = 0
+    private var flowerData: FlowerData? = null
 
     private var productType = 0
     private val gramsQty = 100
@@ -50,18 +55,33 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
         activity = this@FlowerDetailsActivity
 
-        if (intent != null && intent.hasExtra("buyOption")) {
-            buyOption = intent.getIntExtra("buyOption", 0)
+        if (intent != null) {
+            if (intent.hasExtra("buyOption"))
+                buyOption = intent.getIntExtra("buyOption", BuyOption.Subscribe.value)
+
+            if (intent.hasExtra("data"))
+                flowerData = Gson().fromJson(intent.getStringExtra("data"), FlowerData::class.java)
         }
+
+        binding.apply {
+            ivFlowerName.text = flowerData?.name
+
+            ivRemoveEndDate.visibility = View.GONE
+            tvStartDate.text = getFormattedCurrentDate()
+        }
+
+        Glide.with(binding.ivFlowerImage.context)
+            .load(flowerData?.imageUrl)
+            .placeholder(R.drawable.ic_profile_holder)
+            .error(R.drawable.ic_profile_holder)
+            .centerCrop()
+            .into(binding.ivFlowerImage)
 
         binding.backLayout.ivBackAction.setOnClickListener(this)
         binding.tvQtyMinus.setOnClickListener(this)
         binding.tvQtyPlus.setOnClickListener(this)
         binding.endDateLayout.setOnClickListener(this)
         binding.ivRemoveEndDate.setOnClickListener(this)
-
-        binding.ivRemoveEndDate.visibility = View.GONE
-        binding.tvStartDate.text = getFormattedCurrentDate()
 
         when (buyOption) {
             0 -> {

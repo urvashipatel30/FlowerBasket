@@ -77,7 +77,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:maxLines="2"
+                    android:paddingEnd="@dimen/_3sdp"
+                    android:maxLines="1"
                     android:text="Flower"
                     android:textColor="@color/order_ItemTextColor"
                     android:textSize="@dimen/_15ssp" />
@@ -92,22 +93,36 @@
 
             </LinearLayout>
 
+            <com.flower.basket.orderflower.views.ThemeBoldText
+                android:id="@+id/tvFlowerTeluguName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="Flower"
+                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/order_ItemTextColor"
+                android:textSize="@dimen/_15ssp" />
+
             <com.flower.basket.orderflower.views.ThemeText
                 android:id="@+id/tvFlowerQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginVertical="@dimen/_2sdp"
                 android:text="Loose Flowers"
                 android:textColor="@color/order_ItemTextColor"
                 android:textSize="@dimen/_11ssp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail" />
+                app:layout_constraintTop_toBottomOf="@+id/tvFlowerTeluguName" />
 
             <LinearLayout
                 android:id="@+id/llOrderLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/_7sdp"
+                app:layout_constraintTop_toBottomOf="@+id/tvFlowerQuantity"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">

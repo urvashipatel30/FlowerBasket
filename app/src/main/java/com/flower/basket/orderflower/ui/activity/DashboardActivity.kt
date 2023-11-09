@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.core.view.updatePadding
 import androidx.viewpager2.widget.ViewPager2
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.adapter.DashboardPagerAdapter
+import com.flower.basket.orderflower.ui.adapter.DashboardPagerAdapter
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityDashboardBinding
