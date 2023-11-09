@@ -62,7 +62,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         binding.btnLogin.setOnClickListener(this)
 
         binding.radioGrp.setOnCheckedChangeListener(this)
-        binding.radioGrpUserTypes.setOnClickListener(this)
+        binding.radioGrpUserTypes.setOnCheckedChangeListener(this)
 
         setTopTab()
         getCommunityList()
