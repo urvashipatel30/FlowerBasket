@@ -24,7 +24,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvDateOfOrders"
         tools:itemCount="2"
         tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/item_orders_item"
+        tools:listitem="@layout/item_orders"
         tools:spanCount="2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

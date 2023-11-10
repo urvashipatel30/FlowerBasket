@@ -14,17 +14,15 @@ import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.Day
-import com.flower.basket.orderflower.data.FlowerData
-import com.flower.basket.orderflower.data.OrderRequest
-import com.flower.basket.orderflower.data.PlaceOrderResponse
-import com.flower.basket.orderflower.data.preference.AppPreference
+import com.flower.basket.orderflower.data.SubscriptionItemData
+import com.flower.basket.orderflower.data.SubscriptionItemResponse
+import com.flower.basket.orderflower.data.UpdateSubscriptionRequest
+import com.flower.basket.orderflower.data.UpdateSubscriptionResponse
 import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
 import com.flower.basket.orderflower.ui.adapter.DaysAdapter
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.Quantity
-import com.flower.basket.orderflower.utils.SubscriptionType
-import com.flower.basket.orderflower.utils.Utils
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
 import retrofit2.Call
@@ -34,13 +32,13 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class FlowerDetailsActivity : ParentActivity(), OnClickListener {
+class EditSubscriptionActivity : ParentActivity(), OnClickListener {
 
     private lateinit var activity: Activity
     private lateinit var binding: ActivityFlowerDetailsBinding
 
-    private var buyOption = SubscriptionType.Subscribe.value
-    private var flowerData: FlowerData? = null
+    private var subscriptionData: SubscriptionItemData? = null
+    private var subscriptionID: String? = null
 
     private var flowerType = FlowerType.LOOSE_FLOWER.value
     private var quantityToOrder = 1
@@ -50,6 +48,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     private val looseFlower = FlowerType.LOOSE_FLOWER.value
     private val mora = FlowerType.MORA.value
 
+    private var quantity: Int = 1
     private var flowerPrice: Int? = 0
     private var totalPrice: Double? = 0.00
 
@@ -58,6 +57,8 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     private val dateFormat = SimpleDateFormat("E, MMM dd yyyy", Locale.US)
 
     var isPlaceOrderClickable = true
+
+    private var errorMsg: String? = null
 
     private val daysList = mutableListOf(
         Day("All", -1, false), // -1 represents the "All" option
@@ -69,6 +70,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         Day("Friday", 5, false),
         Day("Saturday", 6, false)
     )
+    private var daysAdapter: DaysAdapter? = null
 
     @SuppressLint("RestrictedApi", "ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -76,30 +78,16 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         binding = ActivityFlowerDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        activity = this@FlowerDetailsActivity
+        activity = this@EditSubscriptionActivity
 
         if (intent != null) {
-            if (intent.hasExtra("buyOption"))
-                buyOption = intent.getIntExtra("buyOption", SubscriptionType.Subscribe.value)
+            if (intent.hasExtra("subscriptionID"))
+                subscriptionID = intent.getStringExtra("subscriptionID")
 
             if (intent.hasExtra("data"))
-                flowerData = Gson().fromJson(intent.getStringExtra("data"), FlowerData::class.java)
+                subscriptionData =
+                    Gson().fromJson(intent.getStringExtra("data"), SubscriptionItemData::class.java)
         }
-
-        binding.apply {
-            tvFlowerName.text =
-                if (flowerData?.teluguName?.isNotEmpty() == true) flowerData?.teluguName else flowerData?.name
-
-            ivRemoveEndDate.visibility = View.GONE
-            tvStartDate.text = getFormattedCurrentDate()
-        }
-
-        Glide.with(binding.ivFlowerImage.context)
-            .load(flowerData?.imageUrl)
-            .placeholder(R.drawable.ic_profile_holder)
-            .error(R.drawable.ic_profile_holder)
-            .centerCrop()
-            .into(binding.ivFlowerImage)
 
         binding.backLayout.ivBackAction.setOnClickListener(this)
         binding.btnOrder.setOnClickListener(this)
@@ -108,101 +96,167 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         binding.endDateLayout.setOnClickListener(this)
         binding.ivRemoveEndDate.setOnClickListener(this)
 
-        when (buyOption) {
-            SubscriptionType.BuyOnce.value -> {
-                binding.cardDaySelection.visibility = View.GONE
-                binding.cardStartEndDate.visibility = View.VISIBLE
-
-                binding.tvStartLabel.text = getString(R.string.orders_on)
-                binding.tvEndsLabel.text = getString(R.string.delivers_on)
-                binding.tvEndDate.text = getFormattedTomorrowDate()
-
-                binding.btnOrder.text = getString(R.string.order)
-            }
-
-            SubscriptionType.Subscribe.value -> {
-                binding.cardDaySelection.visibility = View.VISIBLE
-                binding.cardStartEndDate.visibility = View.GONE
-
-                binding.tvStartLabel.text = getString(R.string.starts_on)
-                binding.tvEndsLabel.text = getString(R.string.ends_on)
-                binding.tvEndDate.text = ""
-
-                binding.btnOrder.text = getString(R.string.subscribe)
-            }
-        }
-
 
         // Create & Set the ArrayAdapter for the Spinner
         val productTypes = arrayOf(getString(R.string.loose_flowers), getString(R.string.mora))
         val spnAdapter = ArrayAdapter(this, R.layout.spinner_item_day, productTypes)
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerProductType.adapter = spnAdapter
 
-        binding.spinnerProductType.setSelection(0)
+        binding.apply {
+            cardDaySelection.visibility = View.VISIBLE
+            cardStartEndDate.visibility = View.GONE
+            tvStartLabel.text = getString(R.string.starts_on)
+            tvEndsLabel.text = getString(R.string.ends_on)
+            tvEndDate.text = ""
+            btnOrder.text = getString(R.string.subscribe)
 
-        // Set an OnItemSelectedListener for the Spinner
-        binding.spinnerProductType.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    flowerType = position
-                    // Handle the selected item (e.g., update the price based on the selected item)
-                    binding.tvMeasurement.text =
-                        if (position == 0) getString(R.string.grams) else getString(R.string.mora)
+            spinnerProductType.adapter = spnAdapter
+            // Set an OnItemSelectedListener for the Spinner
+            spinnerProductType.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        flowerType = position
+                        Log.e("onItemSelected: ", "position => $position")
+                        // Handle the selected item (e.g., update the price based on the selected item)
+                        binding.tvMeasurement.text =
+                            if (position == 0) getString(R.string.grams) else getString(R.string.mora)
 
-                    setDefaultQuantity(position)
-                    setFlowerPrice(position)
-                    calculatePrice()
+                        setFlowerPrice(position)
+                        calculatePrice()
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
                 }
+        }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
+        daysAdapter = DaysAdapter(daysList, object : DaysAdapter.DaySelectionCallback {
+            override fun onDaysSelected(selectedDays: String) {
+                Log.e("onDaysSelected: ", "Selected days: $selectedDays")
+                selectedDaysInterval = selectedDays
             }
-
-
+        })
         binding.rvWeekDays.apply {
             layoutManager = LinearLayoutManager(activity)
+            adapter = daysAdapter
+        }
 
-            adapter = DaysAdapter(daysList, object : DaysAdapter.DaySelectionCallback {
-                override fun onDaysSelected(selectedDays: String) {
-                    Log.e("onDaysSelected: ", "Selected days: $selectedDays")
-                    selectedDaysInterval = selectedDays
-                }
-            })
+        getSubscriptionDetail()
+    }
+
+    private fun setDetails() {
+        quantity = subscriptionData?.qty!!
+
+        binding.apply {
+            tvFlowerName.text =
+                if (subscriptionData?.flowerTeluguName?.isNotEmpty() == true) subscriptionData?.flowerTeluguName else subscriptionData?.flowerName
+
+            ivRemoveEndDate.visibility = View.GONE
+            tvQuantity.text = "$quantity"
+        }
+
+        daysAdapter?.selectDaysByString(subscriptionData?.interval.toString())
+
+        Glide.with(binding.ivFlowerImage.context)
+            .load(subscriptionData?.flowerImageUrl)
+            .placeholder(R.drawable.ic_profile_holder)
+            .error(R.drawable.ic_profile_holder)
+            .centerCrop()
+            .into(binding.ivFlowerImage)
+
+        subscriptionData?.flowerType?.let { binding.spinnerProductType.setSelection(it) }
+        binding.spinnerProductType.visibility = View.INVISIBLE
+    }
+
+    private fun getSubscriptionDetail() {
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
+
+            RetroClient.apiService.getSubscriptionsDetail(subscriptionData?.id.toString())
+                .enqueue(object : Callback<SubscriptionItemResponse> {
+                    override fun onResponse(
+                        call: Call<SubscriptionItemResponse>,
+                        response: Response<SubscriptionItemResponse>
+                    ) {
+                        dismissLoader()
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            errorMsg = response.message()
+                            showDetail(false, errorMsg)
+                            return
+                        }
+
+                        val itemResponse = response.body()
+                        Log.e("onResponse: ", "Subscription itemResponse => $itemResponse")
+
+                        if (itemResponse != null) {
+                            if (itemResponse.succeeded) {
+                                // Handle the retrieved subscription data
+                                subscriptionData = itemResponse.data
+                                Log.e("onResponse: ", "subscriptionData => ${subscriptionData}")
+
+                                if (subscriptionData != null) {
+                                    showDetail(true)
+                                    setDetails()
+
+                                } else showDetail(false, errorMsg)
+
+                            } else {
+                                errorMsg = itemResponse.message
+                                showDetail(false, errorMsg)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<SubscriptionItemResponse>, t: Throwable) {
+                        dismissLoader()
+                        errorMsg = t.message
+                        showDetail(false, errorMsg)
+                    }
+                })
+        } else {
+            errorMsg = getString(R.string.error_internet_msg)
+            showDetail(false, errorMsg)
+        }
+    }
+
+    private fun showDetail(
+        isShowDetail: Boolean = true,
+        msg: String? = null
+    ) {
+        binding.apply {
+            contentView.visibility = if (isShowDetail) View.VISIBLE else View.GONE
+            llDataErrorView.visibility = if (isShowDetail) View.GONE else View.VISIBLE
+
+            if (!isShowDetail) {
+                tvDataError.text = msg ?: getString(R.string.error_went_wrong)
+            }
         }
     }
 
     private fun setFlowerPrice(flowerTypePosition: Int) {
         flowerPrice = when (flowerTypePosition) {
-            looseFlower -> flowerData?.loosePrice
-            mora -> flowerData?.moraPrice
-            else -> flowerData?.loosePrice
+            looseFlower -> subscriptionData?.loosePrice
+            mora -> subscriptionData?.moraPrice
+            else -> subscriptionData?.loosePrice
         }
         binding.tvPrice.text = getString(R.string.rupee_symbol, flowerPrice?.toDouble())
-    }
-
-    private fun setDefaultQuantity(flowerTypePosition: Int) {
-        binding.tvQuantity.text = when (flowerTypePosition) {
-            looseFlower -> "$gramsQty"
-            mora -> "$moraQty"
-            else -> "$gramsQty"
-        }
     }
 
     private fun calculatePrice() {
         val selectedProduct = binding.spinnerProductType.selectedItem.toString()
         var quantity = binding.tvQuantity.text.toString()
-        if (flowerType == looseFlower) quantity = (quantity.toInt() / 100).toString()
+        if (flowerType == looseFlower) quantity = (quantity.toInt() / gramsQty).toString()
 
-        // Implement price calculation logic based on the selected product and quantity
+        // Implement price calculation logic based on the selected flower and quantity
         if (quantity.isNotEmpty()) {
             totalPrice = flowerPrice?.times(quantity.toDouble())
-
             binding.tvPrice.text = getString(R.string.rupee_symbol, totalPrice)
 //            binding.tvPrice.text = totalPrice.toString()
         } else {
@@ -216,10 +270,10 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
 
             binding.btnOrder -> {
-                if (buyOption == SubscriptionType.Subscribe.value && selectedDaysInterval.isEmpty()) {
+                if (selectedDaysInterval.isEmpty()) {
                     showDialog(activity, msg = getString(R.string.error_select_interval))
                 } else {
-                    if (isPlaceOrderClickable) placeOrder()
+                    if (isPlaceOrderClickable) updateSubscription()
                 }
             }
 
@@ -248,17 +302,10 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         }
     }
 
-    private fun placeOrder() {
-        val userDetails = AppPreference(activity).getUserDetails()
-
+    private fun updateSubscription() {
         val qtyText = binding.tvQuantity.text.toString().toInt()
         quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
         Log.e("placeOrder: ", "quantityToOrder => $quantityToOrder")
-
-        if (subscriptionEndDate != null) {
-            subscriptionEndDate = Utils().convertDateToISO8601(subscriptionEndDate!!)
-        }
-        Log.e("placeOrder: ", "subscriptionEndDate => $subscriptionEndDate")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             binding.btnOrder.isEnabled = false
@@ -266,7 +313,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
             showLoader(activity)
 
-            if (userDetails?.id == null || flowerData?.id == null) {
+            if (subscriptionData?.id == null) {
                 dismissLoader()
                 binding.btnOrder.isEnabled = true
                 isPlaceOrderClickable = true
@@ -279,28 +326,26 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                 return
             }
 
-            val params = OrderRequest(
-                userId = userDetails.id,
-                flowerId = flowerData?.id!!,
-                subscriptionType = buyOption,
+            val params = UpdateSubscriptionRequest(
                 qty = quantityToOrder,
-                flowerType = flowerType,
-                interval = selectedDaysInterval,
-                subscriptionEndDate = subscriptionEndDate
+                interval = selectedDaysInterval
             )
-            Log.e("placeOrder: ", "OrderData => $params")
+            Log.e("placeOrder: ", "updateSubscriptions Data => $params")
 
-            RetroClient.apiService.placeOrder(params)
-                .enqueue(object : Callback<PlaceOrderResponse> {
+            RetroClient.apiService.updateSubscription(subscriptionData?.id!!, params)
+                .enqueue(object : Callback<UpdateSubscriptionResponse> {
                     override fun onResponse(
-                        call: Call<PlaceOrderResponse>,
-                        response: Response<PlaceOrderResponse>
+                        call: Call<UpdateSubscriptionResponse>,
+                        response: Response<UpdateSubscriptionResponse>
                     ) {
                         binding.btnOrder.isEnabled = true
                         isPlaceOrderClickable = true
 
                         dismissLoader()
-                        Log.e("placeOrder: ", "response => $response, ${response.isSuccessful}")
+                        Log.e(
+                            "updateSubscriptions: ",
+                            "response => $response, ${response.isSuccessful}"
+                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -312,23 +357,22 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                             return
                         }
 
-                        val orderResponse = response.body()
-                        Log.e("placeOrder: ", "orderResponse => $orderResponse")
-                        Log.e("placeOrder: ", "succeeded => ${orderResponse?.succeeded}")
+                        val subscriptionResponse = response.body()
+                        Log.e("updateSubscriptions: ", "Response => $subscriptionResponse")
+                        Log.e(
+                            "updateSubscriptions: ",
+                            "succeeded => ${subscriptionResponse?.succeeded}"
+                        )
 
-                        if (orderResponse != null) {
-                            if (orderResponse.succeeded) {
+                        if (subscriptionResponse != null) {
+                            if (subscriptionResponse.succeeded) {
                                 // Handle the retrieved user data
-                                val orderId = orderResponse.data
-                                Log.e("onResponse: ", "orderId => $orderId")
+                                val subscriptionID = subscriptionResponse.data
+                                Log.e("updateSubscriptions: ", "subscriptionID => $subscriptionID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
-                                    .setTitleText(getString(R.string.success))
-                                    .setContentText(
-                                        if (buyOption == SubscriptionType.BuyOnce.value) getString(
-                                            R.string.order_placed_success
-                                        ) else getString(R.string.subscription_started_success)
-                                    )
+                                    .setTitleText(getString(R.string.success_updated))
+                                    .setContentText(subscriptionResponse.message)
                                     .setConfirmText(getString(R.string.dialog_ok))
                                     .setConfirmClickListener { appAlertDialog ->
                                         appAlertDialog.dismissWithAnimation()
@@ -340,13 +384,13 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                                     activity,
                                     dialogType = AppAlertDialog.ERROR_TYPE,
                                     title = getString(R.string.failed),
-                                    msg = orderResponse.message
+                                    msg = subscriptionResponse.message
                                 )
                             }
                         }
                     }
 
-                    override fun onFailure(call: Call<PlaceOrderResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<UpdateSubscriptionResponse>, t: Throwable) {
                         dismissLoader()
                         binding.btnOrder.isEnabled = true
                         isPlaceOrderClickable = true
@@ -411,9 +455,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             binding.tvEndDate.text = formattedDate
 
             Log.e("showDatePicker: ", "endDate => ${binding.tvEndDate.text}")
-
-            binding.ivRemoveEndDate.visibility =
-                if (buyOption == SubscriptionType.Subscribe.value) View.VISIBLE else View.GONE
+            binding.ivRemoveEndDate.visibility = View.VISIBLE
 
         }, year, month, day)
 

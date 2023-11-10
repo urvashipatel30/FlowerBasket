@@ -66,6 +66,7 @@
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_10sdp"
+            android:visibility="gone"
             android:src="@drawable/ic_edit2"
             app:layout_constraintBottom_toBottomOf="@+id/ivEditProfile"
             app:layout_constraintEnd_toEndOf="@id/ivEditProfile" />

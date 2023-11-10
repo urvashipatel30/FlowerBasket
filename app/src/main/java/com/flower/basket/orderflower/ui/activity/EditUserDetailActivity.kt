@@ -144,6 +144,11 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
         block = binding.edtBlock.text.toString()
         flat = binding.edtFlat.text.toString()
 
+        Log.e(
+            "isValidFields: ",
+            "community => ${community}, any match => ${communityList.any { it.name == community }}"
+        )
+
         return if (!isValidField(name)) {
             showDialog(activity, msg = getString(R.string.error_enter_name))
             binding.edtName.requestFocus()
@@ -160,6 +165,9 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
             showDialog(activity, msg = getString(R.string.error_enter_community))
             binding.autoTextCommunity.requestFocus()
             false
+        } else if (!communityList.any { it.name == community }) {
+            showDialog(activity, msg = getString(R.string.error_community_match))
+            false
         } else if (!isValidField(block)) {
             showDialog(activity, msg = getString(R.string.error_enter_block))
             binding.edtBlock.requestFocus()
@@ -172,9 +180,10 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
     }
 
     private fun getCommunityList() {
-        showLoader(activity)
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
+
             RetroClient.apiService.getCommunities()
                 .enqueue(object : Callback<CommunityResponse> {
                     override fun onResponse(
@@ -214,7 +223,8 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
 
                                 Log.e("onResponse: ", "communityId => ${userDetails?.communityId}")
                                 // Set community we got from API
-                                val community = communityList.find { it.id == userDetails?.communityId }
+                                val community =
+                                    communityList.find { it.id == userDetails?.communityId }
                                 if (community != null) {
                                     binding.autoTextCommunity.setText(community.name)
                                 } else {
@@ -240,7 +250,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                     }
 
                     override fun onFailure(call: Call<CommunityResponse>, t: Throwable) {
-                        Log.e("onFailure: ", "error => ${t.message}")
+                        dismissLoader()
                         showDialog(
                             activity,
                             dialogType = AppAlertDialog.ERROR_TYPE,

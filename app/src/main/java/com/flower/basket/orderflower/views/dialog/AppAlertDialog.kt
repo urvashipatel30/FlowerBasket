@@ -199,6 +199,7 @@ class AppAlertDialog(val activity: Activity, alertType: Int) : Dialog(
     fun setDialogCancelable(isCancelable: Boolean): AppAlertDialog {
         isDialogCancelable = isCancelable
         setCancelable(isDialogCancelable)
+        setCanceledOnTouchOutside(isDialogCancelable)
         return this
     }
 

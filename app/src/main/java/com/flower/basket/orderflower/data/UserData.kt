@@ -1,6 +1,7 @@
 package com.flower.basket.orderflower.data
 
 data class UserData(
+    val id: String,
     val userType: Int = 0,
     val email: String,
     val userName: String,

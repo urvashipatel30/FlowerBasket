@@ -23,8 +23,6 @@ class SplashActivity : ParentActivity() {
         activity = this@SplashActivity
         setUpDefaultData()
 
-        Log.e( "onCreate: ", "SplashActivity")
-
         Handler(Looper.getMainLooper()).postDelayed({
 //            val intent = Intent(activity, LoginActivity::class.java)
 //            startActivity(intent)

@@ -13,15 +13,9 @@ import com.flower.basket.orderflower.ui.fragment.SubscriptionsFragment
 class DashboardPagerAdapter(fragmentActivity: FragmentActivity, val isVendor: Boolean) :
     FragmentStateAdapter(fragmentActivity) {
 
-    override fun createFragment(position: Int): Fragment {
-//        // Return a NEW fragment instance in createFragment(int).
-//        val fragment = HomeFragment()
-////        fragment.arguments = Bundle().apply {
-////            // The object is just an integer.
-////            putInt("ARG_OBJECT", position + 1)
-////        }
-//        return fragment
+//    private val fragmentLoadStatus = mutableMapOf<Int, Boolean>()
 
+    override fun createFragment(position: Int): Fragment {
         return if (isVendor) {
             when (position) {
                 0 -> HomeFragment()
@@ -41,4 +35,22 @@ class DashboardPagerAdapter(fragmentActivity: FragmentActivity, val isVendor: Bo
     }
 
     override fun getItemCount(): Int = if (isVendor) 2 else 5
+
+//    fun loadFragmentData(position: Int) {
+////        val isLoaded = fragmentLoadStatus[position] ?: false
+////
+////        if (!isLoaded) {
+//
+//        when (val fragment = fragmentList[position]) {
+//            is HomeFragment -> {
+//                fragment.getFlowersList()
+//            }
+//
+//            is SubscriptionsFragment -> {
+//                fragment.getSubscriptionList()
+//            }
+//        }
+////            fragmentLoadStatus[position] = true
+////        }
+//    }
 }

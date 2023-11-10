@@ -1,6 +1,7 @@
 package com.flower.basket.orderflower.ui.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,7 +18,9 @@ import com.flower.basket.orderflower.databinding.FragmentHomeBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.FlowerDetailsActivity
 import com.flower.basket.orderflower.ui.adapter.FlowersListAdapter
+import com.flower.basket.orderflower.ui.adapter.SubscriptionListAdapter
 import com.flower.basket.orderflower.utils.NetworkUtils
+import com.flower.basket.orderflower.utils.SubscriptionType
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
 import retrofit2.Call
@@ -33,6 +36,8 @@ class HomeFragment : ParentFragment() {
     private var flowerList = ArrayList<FlowerData>()
     private lateinit var flowerAdapter: FlowersListAdapter
 
+    private var errorMsg: String? = null
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,21 +50,36 @@ class HomeFragment : ParentFragment() {
         Log.e("onCreateView: ", "Home activity => $activity")
 
         val userDetails = AppPreference(activity).getUserDetails()
+        Log.e("onCreateView: ", "User id => ${userDetails?.id}")
         binding.tvUsername.text = getString(R.string.welcome_name, userDetails?.userName)
 
         binding.rvFlowers.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
         }
-        getFlowersList()
 
+        getFlowersList()
         return binding.root
     }
 
-    private fun getFlowersList() {
-        parentActivity.showLoader(parentActivity)
+    private fun showList(
+        isShowList: Boolean = true,
+        msg: String? = null
+    ) {
+        binding.apply {
+            rvFlowers.visibility = if (isShowList) View.VISIBLE else View.GONE
+            llDataErrorView.visibility = if (isShowList) View.GONE else View.VISIBLE
 
+            if (!isShowList) {
+                tvDataError.text = msg ?: getString(R.string.error_went_wrong)
+            }
+        }
+    }
+
+    private fun getFlowersList() {
         if (NetworkUtils.isNetworkAvailable(activity)) {
+            parentActivity.showLoader(parentActivity)
+
             RetroClient.apiService.getFlowersList()
                 .enqueue(object : Callback<FlowerResponse> {
                     override fun onResponse(
@@ -70,11 +90,8 @@ class HomeFragment : ParentFragment() {
 
                         // if response is not successful
                         if (!response.isSuccessful) {
-                            showDialog(
-                                parentActivity,
-                                dialogType = AppAlertDialog.ERROR_TYPE,
-                                msg = response.message() ?: getString(R.string.error_went_wrong)
-                            )
+                            errorMsg = response.message()
+                            showList(false, errorMsg)
                             return
                         }
 
@@ -86,43 +103,36 @@ class HomeFragment : ParentFragment() {
                                 flowerList = flowerResponse.data as ArrayList<FlowerData>
                                 Log.e("onResponse: ", "flowerList => ${flowerList.size}")
 
-                                flowerAdapter = FlowersListAdapter(
-                                    activity,
-                                    flowerList
-                                ) { flowerData, buyOption ->
-                                    val intent = Intent(activity, FlowerDetailsActivity::class.java)
-                                    intent.putExtra("buyOption", buyOption.value)
-                                    intent.putExtra("data", Gson().toJson(flowerData))
-                                    startActivity(intent)
-                                }
-                                binding.rvFlowers.adapter = flowerAdapter
+                                if (flowerList.isNotEmpty()) {
+                                    showList(true)
+                                    flowerAdapter = FlowersListAdapter(
+                                        activity,
+                                        flowerList
+                                    ) { flowerData, buyOption ->
+                                        val intent = Intent(activity, FlowerDetailsActivity::class.java)
+                                        intent.putExtra("buyOption", buyOption.value)
+                                        intent.putExtra("data", Gson().toJson(flowerData))
+                                        startActivity(intent)
+                                    }
+                                    binding.rvFlowers.adapter = flowerAdapter
+                                } else showList(false, errorMsg)
 
                             } else {
-                                showDialog(
-                                    parentActivity,
-                                    dialogType = AppAlertDialog.ERROR_TYPE,
-                                    msg = flowerResponse.message
-                                )
+                                errorMsg = flowerResponse.message
+                                showList(false, errorMsg)
                             }
                         }
                     }
 
                     override fun onFailure(call: Call<FlowerResponse>, t: Throwable) {
-                        Log.e("onFailure: ", "error => ${t.message}")
-                        showDialog(
-                            parentActivity,
-                            dialogType = AppAlertDialog.ERROR_TYPE,
-                            msg = t.message ?: getString(R.string.error_went_wrong)
-                        )
+                        parentActivity.dismissLoader()
+                        errorMsg = t.message
+                        showList(false, errorMsg)
                     }
                 })
         } else {
-            showDialog(
-                parentActivity,
-                dialogType = AppAlertDialog.ERROR_TYPE,
-                title = getString(R.string.error_no_internet),
-                msg = getString(R.string.error_internet_msg)
-            )
+            errorMsg = getString(R.string.error_internet_msg)
+            showList(false, errorMsg)
         }
     }
 }

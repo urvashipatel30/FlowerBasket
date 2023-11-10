@@ -36,14 +36,47 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvOrdersForTomorrow"
+            android:id="@+id/rvOrders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:itemCount="1"
-            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            tools:listitem="@layout/item_orders_list"
+            tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_orders"
             tools:spanCount="1" />
+
+        <LinearLayout
+            android:id="@+id/llDataErrorView"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivDataError"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:alpha="0.9"
+                android:elevation="@dimen/_5sdp"
+                android:visibility="gone"
+                app:tint="#C4FFFFFF" />
+            <!--            android:src="@drawable/ic_data_error"-->
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:id="@+id/tvDataError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:gravity="center"
+                android:text="@string/error_went_wrong"
+                android:textColor="@color/themeTextGrey"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
 
     </FrameLayout>
 

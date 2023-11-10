@@ -26,6 +26,7 @@ import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityLoginBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
+import com.flower.basket.orderflower.utils.UserType
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
 import retrofit2.Call
@@ -42,7 +43,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     private lateinit var selectedCommunity: CommunityData
 
     private var userId = ""
-    private var userType = 1
+    private var userType = UserType.User.value
     private var name = ""
     private var email = ""
     private var password = ""
@@ -63,6 +64,26 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
         binding.radioGrp.setOnCheckedChangeListener(this)
         binding.radioGrpUserTypes.setOnCheckedChangeListener(this)
+
+        // Set a TextWatcher to check for valid input
+//        binding.autoTextCommunity.addTextChangedListener(object : TextWatcher {
+//            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {}
+//
+//            override fun afterTextChanged(editable: Editable?) {
+//                val enteredText = editable.toString()
+//                val isValidInput = communityList.any { it.name == enteredText }
+//
+//                if (!isValidInput) {
+//                    // Show an error message on the AutoCompleteTextView
+//                    binding.autoTextCommunity.error = "Invalid community. Please select from the list."
+//                } else {
+//                    // Clear the error message
+//                    binding.autoTextCommunity.error = null
+//                }
+//            }
+//        })
 
         setTopTab()
         getCommunityList()
@@ -136,7 +157,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         )
         AppPreference(activity).setPreference(
             AppPersistence.keys.IS_VENDOR,
-            userData.userType != 0
+            userData.userType != UserType.User.value
         )
 
         val intent = Intent(activity, DashboardActivity::class.java)
@@ -145,9 +166,9 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     }
 
     private fun loginUser() {
-        showLoader(activity)
-
         if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
+
             val params = LoginRequest(email = email, password = password)
             Log.e("registerUser: ", "login params => $params")
 
@@ -191,7 +212,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        Log.e("onFailure: ", "error => ${t.message}")
+                        dismissLoader()
                         showDialog(
                             activity,
                             dialogType = AppAlertDialog.ERROR_TYPE,
@@ -210,9 +231,8 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     }
 
     private fun registerUser() {
-        showLoader(activity)
-
         if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
 
             val params = UserRequest(
                 userType = userType,
@@ -273,7 +293,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                     }
 
                     override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                        Log.e("onFailure: ", "error => ${t.message}")
+                        dismissLoader()
                         showDialog(
                             activity,
                             dialogType = AppAlertDialog.ERROR_TYPE,
@@ -292,9 +312,9 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     }
 
     private fun getCommunityList() {
-        showLoader(activity)
-
         if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
+
             RetroClient.apiService.getCommunities()
                 .enqueue(object : Callback<CommunityResponse> {
                     override fun onResponse(
@@ -349,7 +369,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                     }
 
                     override fun onFailure(call: Call<CommunityResponse>, t: Throwable) {
-                        Log.e("onFailure: ", "error => ${t.message}")
+                        dismissLoader()
                         showDialog(
                             activity,
                             dialogType = AppAlertDialog.ERROR_TYPE,
@@ -423,7 +443,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     }
 
     private fun isValidFields(): Boolean {
-        userType = if (binding.rbUser.isChecked) 0 else 1
+        userType = if (binding.rbUser.isChecked) UserType.User.value else UserType.Vendor.value
         name = binding.edtSignupName.text.toString()
         email = binding.edtSignupMail.text.toString()
         password = binding.edtSignupPassword.text.toString()
@@ -458,6 +478,9 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         } else if (!isValidField(community)) {
             showDialog(activity, msg = getString(R.string.error_enter_community))
             binding.edtCommunity.requestFocus()
+            false
+        } else if (!communityList.any { it.name == community }) {
+            showDialog(activity, msg = getString(R.string.error_community_match))
             false
         } else if (!isValidField(block)) {
             showDialog(activity, msg = getString(R.string.error_enter_block))

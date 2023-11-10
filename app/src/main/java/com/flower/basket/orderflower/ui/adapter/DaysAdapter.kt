@@ -33,8 +33,9 @@ class DaysAdapter(private val daysList: List<Day>, var daySelectionCallback: Day
 
         holder.itemView.setOnClickListener {
             if (day.value == -1) { // "All" option
+                val isAllSelected = daysList.first { it.value == -1 }.selected
                 for (otherDay in daysList) {
-                    otherDay.selected = true
+                    otherDay.selected = !isAllSelected
                 }
             } else {
                 // Toggle the selection status of the clicked day
@@ -53,6 +54,18 @@ class DaysAdapter(private val daysList: List<Day>, var daySelectionCallback: Day
 
             // Notify the activity about the selected days
             daySelectionCallback.onDaysSelected(selectedDays)
+        }
+    }
+
+    fun selectDaysByString(selectionString: String) {
+        val selectedDayValues = selectionString.split(",").map { it.toInt() }
+
+        for (dayValue in selectedDayValues) {
+            val position = daysList.indexOfFirst { it.value == dayValue }
+            if (position != -1) {
+                daysList[position].selected = true
+                notifyItemChanged(position)
+            }
         }
     }
 

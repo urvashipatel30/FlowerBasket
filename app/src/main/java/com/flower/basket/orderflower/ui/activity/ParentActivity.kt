@@ -16,7 +16,7 @@ import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
 open class ParentActivity : AppCompatActivity() {
 
-     var loader: Dialog?=null
+    var loader: Dialog? = null
 
     open fun showDialog(
         activity: Activity,
@@ -27,8 +27,11 @@ open class ParentActivity : AppCompatActivity() {
         AppAlertDialog(activity, dialogType)
             .setTitleText(
                 title
-                    ?: if (dialogType == AppAlertDialog.ERROR_TYPE) getString(R.string.dialog_error_title)
-                    else getString(R.string.dialog_warning)
+                    ?: when (dialogType) {
+                        AppAlertDialog.ERROR_TYPE -> getString(R.string.dialog_error_title)
+                        AppAlertDialog.SUCCESS_TYPE -> getString(R.string.success)
+                        else -> getString(R.string.dialog_warning)
+                    }
             )
             .setContentText(msg)
             .setConfirmText(getString(R.string.dialog_ok))

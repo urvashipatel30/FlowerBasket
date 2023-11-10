@@ -6,8 +6,7 @@
     android:background="@color/screenBg"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        style="@style/ToolbarStyle">
+    <androidx.appcompat.widget.Toolbar style="@style/ToolbarStyle">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +18,7 @@
                 layout="@layout/back_action" />
 
             <com.flower.basket.orderflower.views.ThemeText
-                android:id="@+id/ivFlowerName"
+                android:id="@+id/tvFlowerName"
                 style="@style/ScreenTitleStyle"
                 android:text="@string/app_name" />
 
@@ -27,351 +26,392 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:scrollbars="none">
+        android:orientation="vertical">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/contentView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:scrollbars="none">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/ivFlowerImage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_160sdp"
-                android:elevation="@dimen/_8sdp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_tropical_flame_kanakambaram"
-                app:layout_constraintTop_toTopOf="parent"
-                app:shapeAppearanceOverlay="@style/ImageView.Corner" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/overlayTopGuideline"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_percent="0.09" />
+                android:orientation="vertical">
 
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:elevation="@dimen/_8sdp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_image_overlay"
-                app:layout_constraintBottom_toBottomOf="@id/ivFlowerImage"
-                app:layout_constraintTop_toTopOf="@id/overlayTopGuideline"
-                app:shapeAppearanceOverlay="@style/ImageView.Corner" />
-
-            <LinearLayout
-                android:id="@+id/quantityLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_70sdp"
-                android:layout_marginHorizontal="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/ivFlowerImage">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivFlowerImage"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+                    android:layout_height="@dimen/_160sdp"
+                    android:elevation="@dimen/_8sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_tropical_flame_kanakambaram"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/ImageView.Corner" />
 
-                    <Spinner
-                        android:id="@+id/spinnerProductType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <com.flower.basket.orderflower.views.ThemeBoldText
-                        android:id="@+id/tvPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="$10.55"
-                        android:textColor="@color/themeColor"
-                        android:textSize="@dimen/_15ssp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/overlayTopGuideline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.09" />
 
-                    <com.flower.basket.orderflower.views.ThemeText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:elevation="@dimen/_8sdp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_image_overlay"
+                    app:layout_constraintBottom_toBottomOf="@id/ivFlowerImage"
+                    app:layout_constraintTop_toTopOf="@id/overlayTopGuideline"
+                    app:shapeAppearanceOverlay="@style/ImageView.Corner" />
+
+                <LinearLayout
+                    android:id="@+id/quantityLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_70sdp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/ivFlowerImage">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:text="@string/quantity"
-                        android:textSize="@dimen/_11ssp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:paddingTop="@dimen/_3ssp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:id="@+id/tvMeasurement"
+                        <Spinner
+                            android:id="@+id/spinnerProductType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="@dimen/_10sdp"
-                            android:text="@string/grams"
-                            android:textSize="@dimen/_11ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/spinnerProductType" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.cardview.widget.CardView
+                        <com.flower.basket.orderflower.views.ThemeBoldText
+                            android:id="@+id/tvPrice"
                             android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_28sdp"
-                            app:cardCornerRadius="0dp"
-                            app:cardElevation="@dimen/_1sdp"
-                            app:cardPreventCornerOverlap="false"
-                            app:cardUseCompatPadding="true">
+                            android:layout_height="wrap_content"
+                            android:text="$10.55"
+                            android:textColor="@color/themeColor"
+                            android:textSize="@dimen/_15ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <androidx.constraintlayout.widget.ConstraintLayout
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_8sdp"
+                            android:layout_weight="1"
+                            android:text="@string/quantity"
+                            android:textSize="@dimen/_11ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:paddingTop="@dimen/_3ssp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvMeasurement"
                                 android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:background="@drawable/ic_border">
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:text="@string/grams"
+                                android:textSize="@dimen/_11ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/spinnerProductType" />
 
-                                <com.flower.basket.orderflower.views.ThemeText
-                                    android:id="@+id/tvQtyMinus"
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:background="@color/themeColor"
-                                    android:gravity="center"
-                                    android:includeFontPadding="false"
-                                    android:text="-"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/_12ssp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintDimensionRatio="1:1"
-                                    app:layout_constraintEnd_toStartOf="@+id/tvQuantity"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_28sdp"
+                                app:cardCornerRadius="0dp"
+                                app:cardElevation="@dimen/_1sdp"
+                                app:cardPreventCornerOverlap="false"
+                                app:cardUseCompatPadding="true">
 
-                                <com.flower.basket.orderflower.views.ThemeText
-                                    android:id="@+id/tvQuantity"
+                                <androidx.constraintlayout.widget.ConstraintLayout
                                     android:layout_width="wrap_content"
-                                    android:layout_height="0dp"
-                                    android:gravity="center"
-                                    android:includeFontPadding="false"
-                                    android:paddingHorizontal="@dimen/_10sdp"
-                                    android:text="1"
-                                    android:textColor="@color/themeColor"
-                                    android:textSize="@dimen/_12ssp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toStartOf="@+id/tvQtyPlus"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/ic_border">
 
-                                <com.flower.basket.orderflower.views.ThemeText
-                                    android:id="@+id/tvQtyPlus"
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:background="@color/themeColor"
-                                    android:gravity="center"
-                                    android:includeFontPadding="false"
-                                    android:text="+"
-                                    android:textColor="@color/white"
-                                    android:textSize="@dimen/_12ssp"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintDimensionRatio="1:1"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
-                            </androidx.constraintlayout.widget.ConstraintLayout>
+                                    <com.flower.basket.orderflower.views.ThemeText
+                                        android:id="@+id/tvQtyMinus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:background="@color/themeColor"
+                                        android:gravity="center"
+                                        android:includeFontPadding="false"
+                                        android:text="-"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12ssp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintDimensionRatio="1:1"
+                                        app:layout_constraintEnd_toStartOf="@+id/tvQuantity"
+                                        app:layout_constraintTop_toTopOf="parent" />
 
-                        </androidx.cardview.widget.CardView>
+                                    <com.flower.basket.orderflower.views.ThemeText
+                                        android:id="@+id/tvQuantity"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="0dp"
+                                        android:gravity="center"
+                                        android:includeFontPadding="false"
+                                        android:paddingHorizontal="@dimen/_10sdp"
+                                        android:text="1"
+                                        android:textColor="@color/themeColor"
+                                        android:textSize="@dimen/_12ssp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toStartOf="@+id/tvQtyPlus"
+                                        app:layout_constraintTop_toTopOf="parent" />
+
+                                    <com.flower.basket.orderflower.views.ThemeText
+                                        android:id="@+id/tvQtyPlus"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:background="@color/themeColor"
+                                        android:gravity="center"
+                                        android:includeFontPadding="false"
+                                        android:text="+"
+                                        android:textColor="@color/white"
+                                        android:textSize="@dimen/_12ssp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintDimensionRatio="1:1"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/_7sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@+id/quantityLayout">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cardDaySelection"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/_7sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="@dimen/item_card_radius"
-                    app:cardElevation="@dimen/_3sdp"
-                    app:cardUseCompatPadding="true"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/quantityLayout">
 
-                    <LinearLayout
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardDaySelection"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_7sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:text="@string/select_days"
-                            android:textColor="@color/themeColor"
-                            android:textSize="@dimen/_14ssp" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rvWeekDays"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/_8sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:layout_marginBottom="@dimen/_8sdp" />
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    app:cardBackgroundColor="@color/white"
-                    app:cardCornerRadius="@dimen/item_card_radius"
-                    app:cardElevation="@dimen/_3sdp"
-                    app:cardUseCompatPadding="true">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/_25sdp">
-
-                        <ImageView
-                            android:id="@+id/ivArrow"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:paddingHorizontal="@dimen/_6sdp"
-                            android:src="@drawable/ic_right_arrow"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                        android:layout_marginTop="@dimen/_10sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/item_card_radius"
+                        app:cardElevation="@dimen/_3sdp"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintTop_toBottomOf="@+id/quantityLayout">
 
                         <LinearLayout
-                            android:layout_width="0dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:layout_constraintEnd_toStartOf="@+id/ivArrow"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <com.flower.basket.orderflower.views.ThemeBoldText
-                                android:id="@+id/tvStartLabel"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/starts_on"
-                                android:textSize="@dimen/_14ssp" />
+                            android:orientation="vertical">
 
                             <com.flower.basket.orderflower.views.ThemeText
-                                android:id="@+id/tvStartDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_25sdp"
-                                android:gravity="center_vertical"
-                                android:text="Wed, Nov 11 2023"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_7sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:text="@string/select_days"
                                 android:textColor="@color/themeColor"
-                                android:textSize="@dimen/_12ssp" />
+                                android:textSize="@dimen/_14ssp" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rvWeekDays"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="@dimen/_8sdp"
+                                android:layout_marginTop="@dimen/_10sdp"
+                                android:layout_marginBottom="@dimen/_8sdp" />
 
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/endDateLayout"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivArrow"
-                            app:layout_constraintTop_toTopOf="parent">
+                    </androidx.cardview.widget.CardView>
 
-                            <com.flower.basket.orderflower.views.ThemeBoldText
-                                android:id="@+id/tvEndsLabel"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardStartEndDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/item_card_radius"
+                        app:cardElevation="@dimen/_3sdp"
+                        app:cardUseCompatPadding="true">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingVertical="@dimen/_25sdp">
+
+                            <ImageView
+                                android:id="@+id/ivArrow"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/ends_on"
-                                android:textSize="@dimen/_14ssp" />
+                                android:layout_height="0dp"
+                                android:paddingHorizontal="@dimen/_6sdp"
+                                android:src="@drawable/ic_right_arrow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_25sdp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toStartOf="@+id/ivArrow"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                                <com.flower.basket.orderflower.views.ThemeText
-                                    android:id="@+id/tvEndDate"
+                                <com.flower.basket.orderflower.views.ThemeBoldText
+                                    android:id="@+id/tvStartLabel"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:hint="@string/optional"
-                                    android:textColor="@color/themeColor"
-                                    android:textColorHint="@color/grey_text_hint"
-                                    android:textSize="@dimen/_12ssp" />
+                                    android:text="@string/starts_on"
+                                    android:textSize="@dimen/_14ssp" />
 
-                                <ImageView
-                                    android:id="@+id/ivRemoveEndDate"
-                                    android:layout_width="@dimen/_20sdp"
-                                    android:layout_height="@dimen/_20sdp"
-                                    android:layout_marginHorizontal="@dimen/_5sdp"
-                                    android:alpha="0.4"
-                                    android:src="@drawable/ic_remove_circle"
-                                    android:visibility="gone"
-                                    app:layout_constraintBottom_toBottomOf="parent"
-                                    app:layout_constraintEnd_toEndOf="parent"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toTopOf="parent" />
+                                <com.flower.basket.orderflower.views.ThemeText
+                                    android:id="@+id/tvStartDate"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_25sdp"
+                                    android:gravity="center_vertical"
+                                    android:text="Wed, Nov 11 2023"
+                                    android:textColor="@color/themeColor"
+                                    android:textSize="@dimen/_12ssp" />
 
                             </LinearLayout>
 
-                        </LinearLayout>
+                            <LinearLayout
+                                android:id="@+id/endDateLayout"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/ivArrow"
+                                app:layout_constraintTop_toTopOf="parent">
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                                <com.flower.basket.orderflower.views.ThemeBoldText
+                                    android:id="@+id/tvEndsLabel"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/ends_on"
+                                    android:textSize="@dimen/_14ssp" />
 
-                </androidx.cardview.widget.CardView>
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="@dimen/_25sdp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
 
-                <com.flower.basket.orderflower.views.ThemeButton
-                    android:id="@+id/btnOrder"
-                    style="@style/dialog_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_38sdp"
-                    android:layout_gravity="center"
-                    android:layout_marginHorizontal="@dimen/_40sdp"
-                    android:layout_marginVertical="@dimen/_25sdp"
-                    android:text="@string/order"
-                    android:textSize="@dimen/_15ssp" />
+                                    <com.flower.basket.orderflower.views.ThemeText
+                                        android:id="@+id/tvEndDate"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:hint="@string/optional"
+                                        android:textColor="@color/themeColor"
+                                        android:textColorHint="@color/grey_text_hint"
+                                        android:textSize="@dimen/_12ssp" />
 
-            </LinearLayout>
+                                    <ImageView
+                                        android:id="@+id/ivRemoveEndDate"
+                                        android:layout_width="@dimen/_20sdp"
+                                        android:layout_height="@dimen/_20sdp"
+                                        android:layout_marginHorizontal="@dimen/_5sdp"
+                                        android:alpha="0.4"
+                                        android:src="@drawable/ic_remove_circle"
+                                        android:visibility="gone"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                                </LinearLayout>
 
-    </ScrollView>
+                            </LinearLayout>
 
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <com.flower.basket.orderflower.views.ThemeButton
+                        android:id="@+id/btnOrder"
+                        style="@style/dialog_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_38sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginHorizontal="@dimen/_40sdp"
+                        android:layout_marginVertical="@dimen/_25sdp"
+                        android:text="@string/order"
+                        android:textSize="@dimen/_15ssp" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/llDataErrorView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/ivDataError"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:alpha="0.9"
+                android:elevation="@dimen/_5sdp"
+                android:visibility="gone"
+                app:tint="#C4FFFFFF" />
+            <!--            android:src="@drawable/ic_data_error"-->
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:id="@+id/tvDataError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:gravity="center"
+                android:text="@string/error_went_wrong"
+                android:textColor="@color/themeTextGrey"
+                android:textSize="@dimen/_12ssp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 </LinearLayout>

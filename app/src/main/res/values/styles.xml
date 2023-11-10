@@ -201,6 +201,14 @@
         <item name="cornerFamily">rounded</item>
     </style>
 
+    <style name="List_FlowerImage.Corner" parent="">
+        <item name="cornerSizeTopRight">@dimen/_5sdp</item>
+        <item name="cornerSizeTopLeft">@dimen/_5sdp</item>
+        <item name="cornerSizeBottomLeft">@dimen/_5sdp</item>
+        <item name="cornerSizeBottomRight">@dimen/_5sdp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
 
     <style name="DialogTheme" parent="@android:style/Theme.Dialog">
         <item name="android:alertDialogStyle">@style/ProcessDialogTheme</item>
