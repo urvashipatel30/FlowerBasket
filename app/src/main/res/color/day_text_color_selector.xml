@@ -4,4 +4,8 @@
     <item android:color="@color/day_unselectedColor" android:state_selected="false" />
     <!-- Selected state -->
     <item android:color="@color/day_selectedColor" android:state_selected="true" />
+<!--    &lt;!&ndash; not selected Not Enabled &ndash;&gt;-->
+<!--    <item android:color="@color/day_unselectedColor" android:state_enabled="false" android:state_selected="false" />-->
+<!--    &lt;!&ndash; Selected state but Not Enabled &ndash;&gt;-->
+<!--    <item android:color="@color/day_selectedColor" android:state_enabled="false" android:state_selected="true" />-->
 </selector>

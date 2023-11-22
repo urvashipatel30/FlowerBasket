@@ -133,17 +133,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
 
-                            <com.flower.basket.orderflower.views.ThemeText
-                                android:id="@+id/tvMeasurement"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="@dimen/_10sdp"
-                                android:text="@string/grams"
-                                android:textSize="@dimen/_11ssp"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/spinnerProductType" />
-
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/_28sdp"
@@ -205,6 +194,28 @@
 
                             </androidx.cardview.widget.CardView>
 
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvTotalQty"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/_10sdp"
+                                android:text="@string/grams"
+                                android:textSize="@dimen/_11ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/spinnerProductType" />
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvMeasurement"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/_2sdp"
+                                android:text="@string/grams"
+                                android:textSize="@dimen/_11ssp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/spinnerProductType" />
+
                         </LinearLayout>
 
                     </LinearLayout>
@@ -237,6 +248,7 @@
                             android:orientation="vertical">
 
                             <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvSelectedDaysLabel"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginHorizontal="@dimen/_7sdp"

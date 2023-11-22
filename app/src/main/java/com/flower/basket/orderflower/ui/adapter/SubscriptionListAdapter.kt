@@ -4,18 +4,22 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup.OnCheckedChangeListener
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.SubscriptionListData
 import com.flower.basket.orderflower.databinding.ItemSubscriptionBinding
 import com.flower.basket.orderflower.utils.Utils
+import com.flower.basket.orderflower.views.MySwitchButton
 
 class SubscriptionListAdapter(
     var activity: Activity,
     private val subscriptionList: List<SubscriptionListData>,
     private val onItemSelected: (SubscriptionListData) -> Unit,
-    private val onItemDeleted: (SubscriptionListData) -> Unit
+    private val onItemDeleted: (SubscriptionListData) -> Unit,
+    private val onItemStatusChanged: (SubscriptionListData) -> Unit
 ) :
     RecyclerView.Adapter<SubscriptionListAdapter.ViewHolder>() {
 
@@ -46,6 +50,16 @@ class SubscriptionListAdapter(
                 subscription.flowerTeluguName
             else binding.tvFlowerTeluguName.visibility = View.GONE
 
+            val isActivated = subscription.isActive
+//            binding.switchStatus.isChecked = isActivated
+            binding.ivChangeStatus.setImageResource(
+                if (isActivated) R.drawable.ic_day_checked
+                else R.drawable.ic_day_unchecked
+            )
+            binding.tvStatus.text =
+                if (isActivated) activity.getString(R.string.status_activated)
+                else activity.getString(R.string.status_deactivated)
+
             Glide.with(binding.ivFlowerPhoto.context)
                 .load(subscription.flowerImageUrl)
                 .placeholder(R.drawable.ic_profile_holder)
@@ -64,6 +78,17 @@ class SubscriptionListAdapter(
             binding.ivDeleteSubscription.setOnClickListener {
                 onItemDeleted.invoke(subscription)
             }
+
+            binding.ivChangeStatus.setOnClickListener {
+                onItemStatusChanged.invoke(subscription)
+            }
+
+//            binding.switchStatus.setOnCheckedChangeListener(
+//                object : MySwitchButton.OnCheckedChangeListener {
+//                    override fun onCheckedChanged(view: MySwitchButton, isChecked: Boolean) {
+//                        onItemStatusChanged.invoke(subscription)
+//                    }
+//                })
         }
     }
 }

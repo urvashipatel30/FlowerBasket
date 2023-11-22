@@ -9,12 +9,14 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.DeleteSubscriptionResponse
 import com.flower.basket.orderflower.data.SubscriptionListData
 import com.flower.basket.orderflower.data.SubscriptionListResponse
+import com.flower.basket.orderflower.data.SubscriptionStatusRequest
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSubscriptionsBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
@@ -39,6 +41,11 @@ class SubscriptionsFragment : ParentFragment() {
     private lateinit var subscriptionAdapter: SubscriptionListAdapter
 
     private var errorMsg: String? = null
+    private var editedSubscriptionID: String? = null
+
+    companion object {
+        const val REQ_EDIT_SUBSCRIPTION = 11
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -117,13 +124,16 @@ class SubscriptionsFragment : ParentFragment() {
                                         activity,
                                         filteredSubscriptionList,
                                         onItemSelected = { subscriptionData ->
+
+                                            editedSubscriptionID = subscriptionData.id
+
                                             val intent = Intent(
                                                 activity,
                                                 EditSubscriptionActivity::class.java
                                             )
                                             intent.putExtra("subscriptionID", subscriptionData.id)
                                             intent.putExtra("data", Gson().toJson(subscriptionData))
-                                            startActivity(intent)
+                                            myActivityResultLauncher.launch(intent)
                                         },
                                         onItemDeleted = { subscriptionData ->
 
@@ -141,6 +151,42 @@ class SubscriptionsFragment : ParentFragment() {
                                                     AppAlertDialog.OnSweetClickListener {
                                                     override fun onClick(appAlertDialog: AppAlertDialog) {
                                                         appAlertDialog.dismissWithAnimation()
+                                                    }
+                                                })
+                                                .show()
+                                        },
+                                        onItemStatusChanged = { subscriptionData ->
+
+                                            val isActivated = subscriptionData.isActive
+
+                                            AppAlertDialog(activity)
+                                                .setTitleText(getString(R.string.dialog_confirm))
+                                                .setContentText(
+                                                    getString(
+                                                        R.string.alert_change_status,
+                                                        if (isActivated) getString(R.string.deactivate) else getString(
+                                                            R.string.active
+                                                        )
+                                                    )
+                                                )
+                                                .setConfirmText(getString(R.string.dialog_yes))
+                                                .setDialogCancelable(true)
+                                                .setConfirmClickListener { appAlertDialog ->
+                                                    appAlertDialog.dismissWithAnimation()
+                                                    changeSubscriptionStatus(
+                                                        subscriptionData,
+                                                        !isActivated
+                                                    )
+                                                }
+                                                .setCancelText(getString(R.string.dialog_cancel))
+                                                .setCancelClickListener(object :
+                                                    AppAlertDialog.OnSweetClickListener {
+                                                    override fun onClick(appAlertDialog: AppAlertDialog) {
+                                                        appAlertDialog.dismissWithAnimation()
+                                                        updateStatus(
+                                                            subscriptionData.id,
+                                                            isActivated
+                                                        )
                                                     }
                                                 })
                                                 .show()
@@ -171,20 +217,151 @@ class SubscriptionsFragment : ParentFragment() {
         }
     }
 
-    private fun deleteSubscription(subscriptionData: SubscriptionListData) {
+    private fun changeSubscriptionStatus(
+        subscriptionData: SubscriptionListData,
+        isActive: Boolean
+    ) {
+
+        if (subscriptionData?.id == null) {
+            showDialog(
+                parentActivity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                msg = getString(R.string.error_went_wrong)
+            )
+            updateStatus(subscriptionData.id, !isActive)
+            return
+        }
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            if (subscriptionData?.id == null) {
-                parentActivity.dismissLoader()
-                showDialog(
-                    parentActivity,
-                    dialogType = AppAlertDialog.ERROR_TYPE,
-                    msg = getString(R.string.error_went_wrong)
-                )
-                return
-            }
+            val params = SubscriptionStatusRequest(
+                isActive = isActive
+            )
+
+            RetroClient.apiService.changeSubscriptionStatus(subscriptionData?.id!!, params)
+                .enqueue(object : Callback<DeleteSubscriptionResponse> {
+                    override fun onResponse(
+                        call: Call<DeleteSubscriptionResponse>,
+                        response: Response<DeleteSubscriptionResponse>
+                    ) {
+                        parentActivity.dismissLoader()
+                        Log.e(
+                            "changeStatus: ",
+                            "response => $response, ${response.isSuccessful}"
+                        )
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            showDialog(
+                                parentActivity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            updateStatus(subscriptionData.id, !isActive)
+                            return
+                        }
+
+                        val deletesubscriptionResponse = response.body()
+                        Log.e(
+                            "changeStatus: ",
+                            "Response => $deletesubscriptionResponse"
+                        )
+                        Log.e(
+                            "changeStatus: ",
+                            "succeeded => ${deletesubscriptionResponse?.succeeded}"
+                        )
+
+                        if (deletesubscriptionResponse != null) {
+                            if (deletesubscriptionResponse.succeeded) {
+                                // Handle the retrieved user data
+                                val subscriptionID = deletesubscriptionResponse.data
+                                Log.e("changeStatus: ", "subscriptionID => $subscriptionID")
+
+                                AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText(
+                                        if (isActive) getString(R.string.status_activated)
+                                        else getString(R.string.status_deactivated)
+                                    )
+                                    .setContentText(deletesubscriptionResponse.message)
+                                    .setConfirmText(getString(R.string.dialog_ok))
+                                    .setConfirmClickListener { appAlertDialog ->
+                                        appAlertDialog.dismissWithAnimation()
+
+                                        updateStatus(deletesubscriptionResponse.data, isActive)
+                                    }
+                                    .show()
+                            } else {
+                                showDialog(
+                                    parentActivity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = deletesubscriptionResponse.message
+                                )
+                                updateStatus(subscriptionData.id, !isActive)
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<DeleteSubscriptionResponse>, t: Throwable) {
+                        parentActivity.dismissLoader()
+                        showDialog(
+                            parentActivity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                        updateStatus(subscriptionData.id, !isActive)
+                    }
+                })
+        } else {
+            showDialog(
+                parentActivity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
+            updateStatus(subscriptionData.id, !isActive)
+        }
+    }
+
+    private fun updateStatus(subscriptionId: String?, isActive: Boolean) {
+        val itemToUpdate =
+            filteredSubscriptionList.find { it.id == subscriptionId }
+
+        // Find the item with the given ID in filteredSubscriptionList
+        Log.e(
+            "changeStatus: ",
+            "onResponse itemToUpdate => $itemToUpdate"
+        )
+
+        // Update the qty if the Subscription is matched
+        itemToUpdate?.let {
+            it.isActive = isActive // Change the status value
+
+            // Find the position of the updated item in the list
+            val updatedItemPosition =
+                filteredSubscriptionList.indexOf(it)
+
+            // Notify the adapter about the change at the specific position
+            subscriptionAdapter.notifyItemChanged(
+                updatedItemPosition
+            )
+        }
+    }
+
+    private fun deleteSubscription(subscriptionData: SubscriptionListData) {
+
+        if (subscriptionData?.id == null) {
+            showDialog(
+                parentActivity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                msg = getString(R.string.error_went_wrong)
+            )
+            return
+        }
+
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            parentActivity.showLoader(activity)
 
             RetroClient.apiService.deleteSubscription(subscriptionData?.id!!)
                 .enqueue(object : Callback<DeleteSubscriptionResponse> {
@@ -287,4 +464,32 @@ class SubscriptionsFragment : ParentFragment() {
             )
         }
     }
+
+    private var myActivityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val intentData = result.data
+            when (result.resultCode) {
+                REQ_EDIT_SUBSCRIPTION -> if (intentData != null) {
+                    val updatedQty =
+                        intentData.getIntExtra("updatedQty", 0)
+
+                    // Find the item with the given ID in filteredSubscriptionList
+                    val itemToUpdate =
+                        filteredSubscriptionList.find { it.id == editedSubscriptionID }
+
+                    // Update the qty if the Subscription is matched
+                    itemToUpdate?.let {
+                        it.qty = updatedQty // Replace quantity with the new quantity value
+
+                        // Find the position of the updated item in the list
+                        val updatedItemPosition = filteredSubscriptionList.indexOf(it)
+
+                        // Notify the adapter about the change at the specific position
+                        subscriptionAdapter.notifyItemChanged(updatedItemPosition)
+                    }
+                }
+            }
+        }
 }

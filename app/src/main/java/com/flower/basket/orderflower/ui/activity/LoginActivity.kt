@@ -170,7 +170,6 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
             showLoader(activity)
 
             val params = LoginRequest(email = email, password = password)
-            Log.e("registerUser: ", "login params => $params")
 
             RetroClient.apiService.loginUser(params)
                 .enqueue(object : Callback<UserResponse> {
@@ -244,7 +243,6 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                 block = block,
                 flatNo = flat
             )
-            Log.e("registerUser: ", "userData => $params")
 
             RetroClient.apiService.registerUser(params)
                 .enqueue(object : Callback<UserResponse> {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Default state (not selected) -->
+    <item android:color="@color/day_disabledColor" android:state_enabled="false" />
+    <!-- Selected state -->
+    <item android:color="@color/day_enabledColor" android:state_enabled="true" />
+</selector>

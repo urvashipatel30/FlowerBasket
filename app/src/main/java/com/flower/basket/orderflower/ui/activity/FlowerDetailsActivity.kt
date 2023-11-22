@@ -90,6 +90,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             tvFlowerName.text =
                 if (flowerData?.teluguName?.isNotEmpty() == true) flowerData?.teluguName else flowerData?.name
 
+            tvQuantity.text = quantityToOrder.toString()
             ivRemoveEndDate.visibility = View.GONE
             tvStartDate.text = getFormattedCurrentDate()
         }
@@ -168,12 +169,15 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         binding.rvWeekDays.apply {
             layoutManager = LinearLayoutManager(activity)
 
-            adapter = DaysAdapter(daysList, object : DaysAdapter.DaySelectionCallback {
-                override fun onDaysSelected(selectedDays: String) {
-                    Log.e("onDaysSelected: ", "Selected days: $selectedDays")
-                    selectedDaysInterval = selectedDays
-                }
-            })
+            adapter = DaysAdapter(
+                daysList,
+                isFromEdit = false,
+                object : DaysAdapter.DaySelectionCallback {
+                    override fun onDaysSelected(selectedDays: String) {
+                        Log.e("onDaysSelected: ", "Selected days: $selectedDays")
+                        selectedDaysInterval = selectedDays
+                    }
+                })
         }
     }
 
@@ -187,17 +191,26 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     }
 
     private fun setDefaultQuantity(flowerTypePosition: Int) {
-        binding.tvQuantity.text = when (flowerTypePosition) {
-            looseFlower -> "$gramsQty"
-            mora -> "$moraQty"
-            else -> "$gramsQty"
+        binding.tvQuantity.text = quantityToOrder.toString()
+        val quantity = binding.tvQuantity.text.toString()
+
+        binding.tvTotalQty.text = when (flowerTypePosition) {
+            looseFlower -> (quantity.toInt().times(gramsQty)).toString()
+            mora -> (quantity.toInt().times(moraQty)).toString()
+            else -> (quantity.toInt().times(gramsQty)).toString()
         }
+
+//        binding.tvQuantity.text = when (flowerTypePosition) {
+//            looseFlower -> "$gramsQty"
+//            mora -> "$moraQty"
+//            else -> "$gramsQty"
+//        }
     }
 
     private fun calculatePrice() {
         val selectedProduct = binding.spinnerProductType.selectedItem.toString()
         var quantity = binding.tvQuantity.text.toString()
-        if (flowerType == looseFlower) quantity = (quantity.toInt() / 100).toString()
+//        if (flowerType == looseFlower) quantity = (quantity.toInt() / 100).toString()
 
         // Implement price calculation logic based on the selected product and quantity
         if (quantity.isNotEmpty()) {
@@ -225,17 +238,27 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
             binding.tvQtyMinus -> {
                 var qty: Int = binding.tvQuantity.text.toString().toInt()
-                val qtyToMinus = if (flowerType == looseFlower) gramsQty else moraQty
+                val qtyToMinus = /*if (flowerType == looseFlower) gramsQty else*/ moraQty
                 if (qty > qtyToMinus) qty -= qtyToMinus
                 binding.tvQuantity.text = "$qty"
+                binding.tvTotalQty.text = when (flowerType) {
+                    looseFlower -> (qty.times(gramsQty)).toString()
+                    mora -> (qty.times(moraQty)).toString()
+                    else -> (qty.times(gramsQty)).toString()
+                }
                 calculatePrice()
             }
 
             binding.tvQtyPlus -> {
                 var qty: Int = binding.tvQuantity.text.toString().toInt()
-                val qtyToPlus = if (flowerType == looseFlower) gramsQty else moraQty
+                val qtyToPlus = /*if (flowerType == looseFlower) gramsQty else*/ moraQty
                 qty += qtyToPlus
                 binding.tvQuantity.text = "$qty"
+                binding.tvTotalQty.text = when (flowerType) {
+                    looseFlower -> (qty.times(gramsQty)).toString()
+                    mora -> (qty.times(moraQty)).toString()
+                    else -> (qty.times(gramsQty)).toString()
+                }
                 calculatePrice()
             }
 
@@ -252,7 +275,8 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         val userDetails = AppPreference(activity).getUserDetails()
 
         val qtyText = binding.tvQuantity.text.toString().toInt()
-        quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
+//        quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
+        quantityToOrder = qtyText
         Log.e("placeOrder: ", "quantityToOrder => $quantityToOrder")
 
         if (subscriptionEndDate != null) {

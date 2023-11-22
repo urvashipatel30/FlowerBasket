@@ -33,37 +33,156 @@
         android:layout_marginHorizontal="@dimen/screen_margin"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-        <com.flower.basket.orderflower.views.ThemeText
+        <LinearLayout
+            android:id="@+id/llAppContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/post_question"
-            android:textColor="@color/themeColor"
-            android:textSize="@dimen/_13ssp" />
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
 
-        <com.flower.basket.orderflower.views.ThemeEditView
-            android:id="@+id/edtQuestion"
-            style="@style/AppEditableFieldsStyle"
+            <com.flower.basket.orderflower.views.ThemeText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_app_support"
+                android:textColor="@color/themeColor"
+                android:textSize="@dimen/_13ssp" />
+
+            <LinearLayout
+                android:id="@+id/llAppMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeTextBoxStyle"
+                android:orientation="horizontal">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    style="@style/HomeFieldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_id"/>
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvAppEmailID"
+                    style="@style/HomeFieldValueTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ksatyagupta@yahoo.com" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llAppPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeTextBoxStyle"
+                android:orientation="horizontal">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    style="@style/HomeFieldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobile_no"/>
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvAppPhoneNumber"
+                    style="@style/HomeFieldValueTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="+914563219870" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llVendorContact"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_95sdp"
-            android:layout_marginTop="@dimen/_15sdp"
-            android:gravity="top|start"
-            android:lines="5"
-            android:hint="@string/what_question"
-            android:imeOptions="actionDone"
-            android:inputType="text" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:orientation="vertical">
 
-        <com.flower.basket.orderflower.views.ThemeButton
-            android:id="@+id/btnPost"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/_15sdp"
-            style="@style/dialog_button"
-            android:text="@string/post" />
+            <com.flower.basket.orderflower.views.ThemeText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_vendor_support"
+                android:textColor="@color/themeColor"
+                android:textSize="@dimen/_13ssp" />
+
+            <LinearLayout
+                android:id="@+id/llVendorName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeTextBoxStyle"
+                android:orientation="horizontal">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    style="@style/HomeFieldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/name"/>
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvVendorName"
+                    style="@style/HomeFieldValueTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/name" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llVendorMail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeTextBoxStyle"
+                android:orientation="horizontal">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    style="@style/HomeFieldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_id"/>
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvVendorEmailID"
+                    style="@style/HomeFieldValueTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/email_id" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llVendorPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/HomeTextBoxStyle"
+                android:orientation="horizontal">
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    style="@style/HomeFieldTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mobile_no"/>
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvVendorPhoneNumber"
+                    style="@style/HomeFieldValueTextStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/mobile_no" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
-
 
 </LinearLayout>

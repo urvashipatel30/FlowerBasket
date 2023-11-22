@@ -3,6 +3,7 @@ package com.flower.basket.orderflower.ui.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -20,6 +21,7 @@ import com.flower.basket.orderflower.data.UpdateSubscriptionRequest
 import com.flower.basket.orderflower.data.UpdateSubscriptionResponse
 import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
 import com.flower.basket.orderflower.ui.adapter.DaysAdapter
+import com.flower.basket.orderflower.ui.fragment.SubscriptionsFragment
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.Quantity
@@ -96,6 +98,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         binding.endDateLayout.setOnClickListener(this)
         binding.ivRemoveEndDate.setOnClickListener(this)
 
+        selectedDaysInterval = subscriptionData?.interval.toString()
 
         // Create & Set the ArrayAdapter for the Spinner
         val productTypes = arrayOf(getString(R.string.loose_flowers), getString(R.string.mora))
@@ -103,6 +106,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.apply {
+            tvSelectedDaysLabel.text = getString(R.string.selected_days)
             cardDaySelection.visibility = View.VISIBLE
             cardStartEndDate.visibility = View.GONE
             tvStartLabel.text = getString(R.string.starts_on)
@@ -126,6 +130,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                         binding.tvMeasurement.text =
                             if (position == 0) getString(R.string.grams) else getString(R.string.mora)
 
+                        setDefaultQuantity(position)
                         setFlowerPrice(position)
                         calculatePrice()
                     }
@@ -135,12 +140,13 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                 }
         }
 
-        daysAdapter = DaysAdapter(daysList, object : DaysAdapter.DaySelectionCallback {
-            override fun onDaysSelected(selectedDays: String) {
-                Log.e("onDaysSelected: ", "Selected days: $selectedDays")
-                selectedDaysInterval = selectedDays
-            }
-        })
+        daysAdapter =
+            DaysAdapter(daysList, isFromEdit = true, object : DaysAdapter.DaySelectionCallback {
+                override fun onDaysSelected(selectedDays: String) {
+                    Log.e("onDaysSelected: ", "Selected days: $selectedDays")
+                    selectedDaysInterval = selectedDays
+                }
+            })
         binding.rvWeekDays.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = daysAdapter
@@ -240,19 +246,39 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         }
     }
 
+    private fun setDefaultQuantity(flowerTypePosition: Int) {
+        binding.tvQuantity.text = quantityToOrder.toString()
+        binding.tvQuantity.text = subscriptionData?.qty?.toString()
+
+        binding.tvTotalQty.text = when (flowerTypePosition) {
+            looseFlower -> (subscriptionData?.qty?.times(gramsQty)).toString()
+            mora -> (subscriptionData?.qty?.times(moraQty)).toString()
+            else -> (subscriptionData?.qty?.times(gramsQty)).toString()
+        }
+
+//        binding.tvQuantity.text = when (flowerTypePosition) {
+//            looseFlower -> (subscriptionData?.qty?.times(gramsQty)).toString()
+//            mora -> (subscriptionData?.qty?.times(moraQty)).toString()
+//            else -> (subscriptionData?.qty?.times(gramsQty)).toString()
+//        }
+
+        Log.e("setDefaultQuantity: ", "Final Qty => ${binding.tvQuantity.text.toString()}")
+    }
+
     private fun setFlowerPrice(flowerTypePosition: Int) {
         flowerPrice = when (flowerTypePosition) {
             looseFlower -> subscriptionData?.loosePrice
             mora -> subscriptionData?.moraPrice
             else -> subscriptionData?.loosePrice
         }
+        Log.e("onCreate: ", "subscriptionData => $subscriptionData")
         binding.tvPrice.text = getString(R.string.rupee_symbol, flowerPrice?.toDouble())
     }
 
     private fun calculatePrice() {
         val selectedProduct = binding.spinnerProductType.selectedItem.toString()
         var quantity = binding.tvQuantity.text.toString()
-        if (flowerType == looseFlower) quantity = (quantity.toInt() / gramsQty).toString()
+//        if (flowerType == looseFlower) quantity = (quantity.toInt() / 100).toString()
 
         // Implement price calculation logic based on the selected flower and quantity
         if (quantity.isNotEmpty()) {
@@ -279,17 +305,27 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
 
             binding.tvQtyMinus -> {
                 var qty: Int = binding.tvQuantity.text.toString().toInt()
-                val qtyToMinus = if (flowerType == looseFlower) gramsQty else moraQty
+                val qtyToMinus = /*if (flowerType == looseFlower) gramsQty else*/ moraQty
                 if (qty > qtyToMinus) qty -= qtyToMinus
                 binding.tvQuantity.text = "$qty"
+                binding.tvTotalQty.text = when (flowerType) {
+                    looseFlower -> (qty.times(gramsQty)).toString()
+                    mora -> (qty.times(moraQty)).toString()
+                    else -> (qty.times(gramsQty)).toString()
+                }
                 calculatePrice()
             }
 
             binding.tvQtyPlus -> {
                 var qty: Int = binding.tvQuantity.text.toString().toInt()
-                val qtyToPlus = if (flowerType == looseFlower) gramsQty else moraQty
+                val qtyToPlus = /*if (flowerType == looseFlower) gramsQty else*/ moraQty
                 qty += qtyToPlus
                 binding.tvQuantity.text = "$qty"
+                binding.tvTotalQty.text = when (flowerType) {
+                    looseFlower -> (qty.times(gramsQty)).toString()
+                    mora -> (qty.times(moraQty)).toString()
+                    else -> (qty.times(gramsQty)).toString()
+                }
                 calculatePrice()
             }
 
@@ -304,8 +340,9 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
 
     private fun updateSubscription() {
         val qtyText = binding.tvQuantity.text.toString().toInt()
-        quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
-        Log.e("placeOrder: ", "quantityToOrder => $quantityToOrder")
+//        quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
+        quantityToOrder = qtyText
+        Log.e("updateSubscription: ", "quantityToOrder => $quantityToOrder")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             binding.btnOrder.isEnabled = false
@@ -358,12 +395,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                         }
 
                         val subscriptionResponse = response.body()
-                        Log.e("updateSubscriptions: ", "Response => $subscriptionResponse")
-                        Log.e(
-                            "updateSubscriptions: ",
-                            "succeeded => ${subscriptionResponse?.succeeded}"
-                        )
-
                         if (subscriptionResponse != null) {
                             if (subscriptionResponse.succeeded) {
                                 // Handle the retrieved user data
@@ -376,6 +407,11 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                                     .setConfirmText(getString(R.string.dialog_ok))
                                     .setConfirmClickListener { appAlertDialog ->
                                         appAlertDialog.dismissWithAnimation()
+
+                                        setResult(
+                                            SubscriptionsFragment.REQ_EDIT_SUBSCRIPTION,
+                                            Intent().putExtra("updatedQty", quantityToOrder)
+                                        )
                                         finish()
                                     }
                                     .show()

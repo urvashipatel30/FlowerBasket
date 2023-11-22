@@ -9,6 +9,7 @@ class FlowerBasketApp: MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
 
+        System.setProperty("javax.net.debug", "all")
         FirebaseApp.initializeApp(this)
         FirebaseAnalytics.getInstance(this)
     }

@@ -10,10 +10,11 @@ data class SubscriptionListData(
     val flowerTeluguName: String,
     val flowerImageUrl: String,
     val subscriptionType: Int,
-    val qty: Int,
+    var qty: Int,
     val loosePrice: Int,
     val moraPrice: Int,
     val interval: String,
     val subscriptionStartDate: String,
     val subscriptionEndDate: String? = null,
+    var isActive: Boolean = false,
 )

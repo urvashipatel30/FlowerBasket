@@ -17,7 +17,9 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.CommunityData
 import com.flower.basket.orderflower.data.CommunityResponse
+import com.flower.basket.orderflower.data.updateUserRequest
 import com.flower.basket.orderflower.data.UserData
+import com.flower.basket.orderflower.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityEditUserDetailBinding
@@ -25,6 +27,7 @@ import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.PermissionUtils
 import com.flower.basket.orderflower.utils.URIPathHelper
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
+import com.google.gson.Gson
 import id.zelory.compressor.Compressor
 import kotlinx.coroutines.launch
 import retrofit2.Call
@@ -99,11 +102,97 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
             }
 
             binding.btnSubmit -> {
-
                 if (isValidFields()) {
-
+                    editUser()
                 }
             }
+        }
+    }
+
+    private fun editUser() {
+        if (userDetails?.id == null) {
+            showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                msg = getString(R.string.error_went_wrong)
+            )
+            return
+        }
+
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
+
+            val params = updateUserRequest(
+                userName = name,
+                mobileNumber = mobileNumber,
+                communityId = selectedCommunity.id,
+                block = block,
+                flatNo = flat
+            )
+
+            RetroClient.apiService.updateUser(userDetails?.id!!, params)
+                .enqueue(object : Callback<UserResponse> {
+                    override fun onResponse(
+                        call: Call<UserResponse>,
+                        response: Response<UserResponse>
+                    ) {
+                        dismissLoader()
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val userResponse = response.body()
+                        if (userResponse != null) {
+                            if (userResponse.succeeded) {
+                                // Handle the retrieved user data
+                                val userData = userResponse.data
+
+                                val json = Gson().toJson(userData)
+                                AppPreference(activity).setPreference(
+                                    AppPersistence.keys.USER_DATA,
+                                    json
+                                )
+
+                                Toast.makeText(
+                                    activity,
+                                    getString(R.string.success_user_detail_updated),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+
+                            } else {
+                                showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = userResponse.message
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                        dismissLoader()
+                        showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
         }
     }
 
@@ -229,6 +318,9 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                                     binding.autoTextCommunity.setText(community.name)
                                 } else {
                                     binding.autoTextCommunity.setText("") // Handle the case where community is not found
+                                }
+                                if (community != null) {
+                                    selectedCommunity = community
                                 }
 
                                 // Set an OnItemClickListener to handle item selection

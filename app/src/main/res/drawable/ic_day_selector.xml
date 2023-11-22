@@ -4,5 +4,9 @@
         android:state_checked="false"/>
     <item android:drawable="@drawable/ic_day_checked"
         android:state_checked="true"/>
+    <!--<item android:drawable="@drawable/ic_day_unchecked_disabled"
+        android:state_checked="false" android:state_enabled="false"/>
+    <item android:drawable="@drawable/ic_day_checked_disabled"
+        android:state_checked="true" android:state_enabled="false"/>-->
     <item android:drawable="@drawable/ic_day_unchecked"/>
 </selector>

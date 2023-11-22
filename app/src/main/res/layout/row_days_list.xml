@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/llDay"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/_8sdp"
     android:orientation="horizontal">
 
-    <CheckBox
-        android:id="@+id/cbDay"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_20sdp"
-        android:button="@drawable/ic_day_selector"
-        android:clickable="false"
-        android:enabled="false"
-        android:minWidth="0dp" />
-
-    <com.flower.basket.orderflower.views.ThemeText
-        android:id="@+id/tvDayName"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/llDay"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_8sdp"
-        android:layout_weight="1"
-        android:text="@string/sunday"
-        android:textColor="@color/day_text_color_selector"
-        android:textSize="@dimen/_13ssp" />
+        android:orientation="horizontal">
 
-</LinearLayout>
+        <CheckBox
+            android:id="@+id/cbDay"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_20sdp"
+            android:button="@drawable/ic_day_selector"
+            android:clickable="false"
+            android:enabled="false"
+            android:minWidth="0dp" />
+
+        <com.flower.basket.orderflower.views.ThemeText
+            android:id="@+id/tvDayName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:text="@string/sunday"
+            android:textColor="@color/day_text_color_selector"
+            android:textSize="@dimen/_13ssp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llDayEnableStateForeground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/day_item_color_selector"
+        android:orientation="horizontal" />
+</FrameLayout>

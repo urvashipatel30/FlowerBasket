@@ -88,6 +88,8 @@
     <color name="blackSemiTransparent_Overlay">#6D000000</color>
     <color name="day_unselectedColor">#8C000000</color>
     <color name="day_selectedColor">@color/themeColor</color>
+    <color name="day_enabledColor">@color/transparent</color>
+    <color name="day_disabledColor">#5AFFFFFF</color>
 
     <color name="grey_text_hint">#55000000</color>
 

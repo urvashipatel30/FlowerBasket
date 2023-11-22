@@ -7,17 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.Day
 
-class DaysAdapter(private val daysList: List<Day>, var daySelectionCallback: DaySelectionCallback) :
+class DaysAdapter(
+    private val daysList: List<Day>,
+    private val isFromEdit: Boolean = false,
+    private val daySelectionCallback: DaySelectionCallback
+) :
     RecyclerView.Adapter<DaysAdapter.ViewHolder>() {
 
     interface DaySelectionCallback {
         fun onDaysSelected(selectedDays: String)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.row_days_list, parent, false)
@@ -30,6 +36,11 @@ class DaysAdapter(private val daysList: List<Day>, var daySelectionCallback: Day
         holder.tvDayName.text = day.name
         holder.tvDayName.isSelected = day.selected
         holder.cbDay.isChecked = day.selected
+
+        if (isFromEdit) {
+            holder.itemView.isEnabled = false
+            holder.llDayEnableStateForeground.isEnabled = false
+        }
 
         holder.itemView.setOnClickListener {
             if (day.value == -1) { // "All" option
@@ -72,6 +83,8 @@ class DaysAdapter(private val daysList: List<Day>, var daySelectionCallback: Day
     override fun getItemCount(): Int = daysList.size
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val llDayEnableStateForeground: LinearLayout =
+            itemView.findViewById(R.id.llDayEnableStateForeground)
         val tvDayName: TextView = itemView.findViewById(R.id.tvDayName)
         val cbDay: CheckBox = itemView.findViewById(R.id.cbDay)
     }

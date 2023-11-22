@@ -9,6 +9,7 @@
     <string name="please_wait">Please wait…</string>
     <string name="dialog_alert">Alert</string>
     <string name="dialog_warning">Warning</string>
+    <string name="dialog_confirm">Confirm</string>
     <string name="dialog_default_title">Here\'s a message!</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
@@ -90,13 +91,16 @@
     <string name="loose_flowers">Loose Flowers</string>
     <string name="mora">Mora</string>
     <string name="rupee_symbol">₹%1$.2f</string>
-<!--    <string name="rupee_symbol">%1$s%2$.2f</string>-->
+    <!--    <string name="rupee_symbol">%1$s%2$.2f</string>-->
 
     <!-- Flower Detail Screen -->
     <string name="order_placed_success">Order placed successfully.</string>
     <string name="subscription_started_success">Subscription started successfully.</string>
 
     <string name="error_select_interval">Please, select days when you want the flowers to get delivered!</string>
+
+    <string name="select_days"><u>Select Days</u></string>
+    <string name="selected_days"><u>Selected Days</u></string>
 
     <!-- Settings Screen -->
     <string name="my_profile">My Profile</string>
@@ -105,11 +109,16 @@
     <string name="change_color_scheme">Change Color Scheme</string>
     <string name="logout">Logout</string>
 
+    <string name="success_user_detail_updated">Details updated successfully!</string>
+
     <string name="confirm">Confirm</string>
     <string name="confirm_logout">Are you sure want to logout?</string>
 
     <!-- Orders Screen -->
+    <string name="order">Order</string>
     <string name="order_id">Order Id  :  %s</string>
+    <string name="optional">Optional</string>
+    <string name="error_no_orders">You have no order history yet!</string>
 
     <!-- Subscription Screen -->
     <string name="subscriptions">Subscriptions</string>
@@ -121,12 +130,25 @@
     <string name="started_on">Started On : </string>
     <string name="quantity_subscription">Quantity : %d</string>
 
+    <string name="error_no_subscriptions">You have not created any subscriptions yet!</string>
+    <string name="warning_delete_subscription">You can\'t revert this action! Are you sure want to delete selected subscription?</string>
+    <string name="alert_change_status">Are you sure want to %s selected subscription?</string>
+
+    <string name="status">Status :</string>
+    <string name="active">active</string>
+    <string name="deactivate">deactivate</string>
+    <string name="status_activated">Activated</string>
+    <string name="status_deactivated">Deactivated</string>
+
     <!-- Help Screen -->
     <string name="post_question"><u>Post a Question</u></string>
     <string name="what_question">What is your Question?</string>
     <string name="post">Post</string>
 
     <string name="error_question_empty">Please enter question to ask!</string>
+
+    <string name="title_vendor_support"><u>Vendor Support</u></string>
+    <string name="title_app_support"><u>App Support</u></string>
 
     <!-- Edit User Detail Screen -->
     <string name="edit_detail">Edit User Detail</string>
@@ -159,17 +181,10 @@
     <string name="quantity">Quantity</string>
     <string name="grams">Grams</string>
 
-    <string name="select_days"><u>Select Days</u></string>
-    <string name="order">Order</string>
-    <string name="optional">Optional</string>
-
     <string name="success_updated">Updated</string>
     <string name="success">Success</string>
-    <string name="error_no_subscriptions">You have not created any subscriptions yet!</string>
-    <string name="error_no_orders">You have no order history yet!</string>
     <string name="dialog_yes">Yes</string>
     <string name="success_deleted">Deleted</string>
-    <string name="warning_delete_subscription">You can\'t revert this action! Are you sure want to delete selected subscription?</string>
 
 
 </resources>

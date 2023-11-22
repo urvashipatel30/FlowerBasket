@@ -15,5 +15,5 @@ data class OrderData(
     val flowerType: Int,
     val orderDate: String,
     val deliveryDate: String,
-    val orderStatus: Int,
+    val orderStatus: Int
 )

@@ -96,12 +96,10 @@ class HomeFragment : ParentFragment() {
                         }
 
                         val flowerResponse = response.body()
-                        Log.e("onResponse: ", "flowerResponse => $flowerResponse")
                         if (flowerResponse != null) {
                             if (flowerResponse.succeeded) {
                                 // Handle the retrieved flowers data
                                 flowerList = flowerResponse.data as ArrayList<FlowerData>
-                                Log.e("onResponse: ", "flowerList => ${flowerList.size}")
 
                                 if (flowerList.isNotEmpty()) {
                                     showList(true)

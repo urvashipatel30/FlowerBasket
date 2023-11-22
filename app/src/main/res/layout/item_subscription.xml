@@ -25,14 +25,14 @@
             <LinearLayout
                 android:id="@+id/llDetail"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/ivDeleteSubscription"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/_8sdp">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/ivFlowerPhoto"
@@ -44,7 +44,7 @@
                     app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
@@ -65,6 +65,30 @@
                         android:text="@string/daily"
                         android:textColor="@color/themeColor"
                         android:textSize="@dimen/_13ssp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_3sdp"
+                        android:orientation="horizontal">
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/quantity"
+                            android:textColor="@color/themeTextGrey"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:id="@+id/tvQuantity"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:text="@string/daily"
+                            android:textColor="@color/themeTextGrey"
+                            android:textSize="@dimen/_13ssp" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -90,13 +114,30 @@
 
                     </LinearLayout>
 
-                    <com.flower.basket.orderflower.views.ThemeText
-                        android:id="@+id/tvQuantity"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/daily"
-                        android:textColor="@color/themeTextGrey"
-                        android:textSize="@dimen/_11ssp" />
+                        android:layout_marginTop="@dimen/_7sdp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status"
+                            android:textColor="@color/themeTextGrey"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:id="@+id/tvStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:text="@string/status_activated"
+                            android:textColor="@color/themeTextGrey"
+                            android:textSize="@dimen/_11ssp" />
+
+                    </LinearLayout>
                 </LinearLayout>
 
             </LinearLayout>
@@ -107,10 +148,32 @@
                 android:layout_height="@dimen/_35sdp"
                 android:adjustViewBounds="true"
                 android:padding="@dimen/_7sdp"
-                app:layout_constraintDimensionRatio="1:1"
                 android:src="@drawable/ic_delete"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivChangeStatus"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_day_checked"
+                android:layout_margin="@dimen/_6sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+<!--            <com.flower.basket.orderflower.views.MySwitchButton-->
+<!--                android:id="@+id/switchStatus"-->
+<!--                android:layout_width="@dimen/_30sdp"-->
+<!--                android:layout_height="@dimen/_20sdp"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_margin="@dimen/_6sdp"-->
+<!--                app:sb_checked_color="@color/themeColor"-->
+<!--                app:sb_checkedbutton_color="@color/white"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:sb_show_indicator="false" />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
