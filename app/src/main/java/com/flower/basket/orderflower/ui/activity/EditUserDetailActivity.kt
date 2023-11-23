@@ -2,6 +2,7 @@ package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -9,21 +10,24 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.CommunityData
 import com.flower.basket.orderflower.data.CommunityResponse
-import com.flower.basket.orderflower.data.updateUserRequest
+import com.flower.basket.orderflower.data.UpdateUserRequest
 import com.flower.basket.orderflower.data.UserData
 import com.flower.basket.orderflower.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityEditUserDetailBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
+import com.flower.basket.orderflower.utils.OrderStatus
 import com.flower.basket.orderflower.utils.PermissionUtils
 import com.flower.basket.orderflower.utils.URIPathHelper
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
@@ -49,7 +53,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
     private var isVendor = false
     private var userDetails: UserData? = null
 
-    private lateinit var communityList: List<CommunityData>
+    private var communityList: List<CommunityData>? = emptyList()
     private lateinit var selectedCommunity: CommunityData
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +71,15 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
         if (isVendor) {
             binding.llBlock.visibility = View.GONE
             binding.llFlat.visibility = View.GONE
+            binding.autoTextCommunity.isEnabled = false
+
+            val foregroundDrawable = if (binding.autoTextCommunity.isEnabled) {
+                ColorDrawable(ContextCompat.getColor(activity, R.color.transparent))
+            } else {
+                ColorDrawable(ContextCompat.getColor(activity, R.color.disabled_communityColor))
+            }
+            val container = binding.autoTextCommunity.parent as? FrameLayout
+            container?.foreground = foregroundDrawable
         }
 
         userDetails = AppPreference(activity).getUserDetails()
@@ -122,7 +135,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
 
-            val params = updateUserRequest(
+            val params = UpdateUserRequest(
                 userName = name,
                 mobileNumber = mobileNumber,
                 communityId = selectedCommunity.id,
@@ -233,11 +246,6 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
         block = binding.edtBlock.text.toString()
         flat = binding.edtFlat.text.toString()
 
-        Log.e(
-            "isValidFields: ",
-            "community => ${community}, any match => ${communityList.any { it.name == community }}"
-        )
-
         return if (!isValidField(name)) {
             showDialog(activity, msg = getString(R.string.error_enter_name))
             binding.edtName.requestFocus()
@@ -254,7 +262,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
             showDialog(activity, msg = getString(R.string.error_enter_community))
             binding.autoTextCommunity.requestFocus()
             false
-        } else if (!communityList.any { it.name == community }) {
+        } else if (!(communityList?.any { it.name == community }!!)) {
             showDialog(activity, msg = getString(R.string.error_community_match))
             false
         } else if (!isValidField(block)) {
@@ -300,7 +308,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                                 Log.e("onResponse: ", "communityList => ${communityResponse.data}")
 
                                 // Create an ArrayAdapter using list of community names
-                                val communityNames = communityList.map { it.name }.toTypedArray()
+                                val communityNames = communityList!!.map { it.name }.toTypedArray()
                                 val adapter = ArrayAdapter(
                                     activity,
                                     android.R.layout.simple_dropdown_item_1line,
@@ -313,7 +321,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                                 Log.e("onResponse: ", "communityId => ${userDetails?.communityId}")
                                 // Set community we got from API
                                 val community =
-                                    communityList.find { it.id == userDetails?.communityId }
+                                    communityList!!.find { it.id == userDetails?.communityId }
                                 if (community != null) {
                                     binding.autoTextCommunity.setText(community.name)
                                 } else {
@@ -328,7 +336,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                                     AdapterView.OnItemClickListener { _, _, position, _ ->
 
                                         // Retrieve the selected community based on the selected position
-                                        selectedCommunity = communityList[position]
+                                        selectedCommunity = communityList!![position]
                                     }
 
                             } else {

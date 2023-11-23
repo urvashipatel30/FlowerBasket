@@ -29,4 +29,12 @@ open class Utils {
         val date = inputFormat.parse(inputDate)
         return outputFormat.format(date)
     }
+
+    fun convertToAPIDateFormat(inputDate: String): String {
+        val inputFormat = SimpleDateFormat("E, MMM dd yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+
+        val date = inputFormat.parse(inputDate)
+        return outputFormat.format(date)
+    }
 }

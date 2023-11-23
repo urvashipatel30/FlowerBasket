@@ -3,8 +3,12 @@ package com.flower.basket.orderflower.ui.activity
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -20,6 +24,9 @@ import com.flower.basket.orderflower.ui.fragment.ReportFragment
 import com.flower.basket.orderflower.ui.fragment.SettingsFragment
 import com.flower.basket.orderflower.ui.fragment.SubscriptionsFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class DashboardActivity : ParentActivity() {
@@ -29,6 +36,7 @@ class DashboardActivity : ParentActivity() {
 
     private var isVendor = false
     private lateinit var viewPagerAdapter: DashboardPagerAdapter
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +47,30 @@ class DashboardActivity : ParentActivity() {
         isVendor = AppPreference(activity).getPreference(AppPersistence.keys.IS_VENDOR) as Boolean
 
         setupPageNavigation()
+        setupBackPress()
 //        setTabWithPager()
+    }
+
+    private fun setupBackPress() {
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (doubleBackToExitPressedOnce) {
+                    finish()
+                } else {
+                    doubleBackToExitPressedOnce = true
+                    Toast.makeText(activity, "Press again to exit", Toast.LENGTH_SHORT).show()
+
+                    // Reset the flag after a delay (e.g., 2 seconds)
+                    GlobalScope.launch {
+                        delay(2000)
+                        doubleBackToExitPressedOnce = false
+                    }
+                }
+            }
+        }
+
+        // Add the callback to the OnBackPressedDispatcher
+        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     /*private fun setupPageNavigation() {
@@ -93,6 +124,7 @@ class DashboardActivity : ParentActivity() {
                     when (item.itemId) {
                         R.id.home_item -> loadFragment(HomeFragment())
                         R.id.report_item -> loadFragment(ReportFragment())
+                        R.id.settings_item -> loadFragment(SettingsFragment())
                     }
                 } else {
                     when (item.itemId) {

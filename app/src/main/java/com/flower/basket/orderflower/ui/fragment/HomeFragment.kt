@@ -8,14 +8,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.FlowerData
 import com.flower.basket.orderflower.data.FlowerResponse
+import com.flower.basket.orderflower.data.UserData
+import com.flower.basket.orderflower.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentHomeBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
+import com.flower.basket.orderflower.ui.activity.EditFlowerDetailsActivity
 import com.flower.basket.orderflower.ui.activity.FlowerDetailsActivity
 import com.flower.basket.orderflower.ui.adapter.FlowersListAdapter
 import com.flower.basket.orderflower.ui.adapter.SubscriptionListAdapter
@@ -35,8 +39,14 @@ class HomeFragment : ParentFragment() {
 
     private var flowerList = ArrayList<FlowerData>()
     private lateinit var flowerAdapter: FlowersListAdapter
+    private var editedFlowerID: Int = 0
 
     private var errorMsg: String? = null
+    private var userDetails: UserData? = null
+
+    companion object {
+        const val REQ_EDIT_FLOWER = 10
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +59,7 @@ class HomeFragment : ParentFragment() {
         parentActivity = activity as DashboardActivity
         Log.e("onCreateView: ", "Home activity => $activity")
 
-        val userDetails = AppPreference(activity).getUserDetails()
+        userDetails = AppPreference(activity).getUserDetails()
         Log.e("onCreateView: ", "User id => ${userDetails?.id}")
         binding.tvUsername.text = getString(R.string.welcome_name, userDetails?.userName)
 
@@ -105,13 +115,25 @@ class HomeFragment : ParentFragment() {
                                     showList(true)
                                     flowerAdapter = FlowersListAdapter(
                                         activity,
-                                        flowerList
-                                    ) { flowerData, buyOption ->
-                                        val intent = Intent(activity, FlowerDetailsActivity::class.java)
-                                        intent.putExtra("buyOption", buyOption.value)
-                                        intent.putExtra("data", Gson().toJson(flowerData))
-                                        startActivity(intent)
-                                    }
+                                        flowerList,
+                                        userDetails?.userType!!,
+                                        onItemSelected = { flowerData, buyOption ->
+                                            val intent =
+                                                Intent(activity, FlowerDetailsActivity::class.java)
+                                            intent.putExtra("buyOption", buyOption.value)
+                                            intent.putExtra("data", Gson().toJson(flowerData))
+                                            startActivity(intent)
+                                        },
+                                        onItemEdited = { flowerData ->
+                                            editedFlowerID = flowerData.id
+
+                                            val intent = Intent(
+                                                activity,
+                                                EditFlowerDetailsActivity::class.java
+                                            )
+                                            intent.putExtra("data", Gson().toJson(flowerData))
+                                            myActivityResultLauncher.launch(intent)
+                                        })
                                     binding.rvFlowers.adapter = flowerAdapter
                                 } else showList(false, errorMsg)
 
@@ -133,4 +155,39 @@ class HomeFragment : ParentFragment() {
             showList(false, errorMsg)
         }
     }
+
+    private var myActivityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val intentData = result.data
+            when (result.resultCode) {
+
+                REQ_EDIT_FLOWER -> if (intentData != null) {
+                    val updatedFlower = Gson().fromJson(
+                        intentData.getStringExtra("updatedFlower"),
+                        FlowerData::class.java
+                    )
+                    // Find the item with the given ID in flowerList
+                    val itemToUpdate = flowerList.find { it.id == editedFlowerID }
+
+                    // Update the qty if the Subscription is matched
+                    itemToUpdate?.let {
+                        it.name = updatedFlower.name // Replace quantity with the new name
+                        it.teluguName =
+                            updatedFlower.teluguName // Replace quantity with the new telugu Name
+                        it.moraPrice =
+                            updatedFlower.moraPrice // Replace quantity with the new mora Price
+                        it.loosePrice =
+                            updatedFlower.loosePrice // Replace quantity with the new loose Price
+
+                        // Find the position of the updated item in the list
+                        val updatedItemPosition = flowerList.indexOf(it)
+
+                        // Notify the adapter about the change at the specific position
+                        flowerAdapter.notifyItemChanged(updatedItemPosition)
+                    }
+                }
+            }
+        }
 }

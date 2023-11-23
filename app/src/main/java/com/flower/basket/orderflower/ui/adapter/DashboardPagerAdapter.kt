@@ -20,6 +20,7 @@ class DashboardPagerAdapter(fragmentActivity: FragmentActivity, val isVendor: Bo
             when (position) {
                 0 -> HomeFragment()
                 1 -> ReportFragment()
+                2 -> SettingsFragment()
                 else -> HomeFragment()
             }
         } else {
@@ -34,7 +35,7 @@ class DashboardPagerAdapter(fragmentActivity: FragmentActivity, val isVendor: Bo
         }
     }
 
-    override fun getItemCount(): Int = if (isVendor) 2 else 5
+    override fun getItemCount(): Int = if (isVendor) 3 else 5
 
 //    fun loadFragmentData(position: Int) {
 ////        val isLoaded = fragmentLoadStatus[position] ?: false

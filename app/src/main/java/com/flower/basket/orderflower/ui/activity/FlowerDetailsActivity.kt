@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
+import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.Day
 import com.flower.basket.orderflower.data.FlowerData
 import com.flower.basket.orderflower.data.OrderRequest
-import com.flower.basket.orderflower.data.PlaceOrderResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
 import com.flower.basket.orderflower.ui.adapter.DaysAdapter
@@ -315,10 +315,10 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             Log.e("placeOrder: ", "OrderData => $params")
 
             RetroClient.apiService.placeOrder(params)
-                .enqueue(object : Callback<PlaceOrderResponse> {
+                .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
-                        call: Call<PlaceOrderResponse>,
-                        response: Response<PlaceOrderResponse>
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
                     ) {
                         binding.btnOrder.isEnabled = true
                         isPlaceOrderClickable = true
@@ -370,7 +370,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                         }
                     }
 
-                    override fun onFailure(call: Call<PlaceOrderResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                         dismissLoader()
                         binding.btnOrder.isEnabled = true
                         isPlaceOrderClickable = true

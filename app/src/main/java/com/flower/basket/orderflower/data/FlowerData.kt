@@ -4,10 +4,10 @@ import java.io.Serializable
 
 data class FlowerData(
     val id: Int,
-    val name: String,
-    val teluguName: String,
-    val loosePrice: Int,
-    val moraPrice: Int,
+    var name: String,
+    var teluguName: String,
+    var loosePrice: Int,
+    var moraPrice: Int,
     val imageUrl: String,
     val createdDate: String
 ) : Serializable

@@ -39,7 +39,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     private lateinit var activity: Activity
     private lateinit var binding: ActivityLoginBinding
 
-    private lateinit var communityList: List<CommunityData>
+    private var communityList: List<CommunityData>? = emptyList()
     private lateinit var selectedCommunity: CommunityData
 
     private var userId = ""
@@ -338,7 +338,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                                 communityList = communityResponse.data
 
                                 // Create an ArrayAdapter using list of community names
-                                val communityNames = communityList.map { it.name }.toTypedArray()
+                                val communityNames = communityList!!.map { it.name }.toTypedArray()
                                 val adapter = ArrayAdapter(
                                     activity,
                                     android.R.layout.simple_dropdown_item_1line,
@@ -353,7 +353,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                                     AdapterView.OnItemClickListener { _, _, position, _ ->
 
                                         // Retrieve the selected community based on the selected position
-                                        selectedCommunity = communityList[position]
+                                        selectedCommunity = communityList!![position]
                                     }
 
                             } else {
@@ -477,7 +477,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
             showDialog(activity, msg = getString(R.string.error_enter_community))
             binding.edtCommunity.requestFocus()
             false
-        } else if (!communityList.any { it.name == community }) {
+        } else if (!(communityList?.any { it.name == community }!!)) {
             showDialog(activity, msg = getString(R.string.error_community_match))
             false
         } else if (!isValidField(block)) {
@@ -489,10 +489,6 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
             binding.edtFlat.requestFocus()
             false
         } else true
-    }
-
-    private fun isValidPassword(target: CharSequence?): Boolean {
-        return !TextUtils.isEmpty(target) && target?.length!! >= 6
     }
 
     private fun isValidEmail(target: CharSequence?): Boolean {

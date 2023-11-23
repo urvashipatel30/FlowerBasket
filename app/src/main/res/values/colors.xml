@@ -27,6 +27,7 @@
     <color name="pageTitleColor">#CF6956</color>
 
     <color name="semiTransparent_black">#B2111111</color>
+    <color name="disabled_itemColor">#5AFFFFFF</color>
 
     <!-- TODO Splash -->
     <color name="splashTitleColor">@color/pageTitleColor</color>
@@ -73,11 +74,14 @@
     <color name="order_ItemTextColor">@color/themeTextGrey</color>
 
     <!-- TODO Orders page -->
+    <color name="cancel_order_btn_bg_color">#C3C8D1</color>
+    <color name="cancel_order_btn_bg_pressed_color">#A8AAB2</color>
 
+    <color name="cancelled_orderColor">@color/disabled_itemColor</color>
 
     <!-- TODO Settings page -->
     <color name="versionBoxBg">@color/themeColorLightest</color>
-
+    <color name="disabled_communityColor">@color/disabled_itemColor</color>
 
     <!-- TODO Help page -->
     <color name="editable_text_bg">#F8BAAD</color>
@@ -89,9 +93,14 @@
     <color name="day_unselectedColor">#8C000000</color>
     <color name="day_selectedColor">@color/themeColor</color>
     <color name="day_enabledColor">@color/transparent</color>
-    <color name="day_disabledColor">#5AFFFFFF</color>
+    <color name="day_disabledColor">@color/disabled_itemColor</color>
 
     <color name="grey_text_hint">#55000000</color>
+
+
+    <!-- TODO Vendor Report page -->
+    <color name="table_dividerColor">@color/themeGrey</color>
+    <color name="table_TextColor">@color/themeTextGrey</color>
 
 
     <!-- TODO Dialog -->

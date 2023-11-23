@@ -1,7 +1,7 @@
 package com.flower.basket.orderflower.data
 
-data class OrderData(
-    val id: String,
+data class ReportData(
+    val orderId: String,
     val subscriptionId: String,
     val userId: String,
     val userName: String,
@@ -9,11 +9,11 @@ data class OrderData(
     val flowerName: String,
     val flowerTeluguName: String,
     val flowerImageUrl: String,
-    var qty: Int,
+    val qty: Int,
     val price: Int,
     val totalPrice: Int,
     val flowerType: Int,
     val orderDate: String,
     val deliveryDate: String,
-    var orderStatus: Int
+    val orderStatus: Int
 )

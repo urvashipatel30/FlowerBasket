@@ -13,6 +13,7 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSettingsBinding
+import com.flower.basket.orderflower.ui.activity.ChangePasswordActivity
 import com.flower.basket.orderflower.ui.activity.EditUserDetailActivity
 import com.flower.basket.orderflower.ui.activity.LoginActivity
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
@@ -33,6 +34,7 @@ class SettingsFragment : Fragment(), OnClickListener {
         Log.e("onCreateView: ", "Settings activity => $activity")
 
         binding.llMyProfile.setOnClickListener(this)
+        binding.llChangePassword.setOnClickListener(this)
         binding.llLogout.setOnClickListener(this)
 
         return binding.root
@@ -43,6 +45,11 @@ class SettingsFragment : Fragment(), OnClickListener {
         when (view) {
             binding.llMyProfile -> {
                 val intent = Intent(activity, EditUserDetailActivity::class.java)
+                startActivity(intent)
+            }
+
+            binding.llChangePassword -> {
+                val intent = Intent(activity, ChangePasswordActivity::class.java)
                 startActivity(intent)
             }
 

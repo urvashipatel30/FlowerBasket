@@ -45,6 +45,10 @@ open class ParentActivity : AppCompatActivity() {
         return !TextUtils.isEmpty(target)
     }
 
+    open fun isValidPassword(target: CharSequence?): Boolean {
+        return !TextUtils.isEmpty(target) && target?.length!! >= 6
+    }
+
     protected fun isValidMobileNumber(target: CharSequence?): Boolean {
         return !TextUtils.isEmpty(target) && target?.length == 10
     }

@@ -78,8 +78,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ellipsize="end"
-                    android:paddingEnd="@dimen/_5sdp"
                     android:maxLines="1"
+                    android:paddingEnd="@dimen/_5sdp"
                     android:text="Flower"
                     android:textColor="@color/order_ItemTextColor"
                     android:textSize="@dimen/_15ssp" />
@@ -99,14 +99,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:maxLines="1"
                 android:ellipsize="end"
+                android:maxLines="1"
                 android:text="Flower"
-                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:textColor="@color/order_ItemTextColor"
-                android:textSize="@dimen/_15ssp" />
+                android:textSize="@dimen/_15ssp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llFlowerDetail" />
 
             <com.flower.basket.orderflower.views.ThemeText
                 android:id="@+id/tvFlowerQuantity"
@@ -116,12 +116,12 @@
                 android:text="Loose Flowers"
                 android:textColor="@color/order_ItemTextColor"
                 android:textSize="@dimen/_11ssp"
+                app:layout_constraintBottom_toTopOf="@+id/llButtonLayout"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/llOrderLayout"
                 app:layout_constraintTop_toBottomOf="@+id/tvFlowerTeluguName" />
 
-            <LinearLayout
-                android:id="@+id/llOrderLayout"
+            <FrameLayout
+                android:id="@+id/llButtonLayout"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginBottom="@dimen/_7sdp"
@@ -129,27 +129,50 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
 
-                <com.flower.basket.orderflower.views.ThemeButton
-                    android:id="@+id/btnSubscribe"
-                    style="@style/dialog_button"
-                    android:layout_gravity="center"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_weight="1"
-                    android:paddingHorizontal="0dp"
-                    android:text="@string/subscribe"
-                    android:textSize="@dimen/_11ssp" />
+                <LinearLayout
+                    android:id="@+id/llOrderLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                <com.flower.basket.orderflower.views.ThemeButton
-                    android:id="@+id/btnBuyOnce"
-                    style="@style/dialog_button"
-                    android:layout_gravity="center"
-                    android:layout_weight="1"
-                    android:paddingHorizontal="0dp"
-                    android:text="@string/buy_once"
-                    android:textSize="@dimen/_11ssp" />
+                    <com.flower.basket.orderflower.views.ThemeButton
+                        android:id="@+id/btnSubscribe"
+                        style="@style/dialog_button"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_weight="1"
+                        android:paddingHorizontal="0dp"
+                        android:text="@string/subscribe"
+                        android:textSize="@dimen/_11ssp" />
 
-            </LinearLayout>
+                    <com.flower.basket.orderflower.views.ThemeButton
+                        android:id="@+id/btnBuyOnce"
+                        style="@style/dialog_button"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:paddingHorizontal="0dp"
+                        android:text="@string/buy_once"
+                        android:textSize="@dimen/_11ssp" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llEditLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.flower.basket.orderflower.views.ThemeButton
+                        android:id="@+id/btnEdit"
+                        style="@style/dialog_button"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/cancel_order_button_background"
+                        android:paddingHorizontal="0dp"
+                        android:text="@string/update_details"
+                        android:textSize="@dimen/_11ssp" />
+
+                </LinearLayout>
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

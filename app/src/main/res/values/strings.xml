@@ -87,11 +87,33 @@
 
     <string name="welcome_name">Welcome, %s!</string>
 
+
     <!-- Home Screen -->
     <string name="loose_flowers">Loose Flowers</string>
     <string name="mora">Mora</string>
     <string name="rupee_symbol">₹%1$.2f</string>
     <!--    <string name="rupee_symbol">%1$s%2$.2f</string>-->
+
+    <string name="update_details">Update Details</string>
+
+
+    <!-- Edit Flower Detail Screen -->
+    <string name="edit_flower_details">Edit Details</string>
+    <string name="label_flower_name">Flower Name:</string>
+    <string name="label_telugu_name">Telugu Name:</string>
+    <string name="label_loose_price">Loose Price:</string>
+    <string name="label_mora_price">Mora Price:</string>
+
+    <string name="enter_flower_name">Enter Flower Name</string>
+    <string name="enter_telugu_name">Enter Telugu Name</string>
+    <string name="enter_loose_price">Enter Loose Price</string>
+    <string name="enter_mora_price">Enter Mora Price</string>
+
+    <string name="update_flower_details">Update Flower Details</string>
+
+    <string name="error_empty_flower_name">Flower name cannot be empty!</string>
+    <string name="error_empty_loose_price">Loose price cannot be empty!</string>
+    <string name="error_empty_mora_price">Mora price cannot be empty!</string>
 
     <!-- Flower Detail Screen -->
     <string name="order_placed_success">Order placed successfully.</string>
@@ -102,11 +124,13 @@
     <string name="select_days"><u>Select Days</u></string>
     <string name="selected_days"><u>Selected Days</u></string>
 
+
     <!-- Settings Screen -->
     <string name="my_profile">My Profile</string>
     <string name="change_profile_pic">Change Profile Picture</string>
     <string name="change_user_details">Change User Details</string>
     <string name="change_color_scheme">Change Color Scheme</string>
+    <string name="change_password">Change Password</string>
     <string name="logout">Logout</string>
 
     <string name="success_user_detail_updated">Details updated successfully!</string>
@@ -114,11 +138,6 @@
     <string name="confirm">Confirm</string>
     <string name="confirm_logout">Are you sure want to logout?</string>
 
-    <!-- Orders Screen -->
-    <string name="order">Order</string>
-    <string name="order_id">Order Id  :  %s</string>
-    <string name="optional">Optional</string>
-    <string name="error_no_orders">You have no order history yet!</string>
 
     <!-- Subscription Screen -->
     <string name="subscriptions">Subscriptions</string>
@@ -140,6 +159,24 @@
     <string name="status_activated">Activated</string>
     <string name="status_deactivated">Deactivated</string>
 
+
+    <!-- Orders Screen -->
+    <string name="order">Order</string>
+    <string name="order_id">Order Id  :  %s</string>
+    <string name="optional">Optional</string>
+    <string name="error_no_orders">You have no order history yet!</string>
+
+    <string name="cancel_order">Cancel Order</string>
+
+    <string name="status_pending">Pending</string>
+    <string name="status_cancelled">Cancelled</string>
+    <string name="status_delivered">Delivered</string>
+    <string name="status_unknown">Unknown</string>
+
+    <string name="alert_cancel_order">Are you sure want to cancel selected order?</string>
+    <string name="success_cancelled_order">Order cancelled successfully.</string>
+
+
     <!-- Help Screen -->
     <string name="post_question"><u>Post a Question</u></string>
     <string name="what_question">What is your Question?</string>
@@ -149,6 +186,7 @@
 
     <string name="title_vendor_support"><u>Vendor Support</u></string>
     <string name="title_app_support"><u>App Support</u></string>
+
 
     <!-- Edit User Detail Screen -->
     <string name="edit_detail">Edit User Detail</string>
@@ -162,6 +200,25 @@
     <string name="update_detail">Update Detail</string>
     <string name="image_error">Cannot retrieve selected image</string>
 
+
+    <!-- Change password Screen -->
+    <string name="label_current_pass">Current Password:</string>
+    <string name="label_new_pass">New Password:</string>
+    <string name="label_confirm_pass">Confirm Password:</string>
+
+    <string name="enter_current_pass">Enter Current Password</string>
+    <string name="enter_new_pass">Enter New Password</string>
+    <string name="enter_confirm_pass">Enter Confirm Password</string>
+
+    <string name="update_password">Update Password</string>
+
+    <string name="error_enter_curr_password">Please, enter your current password first!</string>
+    <string name="error_enter_new_password">Please, enter the new password you want to set!</string>
+    <string name="error_enter_confirm_password">Please, enter confirm password first!</string>
+
+    <string name="error_password_not_match">Confirm password does not match to the new password!</string>
+
+
     <!-- Permission -->
     <string name="dialog_settings">SETTINGS</string>
     <string name="dialog_permission_title">Grant Permissions</string>
@@ -171,6 +228,7 @@
     <string name="sunday">Sunday</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
+
 
     <!-- Order Detail Screen -->
     <string name="starts_on">Starts On</string>
@@ -185,6 +243,14 @@
     <string name="success">Success</string>
     <string name="dialog_yes">Yes</string>
     <string name="success_deleted">Deleted</string>
+
+
+    <!-- Report Screen -->
+    <string name="title_choose_date"><u>Choose Date :</u></string>
+    <string name="type">Type</string>
+    <string name="delivery_date">Delivery Date</string>
+
+    <string name="error_no_report">You have no report for selected date!</string>
 
 
 </resources>

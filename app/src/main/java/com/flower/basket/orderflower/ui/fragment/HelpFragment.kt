@@ -47,13 +47,23 @@ class HelpFragment : ParentFragment() {
         getVendorDetail()
 
         binding.tvAppPhoneNumber.setOnClickListener {
-            val number = binding.tvVendorPhoneNumber.text.toString().replace("+91", "")
+            val number = binding.tvAppPhoneNumber.text.toString().replace("+91 ", "")
             openWhatsApp(number)
         }
 
         binding.tvVendorPhoneNumber.setOnClickListener {
-            val number = binding.tvVendorPhoneNumber.text.toString().replace("+91", "")
+            val number = binding.tvVendorPhoneNumber.text.toString().replace("+91 ", "")
             openWhatsApp(number)
+        }
+
+        binding.tvAppEmailID.setOnClickListener {
+            val email = binding.tvAppEmailID.text.toString()
+            openEmail(email)
+        }
+
+        binding.tvVendorEmailID.setOnClickListener {
+            val email = binding.tvVendorEmailID.text.toString()
+            openEmail(email)
         }
 
 //        binding.btnPost.setOnClickListener {
@@ -119,7 +129,7 @@ class HelpFragment : ParentFragment() {
                                 binding.apply {
                                     tvVendorName.text = vendorData.userName
                                     tvVendorEmailID.text = vendorData.email
-                                    tvVendorPhoneNumber.text = vendorData.mobileNumber
+                                    tvVendorPhoneNumber.text = vendorData.mobileNumber.replace("+91", "+91 ")
                                 }
 
                             } else {
@@ -153,6 +163,18 @@ class HelpFragment : ParentFragment() {
                 msg = getString(R.string.error_internet_msg)
             )
         }
+    }
+
+    private fun openEmail(email: String) {
+        val selectorIntent = Intent(Intent.ACTION_SENDTO)
+        selectorIntent.data = Uri.parse("mailto:")
+
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        emailIntent.putExtra(Intent.EXTRA_TEXT, question)
+        emailIntent.selector = selectorIntent
+        startActivity(Intent.createChooser(emailIntent, "Send mail"))
     }
 
     private fun openWhatsApp(num: String) {

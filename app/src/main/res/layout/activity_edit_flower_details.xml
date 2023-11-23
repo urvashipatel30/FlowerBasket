@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenBg"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/backLayout"
+                layout="@layout/back_action" />
+
+            <com.flower.basket.orderflower.views.ThemeText
+                style="@style/ScreenTitleStyle"
+                android:text="@string/edit_flower_details" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_marginTop="@dimen/_15sdp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/screen_margin">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivFlowerPhoto"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_gravity="center"
+            android:elevation="@dimen/_4sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_profile_holder"
+            app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_flower_name"
+                android:textColor="@color/themeTextGrey"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.flower.basket.orderflower.views.ThemeEditView
+                android:id="@+id/edtFlowerName"
+                style="@style/AppEditableFieldsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="@string/enter_flower_name"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_telugu_name"
+                android:textColor="@color/themeTextGrey"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.flower.basket.orderflower.views.ThemeEditView
+                android:id="@+id/edtTeluguName"
+                style="@style/AppEditableFieldsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="@string/enter_telugu_name"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_loose_price"
+                android:textColor="@color/themeTextGrey"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.flower.basket.orderflower.views.ThemeEditView
+                android:id="@+id/edtLoosePrice"
+                style="@style/AppEditableFieldsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="@string/enter_loose_price"
+                android:imeOptions="actionNext"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:orientation="vertical">
+
+            <com.flower.basket.orderflower.views.ThemeText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/label_mora_price"
+                android:textColor="@color/themeTextGrey"
+                android:textSize="@dimen/_12ssp" />
+
+            <com.flower.basket.orderflower.views.ThemeEditView
+                android:id="@+id/edtMoraPrice"
+                style="@style/AppEditableFieldsStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:hint="@string/enter_mora_price"
+                android:imeOptions="actionDone"
+                android:inputType="number" />
+
+        </LinearLayout>
+
+        <com.flower.basket.orderflower.views.ThemeButton
+            android:id="@+id/btnUpdate"
+            style="@style/dialog_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:paddingHorizontal="@dimen/_18sdp"
+            android:text="@string/update_flower_details" />
+
+    </LinearLayout>
+
+</LinearLayout>

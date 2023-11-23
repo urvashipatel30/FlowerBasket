@@ -50,6 +50,7 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/DEPENDENCIES"
         }
     }
 }
@@ -114,4 +115,19 @@ dependencies {
 
     //Color palette
     implementation("androidx.palette:palette-ktx:1.0.0")
+
+    //Dynamic Tableview to show Report
+//    implementation("com.github.evrencoskun:TableView:v0.8.9.4")
+
+    //Write JSON data to Excel file
+//    implementation("org.apache.poi:poi:5.0.0")/* {
+//        exclude(group = "org.apache.xmlgraphics", module = "batik-all")
+//    }*/
+//    implementation("org.apache.poi:poi-ooxml:5.0.0")/* {
+//        exclude(group = "org.apache.xmlgraphics", module = "batik-all")
+//    }*/
+
+//    implementation("org.apache.commons:commons-io:1.3.2")
+    implementation("commons-io:commons-io:2.4")
+    implementation("org.json:json:20140107")
 }

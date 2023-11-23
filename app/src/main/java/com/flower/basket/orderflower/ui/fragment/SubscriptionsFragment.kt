@@ -13,7 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
-import com.flower.basket.orderflower.data.DeleteSubscriptionResponse
+import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.SubscriptionListData
 import com.flower.basket.orderflower.data.SubscriptionListResponse
 import com.flower.basket.orderflower.data.SubscriptionStatusRequest
@@ -240,10 +240,10 @@ class SubscriptionsFragment : ParentFragment() {
             )
 
             RetroClient.apiService.changeSubscriptionStatus(subscriptionData?.id!!, params)
-                .enqueue(object : Callback<DeleteSubscriptionResponse> {
+                .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
-                        call: Call<DeleteSubscriptionResponse>,
-                        response: Response<DeleteSubscriptionResponse>
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
                     ) {
                         parentActivity.dismissLoader()
                         Log.e(
@@ -303,7 +303,7 @@ class SubscriptionsFragment : ParentFragment() {
                         }
                     }
 
-                    override fun onFailure(call: Call<DeleteSubscriptionResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                         parentActivity.dismissLoader()
                         showDialog(
                             parentActivity,
@@ -364,16 +364,12 @@ class SubscriptionsFragment : ParentFragment() {
             parentActivity.showLoader(activity)
 
             RetroClient.apiService.deleteSubscription(subscriptionData?.id!!)
-                .enqueue(object : Callback<DeleteSubscriptionResponse> {
+                .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
-                        call: Call<DeleteSubscriptionResponse>,
-                        response: Response<DeleteSubscriptionResponse>
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
                     ) {
                         parentActivity.dismissLoader()
-                        Log.e(
-                            "deletesubscriptionResponse: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -387,12 +383,8 @@ class SubscriptionsFragment : ParentFragment() {
 
                         val deletesubscriptionResponse = response.body()
                         Log.e(
-                            "deletesubscriptionResponse: ",
+                            "delete subscription: ",
                             "Response => $deletesubscriptionResponse"
-                        )
-                        Log.e(
-                            "deletesubscriptionResponse: ",
-                            "succeeded => ${deletesubscriptionResponse?.succeeded}"
                         )
 
                         if (deletesubscriptionResponse != null) {
@@ -445,7 +437,7 @@ class SubscriptionsFragment : ParentFragment() {
                         }
                     }
 
-                    override fun onFailure(call: Call<DeleteSubscriptionResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                         parentActivity.dismissLoader()
 
                         showDialog(

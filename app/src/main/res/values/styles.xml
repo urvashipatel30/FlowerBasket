@@ -94,6 +94,12 @@
         <item name="android:background">@color/themeColorUltraLight</item>
     </style>
 
+    <style name="TableDividerStyle">
+        <item name="android:layout_width">0.2dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/table_dividerColor</item>
+    </style>
+
     <style name="HomeTextBoxStyle">
         <item name="android:layout_marginTop">@dimen/_6sdp</item>
         <item name="android:paddingTop">@dimen/_8sdp</item>

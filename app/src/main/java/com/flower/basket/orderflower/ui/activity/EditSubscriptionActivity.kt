@@ -14,11 +14,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
+import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.Day
 import com.flower.basket.orderflower.data.SubscriptionItemData
 import com.flower.basket.orderflower.data.SubscriptionItemResponse
 import com.flower.basket.orderflower.data.UpdateSubscriptionRequest
-import com.flower.basket.orderflower.data.UpdateSubscriptionResponse
 import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
 import com.flower.basket.orderflower.ui.adapter.DaysAdapter
 import com.flower.basket.orderflower.ui.fragment.SubscriptionsFragment
@@ -370,10 +370,10 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
             Log.e("placeOrder: ", "updateSubscriptions Data => $params")
 
             RetroClient.apiService.updateSubscription(subscriptionData?.id!!, params)
-                .enqueue(object : Callback<UpdateSubscriptionResponse> {
+                .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
-                        call: Call<UpdateSubscriptionResponse>,
-                        response: Response<UpdateSubscriptionResponse>
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
                     ) {
                         binding.btnOrder.isEnabled = true
                         isPlaceOrderClickable = true
@@ -426,7 +426,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                         }
                     }
 
-                    override fun onFailure(call: Call<UpdateSubscriptionResponse>, t: Throwable) {
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                         dismissLoader()
                         binding.btnOrder.isEnabled = true
                         isPlaceOrderClickable = true

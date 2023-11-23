@@ -1,6 +1,6 @@
 package com.flower.basket.orderflower.data
 
-data class updateUserRequest(
+data class UpdateUserRequest(
     val userName: String,
     val profilePhoto: String = "",
     val mobileNumber: String,
