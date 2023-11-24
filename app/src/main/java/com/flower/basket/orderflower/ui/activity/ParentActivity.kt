@@ -2,8 +2,10 @@ package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -51,6 +53,18 @@ open class ParentActivity : AppCompatActivity() {
 
     protected fun isValidMobileNumber(target: CharSequence?): Boolean {
         return !TextUtils.isEmpty(target) && target?.length == 10
+    }
+
+    open fun openEmail(emailID: String, mailText: String = "") {
+        val selectorIntent = Intent(Intent.ACTION_SENDTO)
+        selectorIntent.data = Uri.parse("mailto:")
+
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(emailID))
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+        emailIntent.putExtra(Intent.EXTRA_TEXT, mailText)
+        emailIntent.selector = selectorIntent
+        startActivity(Intent.createChooser(emailIntent, "Send mail"))
     }
 
     open fun showLoader(activity: Activity, title: String = "", msg: String = "") {

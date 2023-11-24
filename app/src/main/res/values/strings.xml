@@ -2,7 +2,8 @@
     <string name="app_name">Flower Basket</string>
 
     <string name="splash_title"><u>Flower\nBasket</u></string>
-    <string name="splash_subtitle">Flowers from the heart</string>
+    <string name="splash_subtitle">Flowers for every prayers</string>
+<!--    <string name="splash_subtitle">Flowers from the heart</string>-->
     <!--    <string name="splash_subtitle">basket full of flowers is like, \na garden in your arms.</string>-->
 
     <!-- Dialog -->
@@ -13,6 +14,7 @@
     <string name="dialog_default_title">Here\'s a message!</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_no">NO</string>
 
     <string name="error_went_wrong">Something went wrong!</string>
     <string name="error_no_internet">No Internet</string>
@@ -246,11 +248,26 @@
 
 
     <!-- Report Screen -->
-    <string name="title_choose_date"><u>Choose Date :</u></string>
+    <string name="title_choose_date"><u>Choose Date:</u></string>
     <string name="type">Type</string>
     <string name="delivery_date">Delivery Date</string>
 
     <string name="error_no_report">You have no report for selected date!</string>
+    <string name="download">Download</string>
+    <string name="delivered_order">Deliver Order</string>
+    <string name="label_address">"Address : "</string>
+
+    <string name="alert_delivered_order">Are you sure you delivered this order to %s?</string>
+    <string name="success_delivered_order">Order delivered successfully.</string>
+
+    <string name="ordered_on">Ordered On</string>
+    <string name="delivery_on">Delivery On</string>
+    <string name="customer_details"><u>Customer Details</u></string>
+    <string name="generate_order">Generate Order</string>
+    <string name="label_total">Total :</string>
+    <string name="address">Address</string>
+
+    <string name="order_details"><u>Order Details</u></string>
 
 
 </resources>

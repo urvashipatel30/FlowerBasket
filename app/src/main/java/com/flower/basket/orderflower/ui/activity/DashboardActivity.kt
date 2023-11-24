@@ -47,13 +47,16 @@ class DashboardActivity : ParentActivity() {
         isVendor = AppPreference(activity).getPreference(AppPersistence.keys.IS_VENDOR) as Boolean
 
         setupPageNavigation()
-        setupBackPress()
+        onBackPressedDispatcher.addCallback(this, callback)
 //        setTabWithPager()
     }
 
-    private fun setupBackPress() {
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
+    val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.flHolder)
+
+            // Check if the current fragment is HomeFragment
+            if (currentFragment is HomeFragment) {
                 if (doubleBackToExitPressedOnce) {
                     finish()
                 } else {
@@ -66,11 +69,10 @@ class DashboardActivity : ParentActivity() {
                         doubleBackToExitPressedOnce = false
                     }
                 }
+            } else {
+                loadFragment(HomeFragment())
             }
         }
-
-        // Add the callback to the OnBackPressedDispatcher
-        onBackPressedDispatcher.addCallback(this, callback)
     }
 
     /*private fun setupPageNavigation() {

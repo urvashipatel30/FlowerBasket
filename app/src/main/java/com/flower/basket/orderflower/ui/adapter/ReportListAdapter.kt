@@ -1,13 +1,16 @@
 package com.flower.basket.orderflower.ui.adapter
 
 import android.app.Activity
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.ReportData
-import com.flower.basket.orderflower.databinding.ItemOrdersBinding
 import com.flower.basket.orderflower.databinding.ItemReportBinding
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.OrderStatus
@@ -16,7 +19,7 @@ import com.flower.basket.orderflower.utils.Quantity
 class ReportListAdapter(
     var activity: Activity,
     private val reportList: ArrayList<ReportData>,
-    private val onShowMore: (ReportData) -> Unit,
+    private val onItemSelected: (ReportData) -> Unit,
     private val onChangeDeliveryStatus: (ReportData) -> Unit
 ) :
     RecyclerView.Adapter<ReportListAdapter.ViewHolder>() {
@@ -41,44 +44,59 @@ class ReportListAdapter(
 
     inner class ViewHolder(val binding: ItemReportBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(order: ReportData) {
+        fun bind(report: ReportData) {
 
-            binding.tvFlowerName.text = order.flowerName
-            if (order.flowerTeluguName.isNotEmpty()) binding.tvFlowerTeluguName.text =
-                order.flowerTeluguName
+            binding.tvFlowerName.text = report.flowerName
+            binding.tvFlowerName.requestFocus()
+
+            if (report.flowerTeluguName.isNotEmpty()) binding.tvFlowerTeluguName.text =
+                report.flowerTeluguName
             else binding.tvFlowerTeluguName.visibility = View.GONE
 
-//            Glide.with(binding.ivFlowerPhoto.context)
-//                .load(order.flowerImageUrl)
-//                .placeholder(R.drawable.ic_profile_holder)
-//                .error(R.drawable.ic_profile_holder)
-//                .centerCrop()
-//                .into(binding.ivFlowerPhoto)
+            binding.tvAddress.text = "${report.block} - ${report.flatNo} "
+
+            Glide.with(binding.ivFlowerPhoto.context)
+                .load(report.flowerImageUrl)
+                .placeholder(R.drawable.ic_profile_holder)
+                .error(R.drawable.ic_profile_holder)
+                .centerCrop()
+                .into(binding.ivFlowerPhoto)
 
             val measurement =
-                if (order.flowerType == FlowerType.LOOSE_FLOWER.value) activity.getString(R.string.grams)
+                if (report.flowerType == FlowerType.LOOSE_FLOWER.value) activity.getString(R.string.grams)
                 else activity.getString(R.string.mora)
-
             val qty =
-                if (order.flowerType == FlowerType.LOOSE_FLOWER.value) ((order.qty) * Quantity.GRAMS.value)
-                else ((order.qty) * Quantity.MORA.value)
-            binding.tvQuantity.text = "$qty"
+                if (report.flowerType == FlowerType.LOOSE_FLOWER.value) ((report.qty) * Quantity.GRAMS.value)
+                else ((report.qty) * Quantity.MORA.value)
+            binding.tvQuantity.text = "$qty $measurement"
 
-            val status = order.orderStatus
-            binding.ivDelivered.setImageResource(
-                if (status == OrderStatus.DELIVERED.value) R.drawable.ic_day_checked
-                else R.drawable.ic_day_unchecked
-            )
-
-//            binding.tvTotalPrice.text =
-//                activity.getString(R.string.rupee_symbol, order.totalPrice.toDouble())
-
-            binding.ivShowMore.setOnClickListener {
-                onShowMore.invoke(order)
+            binding.tvOrderStatus.text = when (report.orderStatus) {
+                OrderStatus.PENDING.value -> activity.getString(R.string.status_pending)
+                OrderStatus.CANCELED.value -> activity.getString(R.string.status_cancelled)
+                OrderStatus.DELIVERED.value -> activity.getString(R.string.status_delivered)
+                else -> activity.getString(R.string.status_unknown)
             }
 
-            binding.ivDelivered.setOnClickListener {
-                onChangeDeliveryStatus.invoke(order)
+            binding.tvTotalPrice.text =
+                activity.getString(R.string.rupee_symbol, report.totalPrice.toDouble())
+
+            binding.llDeliveredOrder.visibility =
+                if (report.orderStatus == OrderStatus.PENDING.value) View.VISIBLE else View.GONE
+
+            val foregroundDrawable = if (report.orderStatus == OrderStatus.DELIVERED.value) {
+                ColorDrawable(ContextCompat.getColor(activity, R.color.cancelled_orderColor))
+            } else {
+                ColorDrawable(ContextCompat.getColor(activity, R.color.transparent))
+            }
+            val container = binding.orderDetailView.parent as? FrameLayout
+            container?.foreground = foregroundDrawable
+
+            binding.cardItem.setOnClickListener {
+                onItemSelected.invoke(report)
+            }
+
+            binding.btnDeliveredOrder.setOnClickListener {
+                onChangeDeliveryStatus.invoke(report)
             }
         }
     }

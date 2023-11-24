@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.CancelOrderRequest
+import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
 import com.flower.basket.orderflower.data.OrderData
 import com.flower.basket.orderflower.data.OrderResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
@@ -168,9 +168,9 @@ class OrdersFragment : Fragment() {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            val params = CancelOrderRequest(orderStatus = OrderStatus.CANCELED.value)
+            val params = ChangeOrderStatusRequest(orderStatus = OrderStatus.CANCELED.value)
 
-            RetroClient.apiService.cancelOrder(orderData?.id!!, params)
+            RetroClient.apiService.changeOrderStatus(orderData?.id!!, params)
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,
@@ -178,7 +178,7 @@ class OrdersFragment : Fragment() {
                     ) {
                         parentActivity.dismissLoader()
                         Log.e(
-                            "changeStatus: ",
+                            "cancelOrder: ",
                             "response => $response, ${response.isSuccessful}"
                         )
 
@@ -192,21 +192,21 @@ class OrdersFragment : Fragment() {
                             return
                         }
 
-                        val deletesubscriptionResponse = response.body()
+                        val cancelOrderResponse = response.body()
                         Log.e(
-                            "changeStatus: ",
-                            "Response => $deletesubscriptionResponse"
+                            "cancelOrder: ",
+                            "Response => $cancelOrderResponse"
                         )
                         Log.e(
-                            "changeStatus: ",
-                            "succeeded => ${deletesubscriptionResponse?.succeeded}"
+                            "cancelOrder: ",
+                            "succeeded => ${cancelOrderResponse?.succeeded}"
                         )
 
-                        if (deletesubscriptionResponse != null) {
-                            if (deletesubscriptionResponse.succeeded) {
-                                // Handle the retrieved user data
-                                val subscriptionID = deletesubscriptionResponse.data
-                                Log.e("changeStatus: ", "subscriptionID => $subscriptionID")
+                        if (cancelOrderResponse != null) {
+                            if (cancelOrderResponse.succeeded) {
+                                // Handle the retrieved data
+                                val orderID = cancelOrderResponse.data
+                                Log.e("cancelOrder: ", "orderID => $orderID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.status_cancelled))
@@ -215,7 +215,7 @@ class OrdersFragment : Fragment() {
                                     .setConfirmClickListener { appAlertDialog ->
                                         appAlertDialog.dismissWithAnimation()
 
-                                        updateStatus(deletesubscriptionResponse.data, OrderStatus.CANCELED.value)
+                                        updateStatus(cancelOrderResponse.data, OrderStatus.CANCELED.value)
                                     }
                                     .show()
                             } else {
@@ -223,7 +223,7 @@ class OrdersFragment : Fragment() {
                                     parentActivity,
                                     dialogType = AppAlertDialog.ERROR_TYPE,
                                     title = getString(R.string.failed),
-                                    msg = deletesubscriptionResponse.message
+                                    msg = cancelOrderResponse.message
                                 )
                             }
                         }

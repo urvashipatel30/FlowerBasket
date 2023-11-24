@@ -58,12 +58,12 @@ class HelpFragment : ParentFragment() {
 
         binding.tvAppEmailID.setOnClickListener {
             val email = binding.tvAppEmailID.text.toString()
-            openEmail(email)
+            parentActivity.openEmail(email)
         }
 
         binding.tvVendorEmailID.setOnClickListener {
             val email = binding.tvVendorEmailID.text.toString()
-            openEmail(email)
+            parentActivity.openEmail(email)
         }
 
 //        binding.btnPost.setOnClickListener {
@@ -163,18 +163,6 @@ class HelpFragment : ParentFragment() {
                 msg = getString(R.string.error_internet_msg)
             )
         }
-    }
-
-    private fun openEmail(email: String) {
-        val selectorIntent = Intent(Intent.ACTION_SENDTO)
-        selectorIntent.data = Uri.parse("mailto:")
-
-        val emailIntent = Intent(Intent.ACTION_SEND)
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
-        emailIntent.putExtra(Intent.EXTRA_TEXT, question)
-        emailIntent.selector = selectorIntent
-        startActivity(Intent.createChooser(emailIntent, "Send mail"))
     }
 
     private fun openWhatsApp(num: String) {

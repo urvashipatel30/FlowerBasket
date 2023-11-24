@@ -158,17 +158,26 @@
                 <LinearLayout
                     android:id="@+id/llEditLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:gravity="end">
 
-                    <com.flower.basket.orderflower.views.ThemeButton
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btnEdit"
-                        style="@style/dialog_button"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:background="@drawable/cancel_order_button_background"
-                        android:paddingHorizontal="0dp"
-                        android:text="@string/update_details"
-                        android:textSize="@dimen/_11ssp" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_23sdp"
+                        android:layout_gravity="bottom"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/ic_edit_flower" />
+
+<!--                    <com.flower.basket.orderflower.views.ThemeButton-->
+<!--                        android:id="@+id/btnEdit"-->
+<!--                        style="@style/dialog_button"-->
+<!--                        android:layout_gravity="center"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:background="@drawable/cancel_order_button_background"-->
+<!--                        android:paddingHorizontal="0dp"-->
+<!--                        android:text="@string/update_details"-->
+<!--                        android:textSize="@dimen/_11ssp" />-->
 
                 </LinearLayout>
 

@@ -3,8 +3,6 @@ package com.flower.basket.orderflower.data
 data class ReportData(
     val orderId: String,
     val subscriptionId: String,
-    val userId: String,
-    val userName: String,
     val flowerId: Int,
     val flowerName: String,
     val flowerTeluguName: String,
@@ -15,5 +13,13 @@ data class ReportData(
     val flowerType: Int,
     val orderDate: String,
     val deliveryDate: String,
-    val orderStatus: Int
+    var orderStatus: Int,
+    val userId: String,
+    val userName: String,
+    val userEmail: String,
+    val communityId: Int,
+    val communityName: String,
+    val mobileNumber: String,
+    val block: String,
+    val flatNo: String
 )

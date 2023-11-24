@@ -1,7 +1,7 @@
 package com.flower.basket.orderflower.api
 
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.CancelOrderRequest
+import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
 import com.flower.basket.orderflower.data.CommunityResponse
 import com.flower.basket.orderflower.data.UpdateFlowerRequest
 import com.flower.basket.orderflower.data.UpdateUserRequest
@@ -80,11 +80,11 @@ interface ApiService {
     @GET("/api/Order/GetAll/{id}")
     fun getAllOrders(@Path("id") userId: String): Call<OrderResponse>
 
-    //Cancel Order
+    //Cancel Order & Delivered Order
     @PUT("/api/Order/UpdateOrderStatus/{id}")
-    fun cancelOrder(
+    fun changeOrderStatus(
         @Path("id") orderId: String,
-        @Body params: CancelOrderRequest
+        @Body params: ChangeOrderStatusRequest
     ): Call<APIResponse>
 
     //Get Vendor contact
@@ -100,6 +100,10 @@ interface ApiService {
     ): Call<APIResponse>
 
     //Order List
-    @GET("/api/Vendor/GetAllOrders")
-    fun getReport(@Query("dateTime") date: String): Call<ReportResponse>
+    @GET("/api/Vendor/GetAllOrders/{communityId}/")
+    fun getReport(@Path("communityId") id: Int, @Query("dateTime") date: String): Call<ReportResponse>
+
+    //Generate Orders
+    @POST("/api/Order/GenerateOrder/")
+    fun generateOrders(): Call<APIResponse>
 }

@@ -36,7 +36,7 @@ class SplashActivity : ParentActivity() {
                 }
             startActivity(intent)
             finish()
-        }, 2000)
+        }, 2500)
     }
 
     private fun setUpDefaultData() {

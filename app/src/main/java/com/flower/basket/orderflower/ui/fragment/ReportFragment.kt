@@ -3,11 +3,9 @@ package com.flower.basket.orderflower.ui.fragment
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.DocumentsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +17,8 @@ import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
+import com.flower.basket.orderflower.data.APIResponse
+import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
 import com.flower.basket.orderflower.data.ReportData
 import com.flower.basket.orderflower.data.ReportDataToSend
 import com.flower.basket.orderflower.data.ReportResponse
@@ -26,11 +26,13 @@ import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentReportBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
+import com.flower.basket.orderflower.ui.activity.ReportOrderDetailsActivity
 import com.flower.basket.orderflower.ui.adapter.ReportListAdapter
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.OrderStatus
 import com.flower.basket.orderflower.utils.Utils
+import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
 import org.apache.commons.io.FileUtils
 import org.json.CDL
@@ -42,7 +44,6 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-import java.util.Objects
 
 
 class ReportFragment : ParentFragment(), OnClickListener {
@@ -53,10 +54,16 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
     private var reportListJSON: String? = null
     private var reportList = ArrayList<ReportData>()
-    private var reportListToSend = emptyList<ReportDataToSend>()
+
+    //    private var reportListToSend = emptyList<ReportDataToSend>()
+//    private var reportListToSend: List<LinkedHashMap<String, Any>> = emptyList()
     private lateinit var reportAdapter: ReportListAdapter
 
     private val dateFormat = SimpleDateFormat("E, MMM dd yyyy", Locale.US)
+
+    companion object {
+        const val REQ_VIEW_ORDER = 5
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,6 +79,7 @@ class ReportFragment : ParentFragment(), OnClickListener {
         binding.tvSelectedDate.text = getFormattedCurrentDate()
 
         binding.backLayout.ivBackAction.setOnClickListener(this)
+        binding.btnGenerateOrder.setOnClickListener(this)
         binding.llChooseDate.setOnClickListener(this)
         binding.ivDownloadReport.setOnClickListener(this)
 
@@ -81,20 +89,35 @@ class ReportFragment : ParentFragment(), OnClickListener {
         }
 
         loadReport()
-
         return binding.root
+    }
+
+    override fun onClick(view: View?) {
+        when (view) {
+//            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
+
+            binding.btnGenerateOrder -> generateOrder()
+
+            binding.llChooseDate -> showDatePicker()
+
+            binding.ivDownloadReport -> {
+//                launchBaseDirectoryPicker()
+                saveToCSVFile()
+            }
+        }
     }
 
     private fun loadReport() {
         val selectedDate = binding.tvSelectedDate.text.toString()
 
+        val userDetails = AppPreference(activity).getUserDetails()
         val dateToSend = Utils().convertToAPIDateFormat(selectedDate)
         Log.e("loadReport: ", "dateToSend => $dateToSend")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            RetroClient.apiService.getReport(dateToSend)
+            RetroClient.apiService.getReport(userDetails?.communityId!!, dateToSend)
                 .enqueue(object : Callback<ReportResponse> {
                     override fun onResponse(
                         call: Call<ReportResponse>,
@@ -126,11 +149,39 @@ class ReportFragment : ParentFragment(), OnClickListener {
                                     reportAdapter = ReportListAdapter(
                                         activity,
                                         reportList,
-                                        onShowMore = { reportData ->
-
+                                        onItemSelected = { reportData ->
+                                            val intent =
+                                                Intent(
+                                                    activity,
+                                                    ReportOrderDetailsActivity::class.java
+                                                )
+                                            intent.putExtra("data", Gson().toJson(reportData))
+//                                            startActivity(intent)
+                                            myActivityResultLauncher.launch(intent)
                                         },
                                         onChangeDeliveryStatus = { reportData ->
-                                            changeDeliveryStatus(reportData)
+                                            AppAlertDialog(activity)
+                                                .setTitleText(getString(R.string.dialog_confirm))
+                                                .setContentText(
+                                                    getString(
+                                                        R.string.alert_delivered_order,
+                                                        reportData.userName
+                                                    )
+                                                )
+                                                .setConfirmText(getString(R.string.dialog_yes))
+                                                .setDialogCancelable(true)
+                                                .setConfirmClickListener { appAlertDialog ->
+                                                    appAlertDialog.dismissWithAnimation()
+                                                    changeDeliveryStatus(reportData)
+                                                }
+                                                .setCancelText(getString(R.string.dialog_cancel))
+                                                .setCancelClickListener(object :
+                                                    AppAlertDialog.OnSweetClickListener {
+                                                    override fun onClick(appAlertDialog: AppAlertDialog) {
+                                                        appAlertDialog.dismissWithAnimation()
+                                                    }
+                                                })
+                                                .show()
                                         })
                                     binding.rvReport.adapter = reportAdapter
 
@@ -157,6 +208,120 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
     private fun changeDeliveryStatus(reportData: ReportData) {
 
+        if (reportData?.orderId == null) {
+            parentActivity.showDialog(
+                parentActivity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                msg = getString(R.string.error_went_wrong)
+            )
+            return
+        }
+
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            parentActivity.showLoader(activity)
+
+            val params = ChangeOrderStatusRequest(orderStatus = OrderStatus.DELIVERED.value)
+
+            RetroClient.apiService.changeOrderStatus(reportData.orderId, params)
+                .enqueue(object : Callback<APIResponse> {
+                    override fun onResponse(
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
+                    ) {
+                        parentActivity.dismissLoader()
+                        Log.e(
+                            "deliveredOrder: ",
+                            "response => $response, ${response.isSuccessful}"
+                        )
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            parentActivity.showDialog(
+                                parentActivity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val deliveredOrderResponse = response.body()
+                        Log.e(
+                            "deliveredOrder: ",
+                            "Response => $deliveredOrderResponse"
+                        )
+                        Log.e(
+                            "deliveredOrder: ",
+                            "succeeded => ${deliveredOrderResponse?.succeeded}"
+                        )
+
+                        if (deliveredOrderResponse != null) {
+                            if (deliveredOrderResponse.succeeded) {
+                                // Handle the retrieved data
+                                val orderID = deliveredOrderResponse.data
+                                Log.e("deliveredOrder: ", "orderID => $orderID")
+
+                                AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
+                                    .setTitleText(getString(R.string.status_delivered))
+                                    .setContentText(getString(R.string.success_delivered_order))
+                                    .setConfirmText(getString(R.string.dialog_ok))
+                                    .setConfirmClickListener { appAlertDialog ->
+                                        appAlertDialog.dismissWithAnimation()
+
+                                        updateStatus(
+                                            deliveredOrderResponse.data,
+                                            OrderStatus.DELIVERED.value
+                                        )
+                                    }
+                                    .show()
+                            } else {
+                                parentActivity.showDialog(
+                                    parentActivity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = deliveredOrderResponse.message
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+                        parentActivity.dismissLoader()
+                        parentActivity.showDialog(
+                            parentActivity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            parentActivity.showDialog(
+                parentActivity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
+        }
+    }
+
+    private fun updateStatus(orderId: String?, orderStatus: Int) {
+        val itemToUpdate = reportList.find { it.orderId == orderId }
+
+        // Find the item with the given ID in reportList
+        Log.e(
+            "updateStatus: ",
+            "itemToUpdate => $itemToUpdate"
+        )
+
+        // Update the status if the order from the list is matched
+        itemToUpdate?.let {
+            it.orderStatus = orderStatus // Change the status value
+
+            // Find the position of the updated item in the list
+            val updatedItemPosition = reportList.indexOf(it)
+
+            // Notify the adapter about the change at the specific position
+            reportAdapter.notifyItemChanged(updatedItemPosition)
+        }
     }
 
     private fun showList(
@@ -165,6 +330,7 @@ class ReportFragment : ParentFragment(), OnClickListener {
     ) {
         binding.apply {
             rvReport.visibility = if (isShowList) View.VISIBLE else View.GONE
+            ivDownloadReport.visibility = if (isShowList) View.VISIBLE else View.GONE
             llDataErrorView.visibility = if (isShowList) View.GONE else View.VISIBLE
 
             if (!isShowList) {
@@ -173,20 +339,119 @@ class ReportFragment : ParentFragment(), OnClickListener {
         }
     }
 
-    override fun onClick(view: View?) {
-        when (view) {
-//            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
+    private fun generateOrder() {
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            parentActivity.showLoader(activity)
 
-            binding.llChooseDate -> showDatePicker()
+            RetroClient.apiService.generateOrders()
+                .enqueue(object : Callback<APIResponse> {
+                    override fun onResponse(
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
+                    ) {
+                        parentActivity.dismissLoader()
+                        Log.e(
+                            "generateOrder: ",
+                            "response => $response, ${response.isSuccessful}"
+                        )
 
-            binding.ivDownloadReport -> {
-//                launchBaseDirectoryPicker()
-                saveToCSVFile()
-            }
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            parentActivity.showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val generateOrderResponse = response.body()
+                        if (generateOrderResponse != null) {
+                            if (generateOrderResponse.succeeded) {
+                                // Handle the retrieved user data
+                                parentActivity.showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.SUCCESS_TYPE,
+                                    msg = generateOrderResponse.message
+                                )
+                            } else {
+                                parentActivity.showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = generateOrderResponse.message
+                                )
+                            }
+                        }
+                    }
+
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+                        parentActivity.dismissLoader()
+                        parentActivity.showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            parentActivity.showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
         }
     }
 
-    fun ReportData.toReportDataToSend(): ReportDataToSend {
+    fun saveToCSVFile() {
+        val initialDateStr = binding.tvSelectedDate.text.toString()
+
+        // Copy values from one list to another using the extension function
+//        reportListToSend = reportList.map { it.toReportDataToSend() }
+        val reportListToSend = reportList.map { it.toReportDataToSend().data }
+
+        val jsonFormatString = Gson().toJson(reportListToSend)
+        Log.e("onClick: ", "jsonFormatString => $jsonFormatString")
+
+        if (reportList.size > 0) {
+            val jsonArray = JSONArray(jsonFormatString)
+
+            val file =
+                File(activity.filesDir.absolutePath, "/report/$initialDateStr.csv")
+            val csv: String = CDL.toString(jsonArray)
+            FileUtils.writeStringToFile(file, csv)
+
+            openWhatsapp(file)
+        }
+    }
+
+    private fun ReportData.toReportDataToSend(): ReportDataToSend {
+        return ReportDataToSend(
+            linkedMapOf(
+                "Flower Name" to this.flowerName,
+                "Telugu Name" to this.flowerTeluguName,
+                "Quantity" to this.qty,
+                "Flower Type" to if (flowerType == FlowerType.LOOSE_FLOWER.value) getString(R.string.loose_flowers) else getString(
+                    R.string.mora
+                ),
+                "Block" to this.block,
+                "Flat No" to this.flatNo,
+                "Name" to this.userName,
+                "Mobile Number" to this.mobileNumber,
+                "Price" to this.price,
+                "Total Price" to this.totalPrice,
+                "Order Status" to when (orderStatus) {
+                    OrderStatus.DELIVERED.value -> getString(R.string.status_delivered)
+                    OrderStatus.PENDING.value -> getString(R.string.status_pending)
+                    OrderStatus.CANCELED.value -> getString(R.string.status_cancelled)
+                    else -> getString(R.string.status_pending)
+                }
+            )
+        )
+    }
+
+    /*private fun ReportData.toReportDataToSend(): ReportDataToSend {
         return ReportDataToSend(
             flowerName = this.flowerName,
             flowerTeluguName = this.flowerTeluguName,
@@ -204,29 +469,7 @@ class ReportFragment : ParentFragment(), OnClickListener {
                 else -> getString(R.string.status_pending)
             }
         )
-    }
-
-
-    fun saveToCSVFile() {
-        val initialDateStr = binding.tvSelectedDate.text.toString()
-
-        // Copy values from one list to another using the extension function
-        reportListToSend = reportList.map { it.toReportDataToSend() }
-
-        val jsonFormatString = Gson().toJson(reportListToSend)
-        Log.e("onClick: ", "jsonFormatString => $jsonFormatString")
-
-        if (reportList.size > 0) {
-            val jsonArray = JSONArray(jsonFormatString)
-
-            val file =
-                File(activity.filesDir.absolutePath, "/report/$initialDateStr.csv")
-            val csv: String = CDL.toString(jsonArray)
-            FileUtils.writeStringToFile(file, csv)
-
-            openWhatsapp(file)
-        }
-    }
+    }*/
 
     private fun openWhatsapp(file: File) {
         val initialDateStr = binding.tvSelectedDate.text.toString()
@@ -288,6 +531,23 @@ class ReportFragment : ParentFragment(), OnClickListener {
         val calendar = Calendar.getInstance()
         return dateFormat.format(calendar.time)
     }
+
+    private var myActivityResultLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val intentData = result.data
+            when (result.resultCode) {
+
+                REQ_VIEW_ORDER -> if (intentData != null) {
+                    val updatedFlower = Gson().fromJson(
+                        intentData.getStringExtra("updatedOrder"),
+                        ReportData::class.java
+                    )
+                    updateStatus(updatedFlower.orderId, updatedFlower.orderStatus)
+                }
+            }
+        }
 
     private var baseDocumentTreeUri: Uri? = null
     private fun launchBaseDirectoryPicker() {
