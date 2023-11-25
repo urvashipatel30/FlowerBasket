@@ -17,9 +17,9 @@ object RetroClient {
     }
 
     private val builder = OkHttpClient().newBuilder()
-        .connectTimeout(50, TimeUnit.SECONDS)
-        .readTimeout(50, TimeUnit.SECONDS)
-        .writeTimeout(50, TimeUnit.SECONDS)
+        .connectTimeout(40, TimeUnit.SECONDS)
+        .readTimeout(40, TimeUnit.SECONDS)
+        .writeTimeout(40, TimeUnit.SECONDS)
         .addInterceptor(loggingInterceptor)
 
     private val httpClient: OkHttpClient = builder.build()

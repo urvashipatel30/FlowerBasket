@@ -2,21 +2,17 @@ package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.Toast
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.UserData
-import com.flower.basket.orderflower.data.UserResponse
+import com.flower.basket.orderflower.ui.login.data.UserData
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.data.UpdatePasswordRequest
 import com.flower.basket.orderflower.databinding.ActivityChangePasswordBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
-import com.flower.basket.orderflower.utils.SubscriptionType
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
 import retrofit2.Call

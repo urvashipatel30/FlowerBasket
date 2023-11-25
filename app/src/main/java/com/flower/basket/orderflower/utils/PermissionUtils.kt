@@ -79,7 +79,7 @@ object PermissionUtils {
             .setTitleText(activity.getString(R.string.dialog_permission_title))
             .setContentText(activity.getString(R.string.dialog_permission_message))
             .setCancelText(activity.getString(R.string.dialog_cancel))
-            .setCancelClickListener(object : AppAlertDialog.OnSweetClickListener {
+            .setCancelClickListener(object : AppAlertDialog.OnDialogClickListener {
                 override fun onClick(appAlertDialog: AppAlertDialog) {
                     appAlertDialog.dismissWithAnimation()
                 }

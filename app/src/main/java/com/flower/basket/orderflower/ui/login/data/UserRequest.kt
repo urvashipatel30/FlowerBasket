@@ -1,4 +1,4 @@
-package com.flower.basket.orderflower.data
+package com.flower.basket.orderflower.ui.login.data
 
 data class UserRequest(
     val userType: Int = 0,

@@ -21,13 +21,12 @@ import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.CommunityData
 import com.flower.basket.orderflower.data.CommunityResponse
 import com.flower.basket.orderflower.data.UpdateUserRequest
-import com.flower.basket.orderflower.data.UserData
-import com.flower.basket.orderflower.data.UserResponse
+import com.flower.basket.orderflower.ui.login.data.UserData
+import com.flower.basket.orderflower.ui.login.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityEditUserDetailBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
-import com.flower.basket.orderflower.utils.OrderStatus
 import com.flower.basket.orderflower.utils.PermissionUtils
 import com.flower.basket.orderflower.utils.URIPathHelper
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
@@ -359,12 +358,21 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                     }
                 })
         } else {
-            showDialog(
-                activity,
-                dialogType = AppAlertDialog.ERROR_TYPE,
-                title = getString(R.string.error_no_internet),
-                msg = getString(R.string.error_internet_msg)
-            )
+            AppAlertDialog(activity, AppAlertDialog.ERROR_TYPE)
+                .setTitleText(getString(R.string.dialog_error_title))
+                .setContentText(getString(R.string.dialog_retry_community_list))
+                .setConfirmText(getString(R.string.dialog_ok))
+                .setConfirmClickListener { appAlertDialog ->
+                    appAlertDialog.dismissWithAnimation()
+                }
+                .setCancelText(getString(R.string.dialog_retry))
+                .setCancelClickListener(object : AppAlertDialog.OnDialogClickListener {
+                    override fun onClick(appAlertDialog: AppAlertDialog) {
+                        appAlertDialog.dismissWithAnimation()
+                        getCommunityList()
+                    }
+                })
+                .show()
         }
     }
 }

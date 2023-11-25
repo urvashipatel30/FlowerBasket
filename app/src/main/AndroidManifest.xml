@@ -44,7 +44,7 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/LoginTheme"

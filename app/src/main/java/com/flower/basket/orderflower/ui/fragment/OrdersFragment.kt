@@ -121,7 +121,7 @@ class OrdersFragment : Fragment() {
                                                 }
                                                 .setCancelText(getString(R.string.dialog_cancel))
                                                 .setCancelClickListener(object :
-                                                    AppAlertDialog.OnSweetClickListener {
+                                                    AppAlertDialog.OnDialogClickListener {
                                                     override fun onClick(appAlertDialog: AppAlertDialog) {
                                                         appAlertDialog.dismissWithAnimation()
                                                     }

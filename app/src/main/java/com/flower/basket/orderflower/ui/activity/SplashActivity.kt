@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivitySplashBinding
+import com.flower.basket.orderflower.ui.login.LoginActivity
 
 class SplashActivity : ParentActivity() {
 

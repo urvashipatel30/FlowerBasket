@@ -1,4 +1,4 @@
-package com.flower.basket.orderflower.ui.activity
+package com.flower.basket.orderflower.ui.login
 
 import android.app.Activity
 import android.content.Intent
@@ -18,13 +18,15 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.CommunityData
 import com.flower.basket.orderflower.data.CommunityResponse
-import com.flower.basket.orderflower.data.LoginRequest
-import com.flower.basket.orderflower.data.UserData
-import com.flower.basket.orderflower.data.UserRequest
-import com.flower.basket.orderflower.data.UserResponse
+import com.flower.basket.orderflower.ui.login.data.LoginRequest
+import com.flower.basket.orderflower.ui.login.data.UserData
+import com.flower.basket.orderflower.ui.login.data.UserRequest
+import com.flower.basket.orderflower.ui.login.data.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityLoginBinding
+import com.flower.basket.orderflower.ui.activity.DashboardActivity
+import com.flower.basket.orderflower.ui.activity.ParentActivity
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.UserType
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
@@ -376,12 +378,21 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                     }
                 })
         } else {
-            showDialog(
-                activity,
-                dialogType = AppAlertDialog.ERROR_TYPE,
-                title = getString(R.string.error_no_internet),
-                msg = getString(R.string.error_internet_msg)
-            )
+            AppAlertDialog(activity, AppAlertDialog.ERROR_TYPE)
+                .setTitleText(getString(R.string.dialog_error_title))
+                .setContentText(getString(R.string.dialog_retry_community_list))
+                .setConfirmText(getString(R.string.dialog_ok))
+                .setConfirmClickListener { appAlertDialog ->
+                    appAlertDialog.dismissWithAnimation()
+                }
+                .setCancelText(getString(R.string.dialog_retry))
+                .setCancelClickListener(object : AppAlertDialog.OnDialogClickListener {
+                    override fun onClick(appAlertDialog: AppAlertDialog) {
+                        appAlertDialog.dismissWithAnimation()
+                        getCommunityList()
+                    }
+                })
+                .show()
         }
     }
 

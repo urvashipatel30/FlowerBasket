@@ -1,7 +1,6 @@
 package com.flower.basket.orderflower.ui.fragment
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,18 +13,14 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.FlowerData
 import com.flower.basket.orderflower.data.FlowerResponse
-import com.flower.basket.orderflower.data.UserData
-import com.flower.basket.orderflower.data.UserResponse
+import com.flower.basket.orderflower.ui.login.data.UserData
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentHomeBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.EditFlowerDetailsActivity
 import com.flower.basket.orderflower.ui.activity.FlowerDetailsActivity
 import com.flower.basket.orderflower.ui.adapter.FlowersListAdapter
-import com.flower.basket.orderflower.ui.adapter.SubscriptionListAdapter
 import com.flower.basket.orderflower.utils.NetworkUtils
-import com.flower.basket.orderflower.utils.SubscriptionType
-import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback

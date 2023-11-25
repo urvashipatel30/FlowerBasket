@@ -268,6 +268,8 @@
     <string name="address">Address</string>
 
     <string name="order_details"><u>Order Details</u></string>
+    <string name="dialog_retry">Retry</string>
+    <string name="dialog_retry_community_list">Please, retry to get community list!</string>
 
 
 </resources>

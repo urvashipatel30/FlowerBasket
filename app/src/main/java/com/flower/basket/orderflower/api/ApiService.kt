@@ -6,7 +6,7 @@ import com.flower.basket.orderflower.data.CommunityResponse
 import com.flower.basket.orderflower.data.UpdateFlowerRequest
 import com.flower.basket.orderflower.data.UpdateUserRequest
 import com.flower.basket.orderflower.data.FlowerResponse
-import com.flower.basket.orderflower.data.LoginRequest
+import com.flower.basket.orderflower.ui.login.data.LoginRequest
 import com.flower.basket.orderflower.data.OrderRequest
 import com.flower.basket.orderflower.data.OrderResponse
 import com.flower.basket.orderflower.data.ReportResponse
@@ -15,8 +15,8 @@ import com.flower.basket.orderflower.data.SubscriptionListResponse
 import com.flower.basket.orderflower.data.SubscriptionStatusRequest
 import com.flower.basket.orderflower.data.UpdatePasswordRequest
 import com.flower.basket.orderflower.data.UpdateSubscriptionRequest
-import com.flower.basket.orderflower.data.UserRequest
-import com.flower.basket.orderflower.data.UserResponse
+import com.flower.basket.orderflower.ui.login.data.UserRequest
+import com.flower.basket.orderflower.ui.login.data.UserResponse
 import com.flower.basket.orderflower.data.VendorContactResponse
 import retrofit2.Call
 import retrofit2.http.*

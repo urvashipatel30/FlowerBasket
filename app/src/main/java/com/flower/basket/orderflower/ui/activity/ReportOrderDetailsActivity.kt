@@ -13,11 +13,8 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
-import com.flower.basket.orderflower.data.FlowerData
 import com.flower.basket.orderflower.data.ReportData
-import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
 import com.flower.basket.orderflower.databinding.ActivityReportOrderDetailsBinding
-import com.flower.basket.orderflower.ui.fragment.HomeFragment
 import com.flower.basket.orderflower.ui.fragment.ReportFragment
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.NetworkUtils
@@ -113,7 +110,7 @@ class ReportOrderDetailsActivity : ParentActivity(), OnClickListener {
                     }
                     .setCancelText(getString(R.string.dialog_no))
                     .setCancelClickListener(object :
-                        AppAlertDialog.OnSweetClickListener {
+                        AppAlertDialog.OnDialogClickListener {
                         override fun onClick(appAlertDialog: AppAlertDialog) {
                             appAlertDialog.dismissWithAnimation()
                         }

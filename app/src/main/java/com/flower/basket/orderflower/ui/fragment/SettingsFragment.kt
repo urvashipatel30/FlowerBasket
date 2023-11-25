@@ -15,7 +15,7 @@ import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSettingsBinding
 import com.flower.basket.orderflower.ui.activity.ChangePasswordActivity
 import com.flower.basket.orderflower.ui.activity.EditUserDetailActivity
-import com.flower.basket.orderflower.ui.activity.LoginActivity
+import com.flower.basket.orderflower.ui.login.LoginActivity
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
 class SettingsFragment : Fragment(), OnClickListener {
@@ -74,7 +74,7 @@ class SettingsFragment : Fragment(), OnClickListener {
                         activity.finish()
                     }
                     .setCancelText(activity.getString(R.string.dialog_cancel))
-                    .setCancelClickListener(object : AppAlertDialog.OnSweetClickListener {
+                    .setCancelClickListener(object : AppAlertDialog.OnDialogClickListener {
                         override fun onClick(appAlertDialog: AppAlertDialog) {
                             appAlertDialog.dismissWithAnimation()
                         }

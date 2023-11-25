@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationSet
@@ -66,7 +65,7 @@ class AppAlertDialog(val activity: Activity, alertType: Int) : Dialog(
     //    private ProgressHelper mProgressHelper;
     private var mWarningFrame: FrameLayout? = null
 
-    private var mCancelClickListener: OnSweetClickListener? = null
+    private var mCancelClickListener: OnDialogClickListener? = null
 
     //    private var mConfirmClickListener: OnSweetClickListener? = null
 //    private var mConfirmClickListener: (appAlertDialog: AppAlertDialog) -> Unit = {_ -> }
@@ -76,7 +75,7 @@ class AppAlertDialog(val activity: Activity, alertType: Int) : Dialog(
     private var isDialogCancelable = false
     private var dialogLayout = -1
 
-    interface OnSweetClickListener {
+    interface OnDialogClickListener {
         fun onClick(appAlertDialog: AppAlertDialog)
     }
 
@@ -260,7 +259,7 @@ class AppAlertDialog(val activity: Activity, alertType: Int) : Dialog(
         return this
     }
 
-    fun setCancelClickListener(listener: OnSweetClickListener): AppAlertDialog {
+    fun setCancelClickListener(listener: OnDialogClickListener): AppAlertDialog {
         mCancelClickListener = listener
         return this
     }
