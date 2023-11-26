@@ -74,8 +74,8 @@
     <color name="order_ItemTextColor">@color/themeTextGrey</color>
 
     <!-- TODO Orders page -->
-    <color name="cancel_order_btn_bg_color">#C3C8D1</color>
-    <color name="cancel_order_btn_bg_pressed_color">#A8AAB2</color>
+    <color name="cancel_order_btn_bg_color">@color/themeColorLight</color>
+    <color name="cancel_order_btn_bg_pressed_color">#F9B5A6</color>
 
     <color name="cancelled_orderColor">@color/disabled_itemColor</color>
 

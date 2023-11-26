@@ -401,6 +401,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     private fun getFormattedTomorrowDate(): String {
         val calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_YEAR, 1) // Add one day to get tomorrow's date
+        subscriptionEndDate = calendar.time.toString()
 
         val dateFormat = SimpleDateFormat("E, MMM dd yyyy", Locale.US)
         return dateFormat.format(calendar.time)

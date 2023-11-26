@@ -1,18 +1,18 @@
 package com.flower.basket.orderflower.ui.adapter
 
 import android.app.Activity
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup.OnCheckedChangeListener
-import androidx.core.content.res.ResourcesCompat
+import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.SubscriptionListData
 import com.flower.basket.orderflower.databinding.ItemSubscriptionBinding
 import com.flower.basket.orderflower.utils.Utils
-import com.flower.basket.orderflower.views.MySwitchButton
 
 class SubscriptionListAdapter(
     var activity: Activity,
@@ -59,6 +59,14 @@ class SubscriptionListAdapter(
             binding.tvStatus.text =
                 if (isActivated) activity.getString(R.string.status_activated)
                 else activity.getString(R.string.status_deactivated)
+
+            val foregroundDrawable = if (!subscription.isActive) {
+                ColorDrawable(ContextCompat.getColor(activity, R.color.cancelled_orderColor))
+            } else {
+                ColorDrawable(ContextCompat.getColor(activity, R.color.transparent))
+            }
+            val container = binding.subscriptionDetailView.parent as? FrameLayout
+            container?.foreground = foregroundDrawable
 
             Glide.with(binding.ivFlowerPhoto.context)
                 .load(subscription.flowerImageUrl)

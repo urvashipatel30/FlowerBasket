@@ -8,7 +8,7 @@
         android:id="@+id/cardItem"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginTop="@dimen/_2sdp"
         android:orientation="vertical"
         app:cardCornerRadius="@dimen/_5sdp"
         app:cardElevation="@dimen/_3sdp"
@@ -17,165 +17,172 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/llDetail"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/subscriptionDetailView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:padding="@dimen/_8sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ivDeleteSubscription"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivFlowerPhoto"
-                    android:layout_width="@dimen/_50sdp"
-                    android:layout_height="@dimen/_50sdp"
-                    android:elevation="@dimen/_8sdp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/ic_profile_holder"
-                    app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
+                android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/llDetail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/ivDeleteSubscription"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    <com.flower.basket.orderflower.views.ThemeBoldText
-                        android:id="@+id/tvFlowerName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/daily"
-                        android:textColor="@color/themeColor"
-                        android:textSize="@dimen/_13ssp" />
-
-                    <com.flower.basket.orderflower.views.ThemeBoldText
-                        android:id="@+id/tvFlowerTeluguName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/daily"
-                        android:textColor="@color/themeColor"
-                        android:textSize="@dimen/_13ssp" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivFlowerPhoto"
+                        android:layout_width="@dimen/_50sdp"
+                        android:layout_height="@dimen/_50sdp"
+                        android:elevation="@dimen/_8sdp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_profile_holder"
+                        app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_3sdp"
-                        android:orientation="horizontal">
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
 
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/quantity"
-                            android:textColor="@color/themeTextGrey"
-                            android:textSize="@dimen/_13ssp" />
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:id="@+id/tvQuantity"
+                        <com.flower.basket.orderflower.views.ThemeBoldText
+                            android:id="@+id/tvFlowerName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:text="@string/daily"
-                            android:textColor="@color/themeTextGrey"
+                            android:textColor="@color/themeColor"
                             android:textSize="@dimen/_13ssp" />
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:orientation="horizontal">
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/started_on"
-                            android:textColor="@color/themeTextGrey"
-                            android:textSize="@dimen/_11ssp" />
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:id="@+id/tvStartDate"
+                        <com.flower.basket.orderflower.views.ThemeBoldText
+                            android:id="@+id/tvFlowerTeluguName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
                             android:text="@string/daily"
-                            android:textColor="@color/themeTextGrey"
-                            android:textSize="@dimen/_11ssp" />
+                            android:textColor="@color/themeColor"
+                            android:textSize="@dimen/_13ssp" />
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_3sdp"
+                            android:orientation="horizontal">
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/quantity"
+                                android:textColor="@color/themeTextGrey"
+                                android:textSize="@dimen/_13ssp" />
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvQuantity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:text="@string/daily"
+                                android:textColor="@color/themeTextGrey"
+                                android:textSize="@dimen/_13ssp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:orientation="horizontal">
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/started_on"
+                                android:textColor="@color/themeTextGrey"
+                                android:textSize="@dimen/_11ssp" />
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvStartDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:text="@string/daily"
+                                android:textColor="@color/themeTextGrey"
+                                android:textSize="@dimen/_11ssp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_7sdp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/status"
+                                android:textColor="@color/themeTextGrey"
+                                android:textSize="@dimen/_11ssp" />
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:id="@+id/tvStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_5sdp"
+                                android:text="@string/status_activated"
+                                android:textColor="@color/themeTextGrey"
+                                android:textSize="@dimen/_11ssp" />
+
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_7sdp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/status"
-                            android:textColor="@color/themeTextGrey"
-                            android:textSize="@dimen/_11ssp" />
-
-                        <com.flower.basket.orderflower.views.ThemeText
-                            android:id="@+id/tvStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_5sdp"
-                            android:text="@string/status_activated"
-                            android:textColor="@color/themeTextGrey"
-                            android:textSize="@dimen/_11ssp" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
-            </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDeleteSubscription"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:adjustViewBounds="true"
+                    android:padding="@dimen/_7sdp"
+                    android:src="@drawable/ic_delete"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivDeleteSubscription"
-                android:layout_width="@dimen/_35sdp"
-                android:layout_height="@dimen/_35sdp"
-                android:adjustViewBounds="true"
-                android:padding="@dimen/_7sdp"
-                android:src="@drawable/ic_delete"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivChangeStatus"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/_6sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/ic_day_checked" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivChangeStatus"
-                android:layout_width="@dimen/_20sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_day_checked"
-                android:layout_margin="@dimen/_6sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                <!--            <com.flower.basket.orderflower.views.MySwitchButton-->
+                <!--                android:id="@+id/switchStatus"-->
+                <!--                android:layout_width="@dimen/_30sdp"-->
+                <!--                android:layout_height="@dimen/_20sdp"-->
+                <!--                android:layout_gravity="center"-->
+                <!--                android:layout_margin="@dimen/_6sdp"-->
+                <!--                app:sb_checked_color="@color/themeColor"-->
+                <!--                app:sb_checkedbutton_color="@color/white"-->
+                <!--                app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                app:sb_show_indicator="false" />-->
 
-<!--            <com.flower.basket.orderflower.views.MySwitchButton-->
-<!--                android:id="@+id/switchStatus"-->
-<!--                android:layout_width="@dimen/_30sdp"-->
-<!--                android:layout_height="@dimen/_20sdp"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_margin="@dimen/_6sdp"-->
-<!--                app:sb_checked_color="@color/themeColor"-->
-<!--                app:sb_checkedbutton_color="@color/white"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                app:sb_show_indicator="false" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
 
     </androidx.cardview.widget.CardView>
 

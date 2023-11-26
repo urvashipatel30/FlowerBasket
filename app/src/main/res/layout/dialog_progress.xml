@@ -25,7 +25,7 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_speed="1.5"
-            app:lottie_rawRes="@raw/ic_save" />
+            app:lottie_rawRes="@raw/ic_loader" />
 
         <com.flower.basket.orderflower.views.ThemeBoldText
             android:id="@+id/tvContentText"

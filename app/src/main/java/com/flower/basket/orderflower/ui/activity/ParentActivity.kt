@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.airbnb.lottie.LottieAnimationView
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
@@ -69,7 +70,7 @@ open class ParentActivity : AppCompatActivity() {
 
     open fun showLoader(activity: Activity, title: String = "", msg: String = "") {
         if (loader == null) {
-            loader = createLoader(activity, "")
+            loader = createLoader(activity, msg)
         }
         if (!activity.isFinishing && !loader!!.isShowing) loader?.show()
     }
@@ -98,6 +99,7 @@ open class ParentActivity : AppCompatActivity() {
         } /*else tvContentText.visibility = View.GONE*/
 
         mDialog.setCancelable(false)
+        //To setup dialog width according to the screen width
         mDialog.window!!
             .setLayout(
                 (activity.resources.displayMetrics.widthPixels * 0.82).toInt(),
