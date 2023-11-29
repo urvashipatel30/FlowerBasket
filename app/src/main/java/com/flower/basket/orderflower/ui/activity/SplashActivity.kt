@@ -24,10 +24,6 @@ class SplashActivity : ParentActivity() {
         setUpDefaultData()
 
         Handler(Looper.getMainLooper()).postDelayed({
-//            val intent = Intent(activity, LoginActivity::class.java)
-//            startActivity(intent)
-//            finish()
-
             val intent: Intent =
                 if (AppPreference(activity).getPreference(AppPersistence.keys.IS_LOGIN) as Boolean) {
                     Intent(activity, DashboardActivity::class.java)

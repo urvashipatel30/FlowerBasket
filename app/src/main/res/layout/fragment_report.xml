@@ -31,6 +31,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_gravity="center"
+                android:visibility="gone"
                 android:paddingHorizontal="@dimen/_8sdp"
                 android:layout_marginHorizontal="@dimen/_8sdp"
                 android:text="@string/generate_order"

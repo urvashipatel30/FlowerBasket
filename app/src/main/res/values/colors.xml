@@ -30,8 +30,9 @@
     <color name="disabled_itemColor">#5AFFFFFF</color>
 
     <!-- TODO Splash -->
-    <color name="splashTitleColor">@color/pageTitleColor</color>
-    <color name="splashSubTitleColor">@color/white</color>
+    <color name="splashBg">#FEEEE1</color>
+    <color name="splashTitleColor">#840017</color>
+    <color name="splashSubTitleColor">#EA6B00</color>
 
 
     <!-- TODO Login -->

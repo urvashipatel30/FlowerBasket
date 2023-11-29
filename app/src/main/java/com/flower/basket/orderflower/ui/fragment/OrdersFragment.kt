@@ -52,7 +52,7 @@ class OrdersFragment : Fragment() {
             setHasFixedSize(true)
         }
 
-        getOrdersList()
+        generateOrder()
         return binding.root
     }
 
@@ -151,6 +151,77 @@ class OrdersFragment : Fragment() {
         } else {
             errorMsg = getString(R.string.error_internet_msg)
             showList(false, errorMsg)
+        }
+    }
+
+    private fun generateOrder() {
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            parentActivity.showLoader(activity)
+
+            RetroClient.apiService.generateOrders()
+                .enqueue(object : Callback<APIResponse> {
+                    override fun onResponse(
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
+                    ) {
+//                        parentActivity.dismissLoader()
+                        Log.e(
+                            "generateOrder: ",
+                            "response => $response, ${response.isSuccessful}"
+                        )
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            parentActivity.showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val generateOrderResponse = response.body()
+                        if (generateOrderResponse != null) {
+                            Log.e(
+                                "generateOrder: ",
+                                "response => ${generateOrderResponse.succeeded}, ${generateOrderResponse.data}"
+                            )
+
+                            if (generateOrderResponse.succeeded) {
+//                                parentActivity.showDialog(
+//                                    activity,
+//                                    dialogType = AppAlertDialog.SUCCESS_TYPE,
+//                                    msg = generateOrderResponse.message
+//                                )
+                            } else {
+                                parentActivity.showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = generateOrderResponse.message
+                                )
+                            }
+                        }
+
+                        getOrdersList()
+                    }
+
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+                        parentActivity.dismissLoader()
+                        parentActivity.showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            parentActivity.showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
         }
     }
 
