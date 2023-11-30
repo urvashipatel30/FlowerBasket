@@ -13,7 +13,6 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.airbnb.lottie.LottieAnimationView
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
@@ -88,7 +87,7 @@ open class ParentActivity : AppCompatActivity() {
         mDialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val mInflater = LayoutInflater.from(activity)
-        val layout = mInflater.inflate(R.layout.dialog_progress, null)
+        val layout = mInflater.inflate(R.layout.dialog_loader, null)
         mDialog.setContentView(layout)
 
         val tvContentText = (layout.findViewById<View>(R.id.tvContentText) as TextView)

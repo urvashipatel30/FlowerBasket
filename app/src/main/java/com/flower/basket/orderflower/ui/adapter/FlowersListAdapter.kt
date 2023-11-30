@@ -1,14 +1,13 @@
 package com.flower.basket.orderflower.ui.adapter
 
 import android.app.Activity
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.data.FlowerData
+import com.flower.basket.orderflower.data.flower.FlowerData
 import com.flower.basket.orderflower.databinding.ItemFlowersBinding
 import com.flower.basket.orderflower.utils.SubscriptionType
 import com.flower.basket.orderflower.utils.UserType

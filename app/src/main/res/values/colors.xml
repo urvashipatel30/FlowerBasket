@@ -14,11 +14,15 @@
 <!--    <color name="themeColorLight">#FFD4D1</color>-->
 
     <!-- TODO Peach -->
-    <color name="themeColor">#F18E73</color>
-    <color name="themeColorLight">#F8C9BF</color>
-    <color name="themeColorUltraLight">#FBD7C9</color>
+<!--    <color name="themeColor">#FFC167</color>-->
+    <color name="themeColor">#FFC169</color>
+    <color name="themeColorDark">#FF9E15</color>
+    <color name="themeColorMiddle">#FFC169</color>
+    <color name="themeColorLight">#FFDBA8</color>
+<!--    <color name="themeColorLight">#FFCC84</color>-->
+    <color name="themeColorUltraLight">#FEE2BB</color>
 
-    <color name="themeColorLightest">#FEF2F2</color>
+    <color name="themeColorLightest">#FBE7CB</color>
 
     <color name="themeGrey">#A4959C</color>
     <color name="themeTextGrey">#84797E</color>
@@ -37,11 +41,12 @@
 
     <!-- TODO Login -->
 <!--    <color name="loginStatusBar">#D1DDEB</color>-->
-    <color name="loginStatusBar">#C1D6E7</color>
+    <color name="loginBg">#FEEEE1</color>
+    <color name="loginStatusBar">@color/loginBg</color>
     <color name="login_bg">#BF000000</color>
 
     <color name="login_tab_unselected">@color/themeColorLight</color>
-    <color name="unselectedLoginTabTextColor">#CD7058</color>
+    <color name="unselectedLoginTabTextColor">@color/themeColorDark</color>
 <!--    <color name="unselectedLoginTabTextColor">#FC8AA3</color>-->
 
     <color name="text_hint">#99FFFFFF</color>

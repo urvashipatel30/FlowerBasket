@@ -7,10 +7,10 @@ import android.view.View.OnClickListener
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.ui.login.data.UserData
+import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
-import com.flower.basket.orderflower.data.UpdatePasswordRequest
+import com.flower.basket.orderflower.data.user.UpdatePasswordRequest
 import com.flower.basket.orderflower.databinding.ActivityChangePasswordBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
@@ -24,7 +24,7 @@ class ChangePasswordActivity : ParentActivity(), OnClickListener {
     private lateinit var activity: Activity
     private lateinit var binding: ActivityChangePasswordBinding
 
-    private var userDetails: UserData? = null
+    public var userDetails: UserData? = null
     private var currentPassword = ""
     private var newPassword = ""
     private var confirmPassword = ""

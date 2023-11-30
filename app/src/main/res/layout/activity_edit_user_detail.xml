@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/screen_margin"
             android:orientation="vertical"
-            android:paddingBottom="@dimen/screen_margin">
+            android:paddingBottom="@dimen/_20sdp">
 
             <LinearLayout
                 android:id="@+id/llEmailID"

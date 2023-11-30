@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.SubscriptionListData
-import com.flower.basket.orderflower.data.SubscriptionListResponse
-import com.flower.basket.orderflower.data.SubscriptionStatusRequest
+import com.flower.basket.orderflower.data.subscription.SubscriptionListData
+import com.flower.basket.orderflower.data.subscription.SubscriptionListResponse
+import com.flower.basket.orderflower.data.subscription.SubscriptionStatusRequest
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSubscriptionsBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
@@ -61,6 +61,10 @@ class SubscriptionsFragment : ParentFragment() {
         binding.rvSubscriptions.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
+        }
+
+        binding.backLayout.ivBackAction.setOnClickListener {
+            parentActivity.backToHome()
         }
 
         getSubscriptionList()

@@ -14,13 +14,15 @@ import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSettingsBinding
 import com.flower.basket.orderflower.ui.activity.ChangePasswordActivity
+import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.EditUserDetailActivity
-import com.flower.basket.orderflower.ui.login.LoginActivity
+import com.flower.basket.orderflower.ui.activity.LoginActivity
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 
-class SettingsFragment : Fragment(), OnClickListener {
+class SettingsFragment : ParentFragment(), OnClickListener {
 
     private lateinit var activity: Activity
+    private lateinit var parentActivity: DashboardActivity
     private lateinit var binding: FragmentSettingsBinding
 
     override fun onCreateView(
@@ -31,8 +33,10 @@ class SettingsFragment : Fragment(), OnClickListener {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
 
         activity = requireActivity()
+        parentActivity = activity as DashboardActivity
         Log.e("onCreateView: ", "Settings activity => $activity")
 
+        binding.backLayout.ivBackAction.setOnClickListener(this)
         binding.llMyProfile.setOnClickListener(this)
         binding.llChangePassword.setOnClickListener(this)
         binding.llLogout.setOnClickListener(this)
@@ -43,6 +47,10 @@ class SettingsFragment : Fragment(), OnClickListener {
     override fun onClick(view: View?) {
 
         when (view) {
+            binding.backLayout.ivBackAction -> {
+                parentActivity.backToHome()
+            }
+
             binding.llMyProfile -> {
                 val intent = Intent(activity, EditUserDetailActivity::class.java)
                 startActivity(intent)

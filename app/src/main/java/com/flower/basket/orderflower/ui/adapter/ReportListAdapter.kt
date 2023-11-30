@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.data.ReportData
+import com.flower.basket.orderflower.data.report.ReportData
 import com.flower.basket.orderflower.databinding.ItemReportBinding
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.OrderStatus

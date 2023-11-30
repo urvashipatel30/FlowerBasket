@@ -10,11 +10,10 @@ import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.FlowerData
-import com.flower.basket.orderflower.data.UpdateFlowerRequest
+import com.flower.basket.orderflower.data.flower.FlowerData
+import com.flower.basket.orderflower.data.flower.UpdateFlowerRequest
 import com.flower.basket.orderflower.databinding.ActivityEditFlowerDetailsBinding
 import com.flower.basket.orderflower.ui.fragment.HomeFragment
-import com.flower.basket.orderflower.ui.fragment.SubscriptionsFragment
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson

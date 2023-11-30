@@ -12,7 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
-import com.flower.basket.orderflower.data.VendorContactResponse
+import com.flower.basket.orderflower.data.vendor.VendorContactResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentHelpBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
@@ -45,6 +45,10 @@ class HelpFragment : ParentFragment() {
         parentActivity = (activity as DashboardActivity)
 
         getVendorDetail()
+
+        binding.backLayout.ivBackAction.setOnClickListener {
+            parentActivity.backToHome()
+        }
 
         binding.tvAppPhoneNumber.setOnClickListener {
             val number = binding.tvAppPhoneNumber.text.toString().replace("+91 ", "")

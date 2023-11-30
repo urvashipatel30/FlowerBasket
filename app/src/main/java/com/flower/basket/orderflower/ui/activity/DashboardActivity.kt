@@ -1,17 +1,14 @@
 package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import android.widget.TextView
+import android.text.TextUtils
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
+import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.RecyclerView.Adapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.ui.adapter.DashboardPagerAdapter
 import com.flower.basket.orderflower.data.preference.AppPersistence
@@ -23,19 +20,19 @@ import com.flower.basket.orderflower.ui.fragment.OrdersFragment
 import com.flower.basket.orderflower.ui.fragment.ReportFragment
 import com.flower.basket.orderflower.ui.fragment.SettingsFragment
 import com.flower.basket.orderflower.ui.fragment.SubscriptionsFragment
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class DashboardActivity : ParentActivity() {
+open class DashboardActivity : ParentActivity() {
 
     private lateinit var activity: Activity
     private lateinit var binding: ActivityDashboardBinding
 
     private var isVendor = false
     private lateinit var viewPagerAdapter: DashboardPagerAdapter
+
     private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +46,44 @@ class DashboardActivity : ParentActivity() {
         setupPageNavigation()
         onBackPressedDispatcher.addCallback(this, callback)
 //        setTabWithPager()
+    }
+
+    private fun setupPageNavigation() {
+        binding.bottomNavigation.apply {
+            inflateMenu(if (isVendor) R.menu.bottom_vendor_item_menu else R.menu.bottom_item_menu)
+
+            setOnItemSelectedListener { item ->
+                if (isVendor) {
+                    when (item.itemId) {
+                        R.id.home_item -> loadFragment(HomeFragment())
+                        R.id.report_item -> loadFragment(ReportFragment())
+                        R.id.settings_item -> loadFragment(SettingsFragment())
+                    }
+                } else {
+                    when (item.itemId) {
+                        R.id.subscriptions_item -> loadFragment(SubscriptionsFragment())
+                        R.id.orders_item -> loadFragment(OrdersFragment())
+                        R.id.home_item -> loadFragment(HomeFragment())
+                        R.id.settings_item -> loadFragment(SettingsFragment())
+                        R.id.help_item -> loadFragment(HelpFragment())
+                    }
+                }
+                true
+            }
+
+            selectedItemId = R.id.home_item
+        }
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.flHolder, fragment)
+        transaction.addToBackStack(null) // Add the transaction to the back stack (optional)
+        transaction.commit()
+    }
+
+    fun backToHome() {
+        binding.bottomNavigation.selectedItemId = R.id.home_item
     }
 
     val callback = object : OnBackPressedCallback(true) {
@@ -70,7 +105,7 @@ class DashboardActivity : ParentActivity() {
                     }
                 }
             } else {
-                loadFragment(HomeFragment())
+                backToHome()
             }
         }
     }
@@ -116,38 +151,4 @@ class DashboardActivity : ParentActivity() {
             currentItem = if (isVendor) 0 else 2
         }
     }*/
-
-    private fun setupPageNavigation() {
-        binding.bottomNavigation.apply {
-            inflateMenu(if (isVendor) R.menu.bottom_vendor_item_menu else R.menu.bottom_item_menu)
-
-            setOnItemSelectedListener { item ->
-                if (isVendor) {
-                    when (item.itemId) {
-                        R.id.home_item -> loadFragment(HomeFragment())
-                        R.id.report_item -> loadFragment(ReportFragment())
-                        R.id.settings_item -> loadFragment(SettingsFragment())
-                    }
-                } else {
-                    when (item.itemId) {
-                        R.id.subscriptions_item -> loadFragment(SubscriptionsFragment())
-                        R.id.orders_item -> loadFragment(OrdersFragment())
-                        R.id.home_item -> loadFragment(HomeFragment())
-                        R.id.settings_item -> loadFragment(SettingsFragment())
-                        R.id.help_item -> loadFragment(HelpFragment())
-                    }
-                }
-                true
-            }
-
-            selectedItemId = R.id.home_item
-        }
-    }
-
-    private fun loadFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.flHolder, fragment)
-        transaction.addToBackStack(null) // Add the transaction to the back stack (optional)
-        transaction.commit()
-    }
 }

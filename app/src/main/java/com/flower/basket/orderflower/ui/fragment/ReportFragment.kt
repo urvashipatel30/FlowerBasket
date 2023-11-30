@@ -18,10 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
-import com.flower.basket.orderflower.data.ReportData
-import com.flower.basket.orderflower.data.ReportDataToSend
-import com.flower.basket.orderflower.data.ReportResponse
+import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
+import com.flower.basket.orderflower.data.report.ReportData
+import com.flower.basket.orderflower.data.report.ReportDataToSend
+import com.flower.basket.orderflower.data.report.ReportResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentReportBinding
@@ -86,6 +86,10 @@ class ReportFragment : ParentFragment(), OnClickListener {
         binding.rvReport.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
+        }
+
+        binding.backLayout.ivBackAction.setOnClickListener {
+            parentActivity.backToHome()
         }
 
         loadReport()

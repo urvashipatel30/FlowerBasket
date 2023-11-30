@@ -173,6 +173,7 @@
     <string name="status_pending">Pending</string>
     <string name="status_cancelled">Cancelled</string>
     <string name="status_delivered">Delivered</string>
+    <string name="status_in_delivery">In Delivery</string>
     <string name="status_unknown">Unknown</string>
 
     <string name="alert_cancel_order">Are you sure want to cancel selected order?</string>

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardItem"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_120sdp">
+    android:layout_height="@dimen/_110sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -12,12 +12,15 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardFlower"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:cardBackgroundColor="@color/themeColorLightest"
             app:cardCornerRadius="@dimen/item_card_radius"
             app:cardElevation="@dimen/_4sdp"
             app:cardPreventCornerOverlap="false"
+            android:layout_marginStart="@dimen/_5sdp"
             app:cardUseCompatPadding="true"
+            android:layout_marginVertical="@dimen/_5sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ic_tropical_flame_kanakambaram" />
 
         </androidx.cardview.widget.CardView>
@@ -50,13 +53,13 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/detailTopGuideline" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+<!--        app:layout_constraintTop_toTopOf="@id/detailTopGuideline"-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_15sdp"
             android:layout_marginEnd="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_3sdp"
             android:elevation="@dimen/_5sdp"
@@ -136,7 +139,7 @@
 
                     <com.flower.basket.orderflower.views.ThemeButton
                         android:id="@+id/btnSubscribe"
-                        style="@style/dialog_button"
+                        style="@style/app_button"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/_8sdp"
                         android:layout_weight="1"
@@ -146,7 +149,7 @@
 
                     <com.flower.basket.orderflower.views.ThemeButton
                         android:id="@+id/btnBuyOnce"
-                        style="@style/dialog_button"
+                        style="@style/app_button"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:paddingHorizontal="0dp"

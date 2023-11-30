@@ -18,14 +18,15 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
-import com.flower.basket.orderflower.data.CommunityData
-import com.flower.basket.orderflower.data.CommunityResponse
-import com.flower.basket.orderflower.data.UpdateUserRequest
-import com.flower.basket.orderflower.ui.login.data.UserData
-import com.flower.basket.orderflower.ui.login.data.UserResponse
+import com.flower.basket.orderflower.data.community.CommunityData
+import com.flower.basket.orderflower.data.community.CommunityResponse
+import com.flower.basket.orderflower.data.user.UpdateUserRequest
+import com.flower.basket.orderflower.data.user.UserData
+import com.flower.basket.orderflower.data.user.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityEditUserDetailBinding
+import com.flower.basket.orderflower.ui.adapter.CommunityAdapter
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.PermissionUtils
 import com.flower.basket.orderflower.utils.URIPathHelper
@@ -165,6 +166,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                             if (userResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val userData = userResponse.data
+                                Log.e("editUser: ", "userData => $userData")
 
                                 val json = Gson().toJson(userData)
                                 AppPreference(activity).setPreference(
@@ -288,7 +290,6 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                     ) {
                         dismissLoader()
 
-                        // if response is not successful
                         if (!response.isSuccessful) {
                             showDialog(
                                 activity,
@@ -301,41 +302,32 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                         val communityResponse = response.body()
                         if (communityResponse != null) {
                             if (communityResponse.succeeded) {
-                                // Handle the retrieved community data
                                 communityList = communityResponse.data
 
-                                Log.e("onResponse: ", "communityList => ${communityResponse.data}")
-
-                                // Create an ArrayAdapter using list of community names
                                 val communityNames = communityList!!.map { it.name }.toTypedArray()
                                 val adapter = ArrayAdapter(
                                     activity,
                                     android.R.layout.simple_dropdown_item_1line,
                                     communityNames
                                 )
-
-                                // Set the ArrayAdapter to the AutoCompleteTextView
                                 binding.autoTextCommunity.setAdapter(adapter)
 
-                                Log.e("onResponse: ", "communityId => ${userDetails?.communityId}")
-                                // Set community we got from API
+                                // Set community that got from an API
                                 val community =
                                     communityList!!.find { it.id == userDetails?.communityId }
                                 if (community != null) {
                                     binding.autoTextCommunity.setText(community.name)
                                 } else {
-                                    binding.autoTextCommunity.setText("") // Handle the case where community is not found
+                                    binding.autoTextCommunity.setText("")
                                 }
                                 if (community != null) {
                                     selectedCommunity = community
                                 }
 
-                                // Set an OnItemClickListener to handle item selection
                                 binding.autoTextCommunity.onItemClickListener =
-                                    AdapterView.OnItemClickListener { _, _, position, _ ->
-
-                                        // Retrieve the selected community based on the selected position
-                                        selectedCommunity = communityList!![position]
+                                    AdapterView.OnItemClickListener { _, _, _, _ ->
+                                        val communityName = binding.autoTextCommunity.text.toString()
+                                        selectedCommunity = communityList!!.find { it.name == communityName }!!
                                     }
 
                             } else {

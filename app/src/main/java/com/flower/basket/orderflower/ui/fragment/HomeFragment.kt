@@ -11,9 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
-import com.flower.basket.orderflower.data.FlowerData
-import com.flower.basket.orderflower.data.FlowerResponse
-import com.flower.basket.orderflower.ui.login.data.UserData
+import com.flower.basket.orderflower.data.flower.FlowerData
+import com.flower.basket.orderflower.data.flower.FlowerResponse
+import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentHomeBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity

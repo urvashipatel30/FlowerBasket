@@ -1,23 +1,23 @@
 package com.flower.basket.orderflower.api
 
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
-import com.flower.basket.orderflower.data.CommunityResponse
-import com.flower.basket.orderflower.data.UpdateFlowerRequest
-import com.flower.basket.orderflower.data.UpdateUserRequest
-import com.flower.basket.orderflower.data.FlowerResponse
-import com.flower.basket.orderflower.ui.login.data.LoginRequest
-import com.flower.basket.orderflower.data.OrderRequest
-import com.flower.basket.orderflower.data.OrderResponse
-import com.flower.basket.orderflower.data.ReportResponse
-import com.flower.basket.orderflower.data.SubscriptionItemResponse
-import com.flower.basket.orderflower.data.SubscriptionListResponse
-import com.flower.basket.orderflower.data.SubscriptionStatusRequest
-import com.flower.basket.orderflower.data.UpdatePasswordRequest
-import com.flower.basket.orderflower.data.UpdateSubscriptionRequest
-import com.flower.basket.orderflower.ui.login.data.UserRequest
-import com.flower.basket.orderflower.ui.login.data.UserResponse
-import com.flower.basket.orderflower.data.VendorContactResponse
+import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
+import com.flower.basket.orderflower.data.community.CommunityResponse
+import com.flower.basket.orderflower.data.flower.UpdateFlowerRequest
+import com.flower.basket.orderflower.data.user.UpdateUserRequest
+import com.flower.basket.orderflower.data.flower.FlowerResponse
+import com.flower.basket.orderflower.data.user.LoginRequest
+import com.flower.basket.orderflower.data.order.OrderRequest
+import com.flower.basket.orderflower.data.order.OrderResponse
+import com.flower.basket.orderflower.data.report.ReportResponse
+import com.flower.basket.orderflower.data.subscription.SubscriptionItemResponse
+import com.flower.basket.orderflower.data.subscription.SubscriptionListResponse
+import com.flower.basket.orderflower.data.subscription.SubscriptionStatusRequest
+import com.flower.basket.orderflower.data.user.UpdatePasswordRequest
+import com.flower.basket.orderflower.data.subscription.UpdateSubscriptionRequest
+import com.flower.basket.orderflower.data.user.RegistrationRequest
+import com.flower.basket.orderflower.data.user.UserResponse
+import com.flower.basket.orderflower.data.vendor.VendorContactResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -26,7 +26,10 @@ interface ApiService {
     fun getCommunities(): Call<CommunityResponse>
 
     @POST("api/Users/register")
-    fun registerUser(@Body registerParams: UserRequest): Call<UserResponse>
+    fun registerUser(@Body registerParams: RegistrationRequest): Call<UserResponse>
+
+    @POST("api/Users/login")
+    fun loginUser(@Body loginParams: LoginRequest): Call<UserResponse>
 
     @PUT("api/Users/Update/{id}")
     fun updateUser(
@@ -39,9 +42,6 @@ interface ApiService {
         @Path("id") userId: String,
         @Body params: UpdatePasswordRequest
     ): Call<APIResponse>
-
-    @POST("api/Users/login")
-    fun loginUser(@Body loginParams: LoginRequest): Call<UserResponse>
 
     @GET("api/Flowers/GetAll")
     fun getFlowersList(): Call<FlowerResponse>

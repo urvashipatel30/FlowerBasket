@@ -3,20 +3,47 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/loginBg"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
 
+<!--    <ImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:adjustViewBounds="true"-->
+<!--        android:rotation="180"-->
+<!--        android:scaleType="centerCrop"-->
+<!--        android:src="@drawable/ic_login_bg" />-->
+
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:rotation="180"
+        android:src="@drawable/ic_splash_top"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/textBottomLayoutTopGuideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_login_bg" />
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_login_bottom"
+        app:layout_constraintTop_toBottomOf="@+id/textBottomLayoutTopGuideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="@dimen/screen_margin">
+        android:layout_marginHorizontal="@dimen/_15sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,7 +93,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtLoginMail"
@@ -139,7 +166,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -197,8 +224,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/name"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:text="Test" />
+                    android:inputType="text" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtSignupMail"
@@ -208,8 +234,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/email_id"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:text="test@gmail.com" />
+                    android:inputType="textEmailAddress" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtSignupPassword"
@@ -219,8 +244,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/password"
                     android:imeOptions="actionNext"
-                    android:inputType="textPassword"
-                    android:text="123456" />
+                    android:inputType="textPassword" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -249,8 +273,7 @@
                         android:hint="@string/mobile_no"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:maxLength="10"
-                        android:text="1234567890" />
+                        android:maxLength="10" />
 
                 </LinearLayout>
 
@@ -263,7 +286,6 @@
                     android:hint="@string/community"
                     android:imeOptions="actionNext"
                     android:inputType="text"
-                    android:text="Sample"
                     android:visibility="gone" />
 
                 <!-- By setting the android:completionThreshold attribute to 1,
@@ -286,8 +308,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/block"
                     android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:text="B" />
+                    android:inputType="text" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtFlat"
@@ -297,8 +318,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/flat"
                     android:imeOptions="actionDone"
-                    android:inputType="number"
-                    android:text="201" />
+                    android:inputType="number" />
 
                 <com.flower.basket.orderflower.views.ThemeButton
                     android:id="@+id/btnSignup"

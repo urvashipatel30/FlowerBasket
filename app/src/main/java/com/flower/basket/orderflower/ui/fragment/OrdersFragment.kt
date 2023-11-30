@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
-import com.flower.basket.orderflower.data.OrderData
-import com.flower.basket.orderflower.data.OrderResponse
+import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
+import com.flower.basket.orderflower.data.order.OrderData
+import com.flower.basket.orderflower.data.order.OrderResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentOrdersBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
@@ -25,7 +25,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OrdersFragment : Fragment() {
+class OrdersFragment : ParentFragment() {
 
     private lateinit var activity: Activity
     private lateinit var parentActivity: DashboardActivity
@@ -50,6 +50,10 @@ class OrdersFragment : Fragment() {
         binding.rvOrders.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
+        }
+
+        binding.backLayout.ivBackAction.setOnClickListener {
+            parentActivity.backToHome()
         }
 
         generateOrder()
@@ -286,7 +290,10 @@ class OrdersFragment : Fragment() {
                                     .setConfirmClickListener { appAlertDialog ->
                                         appAlertDialog.dismissWithAnimation()
 
-                                        updateStatus(cancelOrderResponse.data, OrderStatus.CANCELED.value)
+                                        updateStatus(
+                                            cancelOrderResponse.data,
+                                            OrderStatus.CANCELED.value
+                                        )
                                     }
                                     .show()
                             } else {

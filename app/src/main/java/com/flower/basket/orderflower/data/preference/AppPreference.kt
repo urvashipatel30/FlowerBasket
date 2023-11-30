@@ -1,7 +1,7 @@
 package com.flower.basket.orderflower.data.preference
 
 import android.content.Context
-import com.flower.basket.orderflower.ui.login.data.UserData
+import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.data.preference.AppPersistence.Companion.start
 import com.google.gson.Gson
 

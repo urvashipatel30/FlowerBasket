@@ -15,8 +15,8 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.Day
-import com.flower.basket.orderflower.data.FlowerData
-import com.flower.basket.orderflower.data.OrderRequest
+import com.flower.basket.orderflower.data.flower.FlowerData
+import com.flower.basket.orderflower.data.order.OrderRequest
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivityFlowerDetailsBinding
 import com.flower.basket.orderflower.ui.adapter.DaysAdapter

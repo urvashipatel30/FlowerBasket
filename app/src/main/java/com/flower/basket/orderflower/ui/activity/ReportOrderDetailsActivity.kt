@@ -12,8 +12,8 @@ import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.ChangeOrderStatusRequest
-import com.flower.basket.orderflower.data.ReportData
+import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
+import com.flower.basket.orderflower.data.report.ReportData
 import com.flower.basket.orderflower.databinding.ActivityReportOrderDetailsBinding
 import com.flower.basket.orderflower.ui.fragment.ReportFragment
 import com.flower.basket.orderflower.utils.FlowerType
