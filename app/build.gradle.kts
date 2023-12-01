@@ -116,18 +116,10 @@ dependencies {
     //Color palette
     implementation("androidx.palette:palette-ktx:1.0.0")
 
-    //Dynamic Tableview to show Report
-//    implementation("com.github.evrencoskun:TableView:v0.8.9.4")
+    //For Custom Spinner
+    implementation("com.github.skydoves:powerspinner:1.2.7")
 
-    //Write JSON data to Excel file
-//    implementation("org.apache.poi:poi:5.0.0")/* {
-//        exclude(group = "org.apache.xmlgraphics", module = "batik-all")
-//    }*/
-//    implementation("org.apache.poi:poi-ooxml:5.0.0")/* {
-//        exclude(group = "org.apache.xmlgraphics", module = "batik-all")
-//    }*/
-
-//    implementation("org.apache.commons:commons-io:1.3.2")
+    //To make a report in .csv file
     implementation("commons-io:commons-io:2.4")
     implementation("org.json:json:20140107")
 }

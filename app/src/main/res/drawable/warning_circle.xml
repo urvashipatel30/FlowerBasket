@@ -4,6 +4,6 @@
     <solid android:color="@android:color/transparent" />
     <stroke
         android:width="@dimen/common_circle_width"
-        android:color="@color/warning_stroke_color" />
+        android:color="@color/trans_warning_stroke_color" />
 </shape>
 

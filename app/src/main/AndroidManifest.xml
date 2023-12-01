@@ -47,7 +47,7 @@
             android:name=".ui.activity.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme"
+            android:theme="@style/TranslucentStatusBar_Theme"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
@@ -60,6 +60,7 @@
             android:name=".ui.activity.FlowerDetailsActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:theme="@style/TranslucentStatusBar_Theme"
             tools:ignore="LockedOrientationActivity" />
 
         <activity

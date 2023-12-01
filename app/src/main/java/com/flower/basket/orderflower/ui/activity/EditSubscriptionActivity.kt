@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +28,9 @@ import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.Quantity
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
+import com.skydoves.powerspinner.IconSpinnerAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,6 +81,11 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
     @SuppressLint("RestrictedApi", "ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
         binding = ActivityFlowerDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -91,7 +100,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                     Gson().fromJson(intent.getStringExtra("data"), SubscriptionItemData::class.java)
         }
 
-        binding.backLayout.ivBackAction.setOnClickListener(this)
+        binding.ivBackAction.setOnClickListener(this)
         binding.btnOrder.setOnClickListener(this)
         binding.tvQtyMinus.setOnClickListener(this)
         binding.tvQtyPlus.setOnClickListener(this)
@@ -99,11 +108,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         binding.ivRemoveEndDate.setOnClickListener(this)
 
         selectedDaysInterval = subscriptionData?.interval.toString()
-
-        // Create & Set the ArrayAdapter for the Spinner
-        val productTypes = arrayOf(getString(R.string.loose_flowers), getString(R.string.mora))
-        val spnAdapter = ArrayAdapter(this, R.layout.spinner_item_day, productTypes)
-        spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
         binding.apply {
             tvSelectedDaysLabel.text = getString(R.string.selected_days)
@@ -113,32 +117,31 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
             tvEndsLabel.text = getString(R.string.ends_on)
             tvEndDate.text = ""
             btnOrder.text = getString(R.string.subscribe)
-
-            spinnerProductType.adapter = spnAdapter
-            // Set an OnItemSelectedListener for the Spinner
-            spinnerProductType.onItemSelectedListener =
-                object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>?,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        flowerType = position
-                        Log.e("onItemSelected: ", "position => $position")
-                        // Handle the selected item (e.g., update the price based on the selected item)
-                        binding.tvMeasurement.text =
-                            if (position == 0) getString(R.string.grams) else getString(R.string.mora)
-
-                        setDefaultQuantity(position)
-                        setFlowerPrice(position)
-                        calculatePrice()
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>?) {
-                    }
-                }
         }
+
+
+        binding.spinnerProductType.apply {
+            setSpinnerAdapter(IconSpinnerAdapter(this))
+            setItems(
+                arrayListOf(
+                    IconSpinnerItem(text = getString(R.string.loose_flowers)),
+                    IconSpinnerItem(text = getString(R.string.mora))
+                )
+            )
+            getSpinnerRecyclerView().layoutManager = LinearLayoutManager(activity)
+            lifecycleOwner = activity as EditSubscriptionActivity
+
+            setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<IconSpinnerItem?> { _, _, newIndex, _ ->
+                flowerType = newIndex
+                binding.tvMeasurement.text =
+                    if (newIndex == 0) getString(R.string.grams) else getString(R.string.mora)
+
+                setDefaultQuantity(newIndex)
+                setFlowerPrice(newIndex)
+                calculatePrice()
+            })
+        }
+
 
         daysAdapter =
             DaysAdapter(daysList, isFromEdit = true, object : DaysAdapter.DaySelectionCallback {
@@ -175,8 +178,8 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
             .centerCrop()
             .into(binding.ivFlowerImage)
 
-        subscriptionData?.flowerType?.let { binding.spinnerProductType.setSelection(it) }
-        binding.spinnerProductType.visibility = View.INVISIBLE
+        subscriptionData?.flowerType?.let { binding.spinnerProductType.selectItemByIndex(it) }
+        binding.cardSpinnerProductType.visibility = View.GONE
     }
 
     private fun getSubscriptionDetail() {
@@ -271,12 +274,11 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
             mora -> subscriptionData?.moraPrice
             else -> subscriptionData?.loosePrice
         }
-        Log.e("onCreate: ", "subscriptionData => $subscriptionData")
         binding.tvPrice.text = getString(R.string.rupee_symbol, flowerPrice?.toDouble())
+        binding.tvProductPrice.text = getString(R.string.rupee_symbol, flowerPrice?.toDouble())
     }
 
     private fun calculatePrice() {
-        val selectedProduct = binding.spinnerProductType.selectedItem.toString()
         var quantity = binding.tvQuantity.text.toString()
 //        if (flowerType == looseFlower) quantity = (quantity.toInt() / 100).toString()
 
@@ -293,7 +295,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
     override fun onClick(view: View?) {
 
         when (view) {
-            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
+            binding.ivBackAction -> onBackPressedDispatcher.onBackPressed()
 
             binding.btnOrder -> {
                 if (selectedDaysInterval.isEmpty()) {

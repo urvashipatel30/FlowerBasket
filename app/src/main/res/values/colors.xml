@@ -14,20 +14,18 @@
 <!--    <color name="themeColorLight">#FFD4D1</color>-->
 
     <!-- TODO Peach -->
-<!--    <color name="themeColor">#FFC167</color>-->
-    <color name="themeColor">#FFC169</color>
-    <color name="themeColorDark">#FF9E15</color>
-    <color name="themeColorMiddle">#FFC169</color>
-    <color name="themeColorLight">#FFDBA8</color>
-<!--    <color name="themeColorLight">#FFCC84</color>-->
-    <color name="themeColorUltraLight">#FEE2BB</color>
+    <color name="themeColor">#FCAF71</color>
+    <color name="themeColorDark">#FF8B2D</color>
+    <color name="themeColorLight">#FFCDA5</color>
+    <color name="themeColorUltraLight">#FFD9BA</color>
 
-    <color name="themeColorLightest">#FBE7CB</color>
+    <color name="themeColorLightest">#FFDEC4</color>
 
     <color name="themeGrey">#A4959C</color>
     <color name="themeTextGrey">#84797E</color>
 
     <color name="screenBg">@color/white</color>
+<!--    <color name="screenBg">#FFF3EA</color>-->
     <color name="pageTitleColor">#CF6956</color>
 
     <color name="semiTransparent_black">#B2111111</color>
@@ -80,8 +78,8 @@
     <color name="order_ItemTextColor">@color/themeTextGrey</color>
 
     <!-- TODO Orders page -->
-    <color name="cancel_order_btn_bg_color">@color/themeColorLight</color>
-    <color name="cancel_order_btn_bg_pressed_color">#F9B5A6</color>
+    <color name="cancel_order_btn_bg_color">#FEB87F</color>
+    <color name="cancel_order_btn_bg_pressed_color">#FF7D14</color>
 
     <color name="cancelled_orderColor">@color/disabled_itemColor</color>
 
@@ -90,8 +88,8 @@
     <color name="disabled_communityColor">@color/disabled_itemColor</color>
 
     <!-- TODO Help page -->
-    <color name="editable_text_bg">#F8BAAD</color>
-    <color name="editable_text_hint">#F8BAAD</color>
+    <color name="editable_text_bg">@color/themeColorLight</color>
+    <color name="editable_text_hint">@color/themeColorLight</color>
 
 
     <!-- TODO Flowers Details page -->
@@ -111,8 +109,8 @@
 
     <!-- TODO Dialog -->
     <color name="dialogBgColor">@color/white</color>
-    <color name="dialogTitleColor">#EF7D5E</color>
-    <color name="dialogMsgColor">#EF7D5E</color>
+    <color name="dialogTitleColor">@color/themeColorDark</color>
+    <color name="dialogMsgColor">@color/themeColorDark</color>
 
     <color name="float_transparent">#00000000</color>
     <color name="dialog_bg_color">@color/semiTransparent_black</color>
@@ -124,18 +122,20 @@
     <color name="gray_btn_bg_pressed_color">#7F8287</color>
 
     <color name="dialog_btn_bg_color">@color/themeColor</color>
-    <color name="dialog_btn_bg_pressed_color">#DD5A20</color>
+    <color name="dialog_btn_bg_pressed_color">#FF7D14</color>
 
-    <color name="red_btn_bg_color">#DD6B55</color>
-    <color name="red_btn_bg_pressed_color">#CD5B55</color>
+    <color name="red_btn_bg_color">#FF9742</color>
+    <color name="red_btn_bg_pressed_color">#F16B00</color>
 
 <!--    <color name="error_stroke_color">#F27474</color>-->
-    <color name="error_stroke_color">#F47A58</color>
+    <color name="error_stroke_color">#FF7D14</color>
+    <color name="trans_error_stroke_color">#B1FCAF71</color>
 
-    <color name="success_stroke_color">#F47A58</color>
-    <color name="trans_success_stroke_color">#94F47A58</color>
+    <color name="success_stroke_color">#FF7D14</color>
+    <color name="trans_success_stroke_color">#B1FCAF71</color>
 
-    <color name="warning_stroke_color">#EF7D5E</color>
+    <color name="warning_stroke_color">#EF6B00</color>
+    <color name="trans_warning_stroke_color">#B1FCAF71</color>
 <!--    <color name="warning_stroke_color">#F5A089</color>-->
 <!--    <color name="warning_stroke_color">#F8BB86</color>-->
 

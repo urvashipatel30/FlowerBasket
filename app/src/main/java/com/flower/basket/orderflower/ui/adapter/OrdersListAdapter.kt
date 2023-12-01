@@ -105,7 +105,7 @@ class OrdersListAdapter(
                 onItemSelected.invoke(order)
             }
 
-            binding.btnCancelOrder.setOnClickListener {
+            binding.llCancelOrder.setOnClickListener {
                 onOrderCancelled.invoke(order)
             }
         }

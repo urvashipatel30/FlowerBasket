@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,6 +27,11 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <androidx.appcompat.widget.AppCompatImageView
+        style="@style/screen_bottomImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -52,16 +57,16 @@
 
             <LinearLayout
                 android:id="@+id/llAppMail"
+                style="@style/HomeTextBoxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/HomeTextBoxStyle"
                 android:orientation="horizontal">
 
                 <com.flower.basket.orderflower.views.ThemeText
                     style="@style/HomeFieldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/email_id"/>
+                    android:text="@string/email_id" />
 
                 <com.flower.basket.orderflower.views.ThemeText
                     android:id="@+id/tvAppEmailID"
@@ -75,16 +80,16 @@
 
             <LinearLayout
                 android:id="@+id/llAppPhoneNumber"
+                style="@style/HomeTextBoxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/HomeTextBoxStyle"
                 android:orientation="horizontal">
 
                 <com.flower.basket.orderflower.views.ThemeText
                     style="@style/HomeFieldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mobile_no"/>
+                    android:text="@string/mobile_no" />
 
                 <com.flower.basket.orderflower.views.ThemeText
                     android:id="@+id/tvAppPhoneNumber"
@@ -114,16 +119,16 @@
 
             <LinearLayout
                 android:id="@+id/llVendorName"
+                style="@style/HomeTextBoxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/HomeTextBoxStyle"
                 android:orientation="horizontal">
 
                 <com.flower.basket.orderflower.views.ThemeText
                     style="@style/HomeFieldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/name"/>
+                    android:text="@string/name" />
 
                 <com.flower.basket.orderflower.views.ThemeText
                     android:id="@+id/tvVendorName"
@@ -136,16 +141,16 @@
 
             <LinearLayout
                 android:id="@+id/llVendorMail"
+                style="@style/HomeTextBoxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/HomeTextBoxStyle"
                 android:orientation="horizontal">
 
                 <com.flower.basket.orderflower.views.ThemeText
                     style="@style/HomeFieldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/email_id"/>
+                    android:text="@string/email_id" />
 
                 <com.flower.basket.orderflower.views.ThemeText
                     android:id="@+id/tvVendorEmailID"
@@ -158,16 +163,16 @@
 
             <LinearLayout
                 android:id="@+id/llVendorPhoneNumber"
+                style="@style/HomeTextBoxStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/HomeTextBoxStyle"
                 android:orientation="horizontal">
 
                 <com.flower.basket.orderflower.views.ThemeText
                     style="@style/HomeFieldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/mobile_no"/>
+                    android:text="@string/mobile_no" />
 
                 <com.flower.basket.orderflower.views.ThemeText
                     android:id="@+id/tvVendorPhoneNumber"
@@ -182,4 +187,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

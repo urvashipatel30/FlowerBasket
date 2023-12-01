@@ -24,13 +24,13 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/orderDetailView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/_5sdp"
-                android:paddingVertical="@dimen/_5sdp">
+                android:layout_height="@dimen/_100sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_95sdp"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/_5sdp"
+                    android:paddingVertical="@dimen/_5sdp"
                     app:layout_constraintBottom_toTopOf="@+id/llCancelOrder">
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -41,22 +41,10 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_profile_holder"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintDimensionRatio="1:1.1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
-
-                    <!--            <com.google.android.material.imageview.ShapeableImageView-->
-                    <!--                android:id="@+id/ivFlowerPhoto"-->
-                    <!--                android:layout_width="@dimen/_55sdp"-->
-                    <!--                android:layout_height="@dimen/_55sdp"-->
-                    <!--                android:elevation="@dimen/_8sdp"-->
-                    <!--                android:scaleType="centerCrop"-->
-                    <!--                android:src="@drawable/ic_profile_holder"-->
-                    <!--                app:layout_constraintDimensionRatio="1:1"-->
-                    <!--                app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                app:layout_constraintTop_toTopOf="parent"-->
-                    <!--                app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />-->
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -128,7 +116,7 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_3sdp"
                             android:orientation="horizontal">
@@ -154,24 +142,38 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <FrameLayout
+                <LinearLayout
                     android:id="@+id/llCancelOrder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:paddingHorizontal="@dimen/_13sdp"
+                    android:background="@drawable/cancel_order_button_background"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:paddingTop="@dimen/_5sdp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent">
+                    app:layout_constraintHorizontal_bias="0.5">
 
-                    <com.flower.basket.orderflower.views.ThemeButton
+                    <com.flower.basket.orderflower.views.ThemeText
                         android:id="@+id/btnCancelOrder"
-                        style="@style/dialog_button"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:background="@drawable/cancel_order_button_background"
-                        android:text="@string/cancel_order" />
+                        android:includeFontPadding="false"
+                        android:text="@string/cancel"
+                        android:textColor="@color/button_text_color"
+                        android:textSize="@dimen/_12ssp" />
 
-                </FrameLayout>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:paddingVertical="@dimen/_11sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_double_arrow2"
+                        app:tint="@color/white" />
+
+                </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

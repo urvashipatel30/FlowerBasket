@@ -7,8 +7,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.view.WindowManager
+import androidx.annotation.Nullable
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
@@ -27,12 +27,16 @@ import com.flower.basket.orderflower.utils.SubscriptionType
 import com.flower.basket.orderflower.utils.Utils
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
 import com.google.gson.Gson
+import com.skydoves.powerspinner.IconSpinnerAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
 
 class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
@@ -73,6 +77,11 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     @SuppressLint("RestrictedApi", "ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
         binding = ActivityFlowerDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -90,7 +99,10 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             tvFlowerName.text =
                 if (flowerData?.teluguName?.isNotEmpty() == true) flowerData?.teluguName else flowerData?.name
 
-            tvQuantity.text = quantityToOrder.toString()
+            val quantity = quantityToOrder.toString()
+            tvQuantity.text = quantity
+            tvTotalQty.text = (quantity.toInt().times(gramsQty)).toString()
+
             ivRemoveEndDate.visibility = View.GONE
             tvStartDate.text = getFormattedCurrentDate()
         }
@@ -102,8 +114,8 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             .centerCrop()
             .into(binding.ivFlowerImage)
 
-        binding.backLayout.ivBackAction.setOnClickListener(this)
-        binding.btnOrder.setOnClickListener(this)
+        binding.ivBackAction.setOnClickListener(this)
+        binding.llOrderBtn.setOnClickListener(this)
         binding.tvQtyMinus.setOnClickListener(this)
         binding.tvQtyPlus.setOnClickListener(this)
         binding.endDateLayout.setOnClickListener(this)
@@ -134,36 +146,29 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         }
 
 
-        // Create & Set the ArrayAdapter for the Spinner
-        val productTypes = arrayOf(getString(R.string.loose_flowers), getString(R.string.mora))
-        val spnAdapter = ArrayAdapter(this, R.layout.spinner_item_day, productTypes)
-        spnAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerProductType.adapter = spnAdapter
+        binding.spinnerProductType.apply {
+            setSpinnerAdapter(IconSpinnerAdapter(this))
+            setItems(
+                arrayListOf(
+                    IconSpinnerItem(text = getString(R.string.loose_flowers)),
+                    IconSpinnerItem(text = getString(R.string.mora))
+                )
+            )
+            getSpinnerRecyclerView().layoutManager = LinearLayoutManager(activity)
+            selectItemByIndex(0)
+            lifecycleOwner = activity as FlowerDetailsActivity
 
-        binding.spinnerProductType.setSelection(0)
+            setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<IconSpinnerItem?> { _, _, newIndex, _ ->
+                flowerType = newIndex
+                binding.tvMeasurement.text =
+                    if (newIndex == 0) getString(R.string.grams) else getString(R.string.mora)
 
-        // Set an OnItemSelectedListener for the Spinner
-        binding.spinnerProductType.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    flowerType = position
-                    // Handle the selected item (e.g., update the price based on the selected item)
-                    binding.tvMeasurement.text =
-                        if (position == 0) getString(R.string.grams) else getString(R.string.mora)
-
-                    setDefaultQuantity(position)
-                    setFlowerPrice(position)
-                    calculatePrice()
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-            }
+                setDefaultQuantity(newIndex)
+                setFlowerPrice(newIndex)
+                calculatePrice()
+            })
+        }
+        setFlowerPrice(0)
 
 
         binding.rvWeekDays.apply {
@@ -188,6 +193,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             else -> flowerData?.loosePrice
         }
         binding.tvPrice.text = getString(R.string.rupee_symbol, flowerPrice?.toDouble())
+        binding.tvProductPrice.text = getString(R.string.rupee_symbol, flowerPrice?.toDouble())
     }
 
     private fun setDefaultQuantity(flowerTypePosition: Int) {
@@ -208,7 +214,6 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     }
 
     private fun calculatePrice() {
-        val selectedProduct = binding.spinnerProductType.selectedItem.toString()
         var quantity = binding.tvQuantity.text.toString()
 //        if (flowerType == looseFlower) quantity = (quantity.toInt() / 100).toString()
 
@@ -226,9 +231,9 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     override fun onClick(view: View?) {
 
         when (view) {
-            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
+            binding.ivBackAction -> onBackPressedDispatcher.onBackPressed()
 
-            binding.btnOrder -> {
+            binding.llOrderBtn -> {
                 if (buyOption == SubscriptionType.Subscribe.value && selectedDaysInterval.isEmpty()) {
                     showDialog(activity, msg = getString(R.string.error_select_interval))
                 } else {
@@ -285,14 +290,14 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         Log.e("placeOrder: ", "subscriptionEndDate => $subscriptionEndDate")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
-            binding.btnOrder.isEnabled = false
+            binding.llOrderBtn.isEnabled = false
             isPlaceOrderClickable = false
 
             showLoader(activity)
 
             if (userDetails?.id == null || flowerData?.id == null) {
                 dismissLoader()
-                binding.btnOrder.isEnabled = true
+                binding.llOrderBtn.isEnabled = true
                 isPlaceOrderClickable = true
 
                 showDialog(
@@ -320,7 +325,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                         call: Call<APIResponse>,
                         response: Response<APIResponse>
                     ) {
-                        binding.btnOrder.isEnabled = true
+                        binding.llOrderBtn.isEnabled = true
                         isPlaceOrderClickable = true
 
                         dismissLoader()
@@ -372,7 +377,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
                     override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                         dismissLoader()
-                        binding.btnOrder.isEnabled = true
+                        binding.llOrderBtn.isEnabled = true
                         isPlaceOrderClickable = true
 
                         showDialog(

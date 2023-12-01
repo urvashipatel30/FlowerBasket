@@ -105,6 +105,7 @@
     <string name="label_telugu_name">Telugu Name:</string>
     <string name="label_loose_price">Loose Price:</string>
     <string name="label_mora_price">Mora Price:</string>
+    <string name="label_quantity">Quantity:</string>
 
     <string name="enter_flower_name">Enter Flower Name</string>
     <string name="enter_telugu_name">Enter Telugu Name</string>
@@ -271,6 +272,7 @@
     <string name="order_details"><u>Order Details</u></string>
     <string name="dialog_retry">Retry</string>
     <string name="dialog_retry_community_list">Please, retry to get community list!</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

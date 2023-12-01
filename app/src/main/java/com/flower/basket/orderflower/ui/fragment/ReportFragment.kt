@@ -55,8 +55,8 @@ class ReportFragment : ParentFragment(), OnClickListener {
     private var reportListJSON: String? = null
     private var reportList = ArrayList<ReportData>()
 
-    //    private var reportListToSend = emptyList<ReportDataToSend>()
-//    private var reportListToSend: List<LinkedHashMap<String, Any>> = emptyList()
+//    private var reportListToSend: List<ReportDataToSend> = emptyList()
+    //    private var reportListToSend: List<LinkedHashMap<String, Any>> = emptyList()
     private lateinit var reportAdapter: ReportListAdapter
 
     private val dateFormat = SimpleDateFormat("E, MMM dd yyyy", Locale.US)
@@ -408,7 +408,7 @@ class ReportFragment : ParentFragment(), OnClickListener {
         }
     }
 
-    fun saveToCSVFile() {
+    private fun saveToCSVFile() {
         val initialDateStr = binding.tvSelectedDate.text.toString()
 
         // Copy values from one list to another using the extension function
