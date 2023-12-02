@@ -66,28 +66,26 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
         binding.ivEditProfile.setOnClickListener(this)
         binding.btnSubmit.setOnClickListener(this)
 
+        userDetails = AppPreference(activity).getUserDetails()
         isVendor = AppPreference(activity).getPreference(AppPersistence.keys.IS_VENDOR) as Boolean
 
-        if (isVendor) {
-            binding.llBlock.visibility = View.GONE
-            binding.llFlat.visibility = View.GONE
-            binding.autoTextCommunity.isEnabled = false
-
-            val foregroundDrawable = if (binding.autoTextCommunity.isEnabled) {
-                ColorDrawable(ContextCompat.getColor(activity, R.color.transparent))
-            } else {
-                ColorDrawable(ContextCompat.getColor(activity, R.color.disabled_communityColor))
+        binding.apply {
+            if (isVendor) {
+                llBlock.visibility = View.GONE
+                llFlat.visibility = View.GONE
+                autoTextCommunity.isEnabled = false
+                autoTextCommunity.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
             }
-            val container = binding.autoTextCommunity.parent as? FrameLayout
-            container?.foreground = foregroundDrawable
-        }
 
-        userDetails = AppPreference(activity).getUserDetails()
-        binding.edtEmailID.text = userDetails?.email
-        binding.edtName.setText(userDetails?.userName)
-        binding.edtMobile.setText(userDetails?.mobileNumber?.replace("+91", "")?.trim())
-        binding.edtBlock.setText(userDetails?.block)
-        binding.edtFlat.setText(userDetails?.flatNo)
+            edtEmailID.setText(userDetails?.email)
+            edtEmailID.isEnabled = false
+            edtEmailID.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
+
+            edtName.setText(userDetails?.userName)
+            edtMobile.setText(userDetails?.mobileNumber?.replace("+91", "")?.trim())
+            edtBlock.setText(userDetails?.block)
+            edtFlat.setText(userDetails?.flatNo)
+        }
 
         Glide.with(binding.ivEditProfile)
             .load(userDetails?.profilePhoto)
@@ -326,8 +324,10 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
 
                                 binding.autoTextCommunity.onItemClickListener =
                                     AdapterView.OnItemClickListener { _, _, _, _ ->
-                                        val communityName = binding.autoTextCommunity.text.toString()
-                                        selectedCommunity = communityList!!.find { it.name == communityName }!!
+                                        val communityName =
+                                            binding.autoTextCommunity.text.toString()
+                                        selectedCommunity =
+                                            communityList!!.find { it.name == communityName }!!
                                     }
 
                             } else {

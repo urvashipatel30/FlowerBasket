@@ -408,8 +408,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/_10sdp">
+                android:layout_height="@dimen/_42sdp">
 
                 <LinearLayout
                     android:id="@+id/llTotalPrice"
@@ -449,7 +448,7 @@
                     android:id="@+id/btnDeliveredOrder"
                     style="@style/dialog_button"
                     android:layout_width="0dp"
-                    android:layout_height="@dimen/_38sdp"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:background="@drawable/bottom_bar_button_background"
                     android:text="@string/delivered_order"
@@ -457,7 +456,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/llTotalPrice" />
+                    app:layout_constraintStart_toEndOf="@+id/llTotalPrice"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

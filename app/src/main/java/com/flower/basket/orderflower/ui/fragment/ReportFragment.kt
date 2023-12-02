@@ -55,7 +55,7 @@ class ReportFragment : ParentFragment(), OnClickListener {
     private var reportListJSON: String? = null
     private var reportList = ArrayList<ReportData>()
 
-//    private var reportListToSend: List<ReportDataToSend> = emptyList()
+    //    private var reportListToSend: List<ReportDataToSend> = emptyList()
     //    private var reportListToSend: List<LinkedHashMap<String, Any>> = emptyList()
     private lateinit var reportAdapter: ReportListAdapter
 
@@ -82,14 +82,11 @@ class ReportFragment : ParentFragment(), OnClickListener {
         binding.btnGenerateOrder.setOnClickListener(this)
         binding.llChooseDate.setOnClickListener(this)
         binding.ivDownloadReport.setOnClickListener(this)
+        binding.btnTotalFlower.setOnClickListener(this)
 
         binding.rvReport.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
-        }
-
-        binding.backLayout.ivBackAction.setOnClickListener {
-            parentActivity.backToHome()
         }
 
         loadReport()
@@ -98,15 +95,15 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
     override fun onClick(view: View?) {
         when (view) {
-//            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
-
+            binding.backLayout.ivBackAction -> parentActivity.backToHome()
             binding.btnGenerateOrder -> generateOrder()
-
             binding.llChooseDate -> showDatePicker()
-
             binding.ivDownloadReport -> {
 //                launchBaseDirectoryPicker()
                 saveToCSVFile()
+            }
+
+            binding.btnTotalFlower -> {
             }
         }
     }

@@ -54,8 +54,8 @@
             android:id="@+id/ivEditProfile"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/ic_profile_holder"
             android:alpha="0.85"
+            android:src="@drawable/ic_profile_holder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -104,13 +104,12 @@
                     android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
-                <com.flower.basket.orderflower.views.ThemeText
+                <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtEmailID"
                     style="@style/AppEditableFieldsStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:alpha="0.5"
                     android:hint="@string/email_id"
                     android:imeOptions="actionNext"
                     android:inputType="text" />
@@ -203,21 +202,15 @@
                     android:textColor="@color/themeTextGrey"
                     android:textSize="@dimen/_12ssp" />
 
-                <FrameLayout
+                <AutoCompleteTextView
+                    android:id="@+id/autoTextCommunity"
+                    style="@style/AppEditableFieldsStyle"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:layout_height="wrap_content">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/autoTextCommunity"
-                        style="@style/AppEditableFieldsStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:completionThreshold="1"
-                        android:fontFamily="@font/pangram_regular"
-                        android:hint="@string/search_community" />
-
-                </FrameLayout>
+                    android:completionThreshold="1"
+                    android:fontFamily="@font/pangram_regular"
+                    android:hint="@string/search_community" />
 
                 <!--                <com.flower.basket.orderflower.views.ThemeEditView-->
                 <!--                    android:id="@+id/edtCommunity"-->

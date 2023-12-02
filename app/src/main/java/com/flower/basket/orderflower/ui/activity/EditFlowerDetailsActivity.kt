@@ -47,12 +47,21 @@ class EditFlowerDetailsActivity : ParentActivity(), OnClickListener {
                 flowerData = Gson().fromJson(intent.getStringExtra("data"), FlowerData::class.java)
         }
 
-        binding.edtFlowerName.setText(flowerData?.name.toString())
-        binding.edtTeluguName.setText(flowerData?.teluguName.toString())
-        binding.edtLoosePrice.setText(flowerData?.loosePrice.toString())
-        binding.edtMoraPrice.setText(flowerData?.moraPrice.toString())
-        imgURL = flowerData?.imageUrl.toString()
+        binding.apply {
+            edtFlowerName.setText(flowerData?.name.toString())
+            edtTeluguName.setText(flowerData?.teluguName.toString())
+            edtLoosePrice.setText(flowerData?.loosePrice.toString())
+            edtMoraPrice.setText(flowerData?.moraPrice.toString())
 
+            if (edtTeluguName.text.toString().isEmpty()) edtTeluguName.hint = ""
+            edtFlowerName.isEnabled = false
+            edtTeluguName.isEnabled = false
+
+            edtFlowerName.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
+            edtTeluguName.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
+        }
+
+        imgURL = flowerData?.imageUrl.toString()
         Glide.with(binding.ivFlowerPhoto)
             .load(flowerData?.imageUrl)
             .placeholder(R.drawable.ic_profile_holder)

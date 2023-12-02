@@ -46,18 +46,6 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
 
-                    <!--            <com.google.android.material.imageview.ShapeableImageView-->
-                    <!--                android:id="@+id/ivFlowerPhoto"-->
-                    <!--                android:layout_width="@dimen/_55sdp"-->
-                    <!--                android:layout_height="@dimen/_55sdp"-->
-                    <!--                android:elevation="@dimen/_8sdp"-->
-                    <!--                android:scaleType="centerCrop"-->
-                    <!--                android:src="@drawable/ic_profile_holder"-->
-                    <!--                app:layout_constraintDimensionRatio="1:1"-->
-                    <!--                app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                app:layout_constraintTop_toTopOf="parent"-->
-                    <!--                app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />-->
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"

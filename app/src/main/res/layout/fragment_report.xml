@@ -159,10 +159,19 @@
             android:layout_marginBottom="@dimen/_15sdp"
             android:adjustViewBounds="true"
             android:elevation="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnTotalFlower"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_download"
-            app:tint="@color/themeColor" />
+            app:srcCompat="@drawable/ic_download"/>
+
+        <com.flower.basket.orderflower.views.ThemeButton
+            android:id="@+id/btnTotalFlower"
+            style="@style/dialog_button"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/_15sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_gravity="center"
+            android:background="@drawable/cancel_order_button_background"
+            android:text="@string/delivered_order" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -16,4 +16,6 @@
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
 
+    <dimen name="disabled_view_alpha">0.4f</dimen>
+
 </resources>
