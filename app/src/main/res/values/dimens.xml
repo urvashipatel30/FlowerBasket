@@ -7,7 +7,7 @@
     <dimen name="settings_field_textSize">@dimen/_12ssp</dimen>
 
     <dimen name="dialog_padding">@dimen/_15sdp</dimen>
-<!--    <dimen name="dialog_padding">@dimen/_15sdp</dimen>-->
+    <!--    <dimen name="dialog_padding">@dimen/_15sdp</dimen>-->
     <dimen name="dialog_button_margin">@dimen/_30sdp</dimen>
     <dimen name="setting_title_textSize">@dimen/_12ssp</dimen>
     <dimen name="dialog_title_textSize">@dimen/_14ssp</dimen>
@@ -16,6 +16,6 @@
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
 
-    <dimen name="disabled_view_alpha">0.4f</dimen>
+    <integer name="disabled_view_alpha">50</integer>
 
 </resources>

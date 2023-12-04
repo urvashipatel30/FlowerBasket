@@ -169,18 +169,13 @@ class HomeFragment : ParentFragment() {
 
                     // Update the qty if the Subscription is matched
                     itemToUpdate?.let {
-                        it.name = updatedFlower.name // Replace quantity with the new name
-                        it.teluguName =
-                            updatedFlower.teluguName // Replace quantity with the new telugu Name
-                        it.moraPrice =
-                            updatedFlower.moraPrice // Replace quantity with the new mora Price
-                        it.loosePrice =
-                            updatedFlower.loosePrice // Replace quantity with the new loose Price
+                        it.name = updatedFlower.name
+                        it.teluguName = updatedFlower.teluguName
+                        it.moraPrice = updatedFlower.moraPrice
+                        it.loosePrice = updatedFlower.loosePrice
 
                         // Find the position of the updated item in the list
                         val updatedItemPosition = flowerList.indexOf(it)
-
-                        // Notify the adapter about the change at the specific position
                         flowerAdapter.notifyItemChanged(updatedItemPosition)
                     }
                 }

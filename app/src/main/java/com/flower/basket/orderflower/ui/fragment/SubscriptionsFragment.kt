@@ -331,8 +331,6 @@ class SubscriptionsFragment : ParentFragment() {
     private fun updateStatus(subscriptionId: String?, isActive: Boolean) {
         val itemToUpdate =
             filteredSubscriptionList.find { it.id == subscriptionId }
-
-        // Find the item with the given ID in filteredSubscriptionList
         Log.e(
             "changeStatus: ",
             "onResponse itemToUpdate => $itemToUpdate"
@@ -340,16 +338,10 @@ class SubscriptionsFragment : ParentFragment() {
 
         // Update the qty if the Subscription is matched
         itemToUpdate?.let {
-            it.isActive = isActive // Change the status value
+            it.isActive = isActive
 
-            // Find the position of the updated item in the list
-            val updatedItemPosition =
-                filteredSubscriptionList.indexOf(it)
-
-            // Notify the adapter about the change at the specific position
-            subscriptionAdapter.notifyItemChanged(
-                updatedItemPosition
-            )
+            val updatedItemPosition = filteredSubscriptionList.indexOf(it)
+            subscriptionAdapter.notifyItemChanged(updatedItemPosition)
         }
     }
 
@@ -477,12 +469,9 @@ class SubscriptionsFragment : ParentFragment() {
 
                     // Update the qty if the Subscription is matched
                     itemToUpdate?.let {
-                        it.qty = updatedQty // Replace quantity with the new quantity value
+                        it.qty = updatedQty
 
-                        // Find the position of the updated item in the list
                         val updatedItemPosition = filteredSubscriptionList.indexOf(it)
-
-                        // Notify the adapter about the change at the specific position
                         subscriptionAdapter.notifyItemChanged(updatedItemPosition)
                     }
                 }

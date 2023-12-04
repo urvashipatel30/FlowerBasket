@@ -74,12 +74,12 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                 llBlock.visibility = View.GONE
                 llFlat.visibility = View.GONE
                 autoTextCommunity.isEnabled = false
-                autoTextCommunity.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
+                autoTextCommunity.alpha = resources.getInteger(R.integer.disabled_view_alpha) / 100.0f
             }
 
             edtEmailID.setText(userDetails?.email)
             edtEmailID.isEnabled = false
-            edtEmailID.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
+            edtEmailID.alpha = resources.getInteger(R.integer.disabled_view_alpha) / 100.0f
 
             edtName.setText(userDetails?.userName)
             edtMobile.setText(userDetails?.mobileNumber?.replace("+91", "")?.trim())

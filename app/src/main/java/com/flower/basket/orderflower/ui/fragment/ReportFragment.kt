@@ -27,6 +27,7 @@ import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentReportBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.ReportOrderDetailsActivity
+import com.flower.basket.orderflower.ui.activity.TotalFlowerActivity
 import com.flower.basket.orderflower.ui.adapter.ReportListAdapter
 import com.flower.basket.orderflower.utils.FlowerType
 import com.flower.basket.orderflower.utils.NetworkUtils
@@ -79,7 +80,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
         binding.tvSelectedDate.text = getFormattedCurrentDate()
 
         binding.backLayout.ivBackAction.setOnClickListener(this)
-        binding.btnGenerateOrder.setOnClickListener(this)
         binding.llChooseDate.setOnClickListener(this)
         binding.ivDownloadReport.setOnClickListener(this)
         binding.btnTotalFlower.setOnClickListener(this)
@@ -89,14 +89,13 @@ class ReportFragment : ParentFragment(), OnClickListener {
             setHasFixedSize(true)
         }
 
-        loadReport()
+        generateOrder()
         return binding.root
     }
 
     override fun onClick(view: View?) {
         when (view) {
             binding.backLayout.ivBackAction -> parentActivity.backToHome()
-            binding.btnGenerateOrder -> generateOrder()
             binding.llChooseDate -> showDatePicker()
             binding.ivDownloadReport -> {
 //                launchBaseDirectoryPicker()
@@ -104,6 +103,9 @@ class ReportFragment : ParentFragment(), OnClickListener {
             }
 
             binding.btnTotalFlower -> {
+                val intent = Intent(activity, TotalFlowerActivity::class.java)
+                intent.putExtra("date", binding.tvSelectedDate.text.toString())
+                startActivity(intent)
             }
         }
     }
@@ -126,7 +128,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
                     ) {
                         parentActivity.dismissLoader()
 
-                        // if response is not successful
                         if (!response.isSuccessful) {
                             showList(false, response.message())
                             return
@@ -137,7 +138,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
                         if (reportResponse != null) {
                             if (reportResponse.succeeded) {
-                                // Handle the retrieved report data
                                 reportListJSON =
                                     reportResponse.data.toString().replace("ReportData", "")
                                 Log.e("onResponse: ", "reportListJSON => $reportListJSON")
@@ -204,6 +204,70 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
         } else {
             showList(false, getString(R.string.error_internet_msg))
+        }
+    }
+
+    private fun generateOrder() {
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            parentActivity.showLoader(activity)
+
+            RetroClient.apiService.generateOrders()
+                .enqueue(object : Callback<APIResponse> {
+                    override fun onResponse(
+                        call: Call<APIResponse>,
+                        response: Response<APIResponse>
+                    ) {
+                        Log.e(
+                            "generateOrder: ",
+                            "response => $response, ${response.isSuccessful}"
+                        )
+
+                        // if response is not successful
+                        if (!response.isSuccessful) {
+                            parentActivity.showDialog(
+                                activity,
+                                dialogType = AppAlertDialog.ERROR_TYPE,
+                                msg = response.message() ?: getString(R.string.error_went_wrong)
+                            )
+                            return
+                        }
+
+                        val generateOrderResponse = response.body()
+                        if (generateOrderResponse != null) {
+                            Log.e(
+                                "generateOrder: ",
+                                "response => ${generateOrderResponse.succeeded}, ${generateOrderResponse.data}"
+                            )
+
+                            if (!generateOrderResponse.succeeded) {
+                                parentActivity.showDialog(
+                                    activity,
+                                    dialogType = AppAlertDialog.ERROR_TYPE,
+                                    title = getString(R.string.failed),
+                                    msg = generateOrderResponse.message
+                                )
+                            }
+                        }
+
+                        loadReport()
+                    }
+
+                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
+                        parentActivity.dismissLoader()
+                        parentActivity.showDialog(
+                            activity,
+                            dialogType = AppAlertDialog.ERROR_TYPE,
+                            msg = t.message ?: getString(R.string.error_went_wrong)
+                        )
+                    }
+                })
+        } else {
+            parentActivity.showDialog(
+                activity,
+                dialogType = AppAlertDialog.ERROR_TYPE,
+                title = getString(R.string.error_no_internet),
+                msg = getString(R.string.error_internet_msg)
+            )
         }
     }
 
@@ -306,8 +370,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
     private fun updateStatus(orderId: String?, orderStatus: Int) {
         val itemToUpdate = reportList.find { it.orderId == orderId }
-
-        // Find the item with the given ID in reportList
         Log.e(
             "updateStatus: ",
             "itemToUpdate => $itemToUpdate"
@@ -315,12 +377,9 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
         // Update the status if the order from the list is matched
         itemToUpdate?.let {
-            it.orderStatus = orderStatus // Change the status value
+            it.orderStatus = orderStatus
 
-            // Find the position of the updated item in the list
             val updatedItemPosition = reportList.indexOf(it)
-
-            // Notify the adapter about the change at the specific position
             reportAdapter.notifyItemChanged(updatedItemPosition)
         }
     }
@@ -331,77 +390,13 @@ class ReportFragment : ParentFragment(), OnClickListener {
     ) {
         binding.apply {
             rvReport.visibility = if (isShowList) View.VISIBLE else View.GONE
+            btnTotalFlower.visibility = if (isShowList) View.VISIBLE else View.GONE
             ivDownloadReport.visibility = if (isShowList) View.VISIBLE else View.GONE
             llDataErrorView.visibility = if (isShowList) View.GONE else View.VISIBLE
 
             if (!isShowList) {
                 tvDataError.text = msg ?: getString(R.string.error_went_wrong)
             }
-        }
-    }
-
-    private fun generateOrder() {
-        if (NetworkUtils.isNetworkAvailable(activity)) {
-            parentActivity.showLoader(activity)
-
-            RetroClient.apiService.generateOrders()
-                .enqueue(object : Callback<APIResponse> {
-                    override fun onResponse(
-                        call: Call<APIResponse>,
-                        response: Response<APIResponse>
-                    ) {
-                        parentActivity.dismissLoader()
-                        Log.e(
-                            "generateOrder: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
-
-                        // if response is not successful
-                        if (!response.isSuccessful) {
-                            parentActivity.showDialog(
-                                activity,
-                                dialogType = AppAlertDialog.ERROR_TYPE,
-                                msg = response.message() ?: getString(R.string.error_went_wrong)
-                            )
-                            return
-                        }
-
-                        val generateOrderResponse = response.body()
-                        if (generateOrderResponse != null) {
-                            if (generateOrderResponse.succeeded) {
-                                // Handle the retrieved user data
-                                parentActivity.showDialog(
-                                    activity,
-                                    dialogType = AppAlertDialog.SUCCESS_TYPE,
-                                    msg = generateOrderResponse.message
-                                )
-                            } else {
-                                parentActivity.showDialog(
-                                    activity,
-                                    dialogType = AppAlertDialog.ERROR_TYPE,
-                                    title = getString(R.string.failed),
-                                    msg = generateOrderResponse.message
-                                )
-                            }
-                        }
-                    }
-
-                    override fun onFailure(call: Call<APIResponse>, t: Throwable) {
-                        parentActivity.dismissLoader()
-                        parentActivity.showDialog(
-                            activity,
-                            dialogType = AppAlertDialog.ERROR_TYPE,
-                            msg = t.message ?: getString(R.string.error_went_wrong)
-                        )
-                    }
-                })
-        } else {
-            parentActivity.showDialog(
-                activity,
-                dialogType = AppAlertDialog.ERROR_TYPE,
-                title = getString(R.string.error_no_internet),
-                msg = getString(R.string.error_internet_msg)
-            )
         }
     }
 

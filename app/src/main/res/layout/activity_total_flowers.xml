@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/screenBg"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        style="@style/ToolbarStyle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <include
+                android:id="@+id/backLayout"
+                layout="@layout/back_action" />
+
+            <com.flower.basket.orderflower.views.ThemeText
+                style="@style/ScreenTitleStyle"
+                android:text="@string/total_flower" />
+
+            <com.flower.basket.orderflower.views.ThemeButton
+                android:id="@+id/btnGenerateOrder"
+                style="@style/dialog_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginVertical="@dimen/_8sdp"
+                android:paddingHorizontal="@dimen/_8sdp"
+                android:text="@string/generate_order"
+                android:textSize="@dimen/_12ssp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        style="@style/screen_bottomImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/screen_margin"
+        android:layout_marginVertical="@dimen/screen_margin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:id="@+id/llFlowersList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View style="@style/TableHorizontalDividerStyle" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_35sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View style="@style/TableVerticalDividerStyle" />
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/_2sdp"
+                            android:text="@string/flower"
+                            android:textColor="@color/home_FieldTextColor"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <View style="@style/TableVerticalDividerStyle" />
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.4"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/_2sdp"
+                            android:text="@string/name"
+                            android:textColor="@color/home_FieldTextColor"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <View style="@style/TableVerticalDividerStyle" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.22"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="@dimen/_2sdp">
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/loose_qty"
+                                android:textColor="@color/home_FieldTextColor"
+                                android:textSize="@dimen/_11ssp" />
+
+                            <com.flower.basket.orderflower.views.ThemeText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@string/in_grams"
+                                android:textColor="@color/home_FieldTextColor"
+                                android:textSize="@dimen/_11ssp" />
+
+                        </LinearLayout>
+
+                        <View style="@style/TableVerticalDividerStyle" />
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.18"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/_2sdp"
+                            android:text="@string/mora_qty"
+                            android:textColor="@color/home_FieldTextColor"
+                            android:textSize="@dimen/_11ssp" />
+
+                        <View style="@style/TableVerticalDividerStyle" />
+
+                    </LinearLayout>
+
+                    <View style="@style/TableHorizontalDividerStyle" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvTotalFlowers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:itemCount="2"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_total_flowers"
+                    tools:spanCount="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llDataErrorView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/ivDataError"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:alpha="0.9"
+                    android:elevation="@dimen/_5sdp"
+                    android:visibility="gone"
+                    app:tint="#C4FFFFFF" />
+                <!--            android:src="@drawable/ic_data_error"-->
+
+                <com.flower.basket.orderflower.views.ThemeText
+                    android:id="@+id/tvDataError"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_7sdp"
+                    android:gravity="center"
+                    android:text="@string/error_went_wrong"
+                    android:textColor="@color/themeTextGrey"
+                    android:textSize="@dimen/_12ssp" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

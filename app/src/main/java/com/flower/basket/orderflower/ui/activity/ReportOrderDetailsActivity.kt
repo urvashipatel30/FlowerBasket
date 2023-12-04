@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
@@ -74,7 +75,7 @@ class ReportOrderDetailsActivity : ParentActivity(), OnClickListener {
 
         if (reportData?.orderStatus == OrderStatus.DELIVERED.value) updateStatusToDelivered()
 
-        binding.backLayout.ivBackAction.setOnClickListener(this)
+        binding.ivBackAction.setOnClickListener(this)
         binding.btnDeliveredOrder.setOnClickListener(this)
         binding.llCustomerMobileNumber.setOnClickListener(this)
         binding.llCustomerEmailID.setOnClickListener(this)
@@ -91,7 +92,7 @@ class ReportOrderDetailsActivity : ParentActivity(), OnClickListener {
 
     override fun onClick(view: View?) {
         when (view) {
-            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
+            binding.ivBackAction -> onBackPressedDispatcher.onBackPressed()
 
             binding.btnDeliveredOrder -> {
                 AppAlertDialog(activity)

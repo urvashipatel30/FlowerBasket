@@ -167,7 +167,7 @@
     <string name="order">Order</string>
     <string name="order_id">Order Id  :  %s</string>
     <string name="optional">Optional</string>
-    <string name="error_no_orders">You have no order history yet!</string>
+    <string name="error_no_orders">You have no order history from the past 2 weeks!</string>
 
     <string name="cancel_order">Cancel Order</string>
 
@@ -273,6 +273,16 @@
     <string name="dialog_retry">Retry</string>
     <string name="dialog_retry_community_list">Please, retry to get community list!</string>
     <string name="cancel">Cancel</string>
+
+
+    <!-- Total flowers Screen -->
+    <string name="total_flower">Total Flowers</string>
+    <string name="error_no_flowers">No flowers for selected date!</string>
+
+    <string name="flower">Flower</string>
+    <string name="loose_qty">Loose Qty</string>
+    <string name="mora_qty">Mora Qty</string>
+    <string name="in_grams">(in Grams)</string>
 
 
 </resources>

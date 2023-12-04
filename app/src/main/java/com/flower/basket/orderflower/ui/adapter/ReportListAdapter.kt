@@ -74,6 +74,7 @@ class ReportListAdapter(
                 OrderStatus.PENDING.value -> activity.getString(R.string.status_pending)
                 OrderStatus.CANCELED.value -> activity.getString(R.string.status_cancelled)
                 OrderStatus.DELIVERED.value -> activity.getString(R.string.status_delivered)
+                OrderStatus.IN_DELIVERY.value -> activity.getString(R.string.status_in_delivery)
                 else -> activity.getString(R.string.status_unknown)
             }
 

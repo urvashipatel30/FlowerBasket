@@ -30,7 +30,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_95sdp"
+                    android:layout_height="@dimen/_85sdp"
                     app:layout_constraintBottom_toTopOf="@+id/llDeliveredOrder">
 
                     <com.google.android.material.imageview.ShapeableImageView
@@ -41,7 +41,7 @@
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_profile_holder"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintDimensionRatio="1:1.1"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
@@ -176,7 +176,7 @@
                         style="@style/dialog_button"
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:background="@drawable/cancel_order_button_background"
+                        android:background="@drawable/deliver_order_button_background"
                         android:text="@string/delivered_order" />
 
                 </FrameLayout>

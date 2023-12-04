@@ -6,41 +6,20 @@
     android:background="@color/screenBg"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar style="@style/ToolbarStyle">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <include
-                android:id="@+id/backLayout"
-                layout="@layout/back_action" />
-
-            <com.flower.basket.orderflower.views.ThemeText
-                android:id="@+id/tvFlowerName"
-                style="@style/ScreenTitleStyle"
-                android:text="@string/app_name" />
-
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
-
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/contentView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <ScrollView
+                android:id="@+id/contentView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:scrollbars="none">
@@ -48,17 +27,26 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/_15sdp">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/flowerBottomGuideline"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.42" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/ivFlowerImage"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_160sdp"
-                        android:elevation="@dimen/_8sdp"
+                        android:layout_height="@dimen/_280sdp"
+                        android:elevation="@dimen/_4sdp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/ic_tropical_flame_kanakambaram"
                         app:layout_constraintTop_toTopOf="parent"
                         app:shapeAppearanceOverlay="@style/ImageView.Corner" />
+                    <!--                    app:layout_constraintBottom_toBottomOf="@+id/flowerBottomGuideline"-->
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/overlayTopGuideline"
@@ -70,12 +58,47 @@
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:elevation="@dimen/_8sdp"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ic_image_overlay"
+                        android:background="@drawable/ic_image_overlay"
+                        android:elevation="@dimen/_4sdp"
                         app:layout_constraintBottom_toBottomOf="@id/ivFlowerImage"
                         app:layout_constraintTop_toTopOf="@id/overlayTopGuideline"
                         app:shapeAppearanceOverlay="@style/ImageView.Corner" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_29sdp"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginTop="@dimen/_36sdp"
+                        android:elevation="@dimen/_5sdp"
+                        android:orientation="horizontal"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_back_action"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:adjustViewBounds="true"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_rounded_back" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.flower.basket.orderflower.views.ThemeText
+                        android:id="@+id/tvFlowerName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:elevation="@dimen/_5sdp"
+                        android:text="@string/app_name"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_18ssp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivFlowerImage"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -265,8 +288,8 @@
                                             android:layout_width="@dimen/_10sdp"
                                             android:layout_height="@dimen/_10sdp"
                                             android:layout_marginStart="@dimen/_3sdp"
-                                            app:tint="@color/themeTextGrey"
-                                            app:srcCompat="@drawable/ic_call" />
+                                            app:srcCompat="@drawable/ic_call"
+                                            app:tint="@color/themeTextGrey" />
 
                                     </LinearLayout>
 
@@ -305,8 +328,8 @@
                                             android:layout_width="@dimen/_12sdp"
                                             android:layout_height="@dimen/_12sdp"
                                             android:layout_marginStart="@dimen/_3sdp"
-                                            app:tint="@color/themeTextGrey"
-                                            app:srcCompat="@drawable/ic_mail" />
+                                            app:srcCompat="@drawable/ic_mail"
+                                            app:tint="@color/themeTextGrey" />
 
                                     </LinearLayout>
 
@@ -496,5 +519,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </FrameLayout>
+
 </LinearLayout>

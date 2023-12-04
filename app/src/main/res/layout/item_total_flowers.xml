@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_55sdp"
+    android:orientation="vertical">
+
+    <View style="@style/TableHorizontalDividerStyle" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <View style="@style/TableVerticalDividerStyle" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivFlowerPhoto"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/_5sdp"
+                android:elevation="@dimen/_4sdp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile_holder"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/List_FlowerImage.Corner" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View style="@style/TableVerticalDividerStyle" />
+
+        <com.flower.basket.orderflower.views.ThemeText
+            android:id="@+id/tvFlowerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="@string/name"
+            android:textColor="@color/home_FieldTextColor"
+            android:textSize="@dimen/_11ssp" />
+
+        <View style="@style/TableVerticalDividerStyle" />
+
+        <com.flower.basket.orderflower.views.ThemeText
+            android:id="@+id/tvLooseQty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.22"
+            android:gravity="center"
+            android:text="@string/loose_qty"
+            android:textColor="@color/home_FieldTextColor"
+            android:textSize="@dimen/_11ssp" />
+
+        <View style="@style/TableVerticalDividerStyle" />
+
+        <com.flower.basket.orderflower.views.ThemeText
+            android:id="@+id/tvMoraQty"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.18"
+            android:gravity="center"
+            android:text="@string/mora_qty"
+            android:textColor="@color/home_FieldTextColor"
+            android:textSize="@dimen/_11ssp" />
+
+        <View style="@style/TableVerticalDividerStyle" />
+
+    </LinearLayout>
+
+    <View style="@style/TableHorizontalDividerStyle" />
+
+</LinearLayout>

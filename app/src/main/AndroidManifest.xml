@@ -66,6 +66,7 @@
         <activity
             android:name=".ui.activity.EditSubscriptionActivity"
             android:exported="true"
+            android:theme="@style/TranslucentStatusBar_Theme"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
 
@@ -89,6 +90,13 @@
 
         <activity
             android:name=".ui.activity.ReportOrderDetailsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/TranslucentStatusBar_Theme"
+            tools:ignore="LockedOrientationActivity" />
+
+        <activity
+            android:name=".ui.activity.TotalFlowerActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

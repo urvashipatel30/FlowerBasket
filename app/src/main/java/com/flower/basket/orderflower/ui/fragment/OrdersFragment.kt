@@ -328,8 +328,6 @@ class OrdersFragment : ParentFragment() {
 
     private fun updateStatus(orderId: String?, orderStatus: Int) {
         val itemToUpdate = ordersList.find { it.id == orderId }
-
-        // Find the item with the given ID in ordersList
         Log.e(
             "updateStatus: ",
             "itemToUpdate => $itemToUpdate"
@@ -337,12 +335,9 @@ class OrdersFragment : ParentFragment() {
 
         // Update the status if the order from the list is matched
         itemToUpdate?.let {
-            it.orderStatus = orderStatus // Change the status value
+            it.orderStatus = orderStatus
 
-            // Find the position of the updated item in the list
             val updatedItemPosition = ordersList.indexOf(it)
-
-            // Notify the adapter about the change at the specific position
             ordersAdapter.notifyItemChanged(updatedItemPosition)
         }
     }

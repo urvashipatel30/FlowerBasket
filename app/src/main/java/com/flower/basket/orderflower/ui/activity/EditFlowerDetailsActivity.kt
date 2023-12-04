@@ -2,10 +2,12 @@ package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
@@ -57,8 +59,8 @@ class EditFlowerDetailsActivity : ParentActivity(), OnClickListener {
             edtFlowerName.isEnabled = false
             edtTeluguName.isEnabled = false
 
-            edtFlowerName.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
-            edtTeluguName.alpha = resources.getDimension(R.dimen.disabled_view_alpha)
+            edtFlowerName.alpha = resources.getInteger(R.integer.disabled_view_alpha) / 100.0f
+            edtTeluguName.alpha = resources.getInteger(R.integer.disabled_view_alpha) / 100.0f
         }
 
         imgURL = flowerData?.imageUrl.toString()
@@ -70,11 +72,8 @@ class EditFlowerDetailsActivity : ParentActivity(), OnClickListener {
     }
 
     override fun onClick(view: View?) {
-
         when (view) {
-            binding.backLayout.ivBackAction -> {
-                onBackPressedDispatcher.onBackPressed()
-            }
+            binding.backLayout.ivBackAction -> onBackPressedDispatcher.onBackPressed()
 
             binding.btnUpdate -> {
                 if (isValidFields()) {

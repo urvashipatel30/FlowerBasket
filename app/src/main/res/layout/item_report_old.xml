@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
     <com.flower.basket.orderflower.views.ThemeText
         android:id="@+id/tvFlowerName"
@@ -16,7 +16,7 @@
         android:text="@string/name"
         android:textColor="@color/themeTextGrey" />
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
     <com.flower.basket.orderflower.views.ThemeText
         android:id="@+id/tvFlowerTeluguName"
@@ -26,7 +26,7 @@
         android:text="@string/name"
         android:textColor="@color/themeTextGrey" />
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
     <com.flower.basket.orderflower.views.ThemeText
         android:id="@+id/tvFlowerType"
@@ -35,7 +35,7 @@
         android:paddingHorizontal="@dimen/_7sdp"
         android:text="@string/type" />
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
     <com.flower.basket.orderflower.views.ThemeText
         android:id="@+id/tvQuantity"
@@ -44,7 +44,7 @@
         android:paddingHorizontal="@dimen/_7sdp"
         android:text="@string/quantity" />
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
     <!-- Add buttons for changing status and viewing more details -->
     <androidx.appcompat.widget.AppCompatImageView
@@ -55,7 +55,7 @@
         app:srcCompat="@drawable/ic_day_unchecked"
         android:paddingHorizontal="@dimen/_7sdp" />
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivShowMore"
@@ -65,6 +65,6 @@
         android:paddingHorizontal="@dimen/_7sdp"
         app:srcCompat="@drawable/ic_view_more" />
 
-    <View style="@style/TableDividerStyle" />
+    <View style="@style/DividerStyle" />
 
 </LinearLayout>

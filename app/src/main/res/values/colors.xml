@@ -17,7 +17,7 @@
     <color name="themeColor">#FCAF71</color>
     <color name="themeColorDark">#FF8B2D</color>
     <color name="themeColorLight">#FFCDA5</color>
-    <color name="themeColorUltraLight">#FFD9BA</color>
+    <color name="themeColorUltraLight">#FFE0C6</color>
 
     <color name="themeColorLightest">#FFDEC4</color>
 
@@ -103,7 +103,7 @@
 
 
     <!-- TODO Vendor Report page -->
-    <color name="table_dividerColor">@color/themeGrey</color>
+    <color name="table_dividerColor">#B3B3B3</color>
     <color name="table_TextColor">@color/themeTextGrey</color>
 
 

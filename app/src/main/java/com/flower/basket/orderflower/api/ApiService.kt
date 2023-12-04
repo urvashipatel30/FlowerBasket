@@ -15,6 +15,7 @@ import com.flower.basket.orderflower.data.subscription.SubscriptionListResponse
 import com.flower.basket.orderflower.data.subscription.SubscriptionStatusRequest
 import com.flower.basket.orderflower.data.user.UpdatePasswordRequest
 import com.flower.basket.orderflower.data.subscription.UpdateSubscriptionRequest
+import com.flower.basket.orderflower.data.totalflowers.TotalFlowersResponse
 import com.flower.basket.orderflower.data.user.RegistrationRequest
 import com.flower.basket.orderflower.data.user.UserResponse
 import com.flower.basket.orderflower.data.vendor.VendorContactResponse
@@ -80,6 +81,10 @@ interface ApiService {
     @GET("/api/Order/GetAll/{id}")
     fun getAllOrders(@Path("id") userId: String): Call<OrderResponse>
 
+    //Generate Orders
+    @POST("/api/Order/GenerateOrder/")
+    fun generateOrders(): Call<APIResponse>
+
     //Cancel Order & Delivered Order
     @PUT("/api/Order/UpdateOrderStatus/{id}")
     fun changeOrderStatus(
@@ -99,11 +104,11 @@ interface ApiService {
         @Body params: UpdateFlowerRequest
     ): Call<APIResponse>
 
-    //Order List
+    //Report List for vendor
     @GET("/api/Vendor/GetAllOrders/{communityId}/")
     fun getReport(@Path("communityId") id: Int, @Query("dateTime") date: String): Call<ReportResponse>
 
-    //Generate Orders
-    @POST("/api/Order/GenerateOrder/")
-    fun generateOrders(): Call<APIResponse>
+    //Total Flowers List for vendor
+    @GET("/api/Vendor/GetTotalFlowers/{communityId}/")
+    fun getTotalFlowers(@Path("communityId") id: Int, @Query("dateTime") date: String): Call<TotalFlowersResponse>
 }
