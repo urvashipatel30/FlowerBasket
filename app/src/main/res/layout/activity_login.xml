@@ -102,8 +102,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email_id"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
-                    android:text="test@gmail.com" />
+                    android:inputType="textEmailAddress"/>
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtLoginPassword"
@@ -113,8 +112,7 @@
                     android:layout_marginTop="@dimen/_15sdp"
                     android:hint="@string/password"
                     android:imeOptions="actionDone"
-                    android:inputType="textPassword"
-                    android:text="1234567" />
+                    android:inputType="textPassword" />
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/cbRememberMe"
