@@ -25,8 +25,15 @@ android {
     }
 
     buildTypes {
+//        debug {
+//            isMinifyEnabled = true
+//            proguardFiles(
+//                getDefaultProguardFile("proguard-android-optimize.txt"),
+//                "proguard-rules.pro"
+//            )
+//        }
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -59,7 +66,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.9.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
     testImplementation("junit:junit:4.13.2")
@@ -97,7 +104,7 @@ dependencies {
     //For firebase
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")
+//    implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore-ktx")
 
     //to convert string to JSON & JSON to string
@@ -114,12 +121,13 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.2")
 
     //Color palette
-    implementation("androidx.palette:palette-ktx:1.0.0")
+//    implementation("androidx.palette:palette-ktx:1.0.0")
 
     //For Custom Spinner
     implementation("com.github.skydoves:powerspinner:1.2.7")
 
     //To make a report in .csv file
     implementation("commons-io:commons-io:2.4")
-    implementation("org.json:json:20140107")
+//    implementation("org.json:json:20140107")
+    implementation(files("libs/json-20140107.jar"))
 }
