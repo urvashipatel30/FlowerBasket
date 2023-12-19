@@ -24,101 +24,106 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiService {
-    @GET("api/Community/GetAll")
-    fun getCommunities(): Call<CommunityResponse>
+    @GET
+    fun getCommunities(@Url url: String): Call<CommunityResponse>
 
-    @POST("api/Users/register")
-    fun registerUser(@Body registerParams: RegistrationRequest): Call<UserResponse>
+    @POST
+    fun registerUser(
+        @Url url: String,
+        @Body registerParams: RegistrationRequest
+    ): Call<UserResponse>
 
-    @POST("api/Users/login")
-    fun loginUser(@Body loginParams: LoginRequest): Call<UserResponse>
+    @POST
+    fun loginUser(@Url url: String, @Body loginParams: LoginRequest): Call<UserResponse>
 
-    @GET("api/Users/GetAll")
-    fun getUsersList(): Call<TotalUsersResponse>
+    @GET
+    fun getUsersList(@Url url: String): Call<TotalUsersResponse>
 
-    @PUT("api/Users/Update/{id}")
+    @PUT
     fun updateUser(
-        @Path("id") userId: String,
+        @Url url: String,
         @Body params: UpdateUserRequest
     ): Call<UserResponse>
 
-    @PUT("api/Users/ChangePassword/{id}")
+    @PUT
     fun changePassword(
-        @Path("id") userId: String,
+        @Url url: String,
         @Body params: UpdatePasswordRequest
     ): Call<APIResponse>
 
-    @GET("api/Flowers/GetAll")
-    fun getFlowersList(): Call<FlowerResponse>
+    @GET
+    fun getFlowersList(@Url url: String): Call<FlowerResponse>
 
     //Place Order
-    @POST("/api/Subscriptions/Add")
-    fun placeOrder(@Body orderParams: OrderRequest): Call<APIResponse>
+    @POST
+    fun placeOrder(@Url url: String, @Body orderParams: OrderRequest): Call<APIResponse>
 
     //Subscription List
-    @GET("/api/Subscriptions/GetAll/{id}")
-    fun getAllSubscriptions(@Path("id") userId: String): Call<SubscriptionListResponse>
+    @GET
+    fun getAllSubscriptions(@Url url: String): Call<SubscriptionListResponse>
 
     //Subscription Item Detail
-    @GET("/api/Subscriptions/Get/{id}")
-    fun getSubscriptionsDetail(@Path("id") subscriptionId: String): Call<SubscriptionItemResponse>
+    @GET
+    fun getSubscriptionsDetail(@Url url: String): Call<SubscriptionItemResponse>
 
     //Update Subscription
-    @PUT("/api/Subscriptions/Update/{id}")
+    @PUT
     fun updateSubscription(
-        @Path("id") subscriptionId: String,
+        @Url url: String,
         @Body subscriptionsParams: UpdateSubscriptionRequest
     ): Call<APIResponse>
 
     //Active/Deactive Subscription
-    @PUT("/api/Subscriptions/ManageVacationMode/{id}")
+    @PUT
     fun changeSubscriptionStatus(
-        @Path("id") subscriptionId: String,
+        @Url url: String,
         @Body statusParams: SubscriptionStatusRequest
     ): Call<APIResponse>
 
     //Delete Subscription
-    @DELETE("/api/Subscriptions/Delete/{id}")
-    fun deleteSubscription(@Path("id") subscriptionId: String): Call<APIResponse>
+    @DELETE
+    fun deleteSubscription(@Url url: String): Call<APIResponse>
 
     //Order List
-    @GET("/api/Order/GetAll/{id}")
-    fun getAllOrders(@Path("id") userId: String): Call<OrderResponse>
+    @GET
+    fun getAllOrders(@Url url: String): Call<OrderResponse>
 
     //Generate Orders
-    @POST("/api/Order/GenerateOrder/")
-    fun generateOrders(): Call<APIResponse>
+    @POST
+    fun generateOrders(@Url url: String): Call<APIResponse>
 
     //Cancel Order & Delivered Order
-    @PUT("/api/Order/UpdateOrderStatus/{id}")
+    @PUT
     fun changeOrderStatus(
-        @Path("id") orderId: String,
+        @Url url: String,
         @Body params: ChangeOrderStatusRequest
     ): Call<APIResponse>
 
     //Get Vendor contact
-    @GET("/api/Vendor/GetVendorByCommunity/{id}")
-    fun getVendorContact(@Path("id") id: Int): Call<VendorContactResponse>
+    @GET
+    fun getVendorContact(@Url url: String): Call<VendorContactResponse>
 
 
     //Update Flower Details
-    @PUT("api/Flowers/Update/{id}")
+    @PUT
     fun updateFlower(
-        @Path("id") id: Int,
+        @Url url: String,
         @Body params: UpdateFlowerRequest
     ): Call<APIResponse>
 
+
     //Report List for vendor
-    @GET("/api/Vendor/GetAllOrders/{communityId}/")
+    @GET
     fun getReport(
-        @Path("communityId") id: Int,
+        @Url url: String,
         @Query("dateTime") date: String
     ): Call<ReportResponse>
 
+
     //Total Flowers List for vendor
-    @GET("/api/Vendor/GetTotalFlowers/{communityId}/")
+    @GET
     fun getTotalFlowers(
-        @Path("communityId") id: Int,
+        @Url url: String,
         @Query("dateTime") date: String
     ): Call<TotalFlowersResponse>
 }

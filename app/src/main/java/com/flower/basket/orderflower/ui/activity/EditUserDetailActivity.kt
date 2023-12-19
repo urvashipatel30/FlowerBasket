@@ -138,7 +138,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
                 flatNo = flat
             )
 
-            RetroClient.apiService.updateUser(userDetails?.id!!, params)
+            RetroClient.apiService.updateUser("${AppData.updateUserURL}/${userDetails?.id!!}", params)
                 .enqueue(object : Callback<UserResponse> {
                     override fun onResponse(
                         call: Call<UserResponse>,
@@ -276,7 +276,7 @@ class EditUserDetailActivity : ParentActivity(), OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
 
-            RetroClient.apiService.getCommunities()
+            RetroClient.apiService.getCommunities(AppData.communityURL)
                 .enqueue(object : Callback<CommunityResponse> {
                     override fun onResponse(
                         call: Call<CommunityResponse>,

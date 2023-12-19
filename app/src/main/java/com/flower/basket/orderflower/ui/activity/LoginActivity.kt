@@ -15,6 +15,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.community.CommunityData
 import com.flower.basket.orderflower.data.community.CommunityResponse
@@ -158,7 +159,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
 
-            RetroClient.apiService.getUsersList()
+            RetroClient.apiService.getUsersList(AppData.allUsersURL)
                 .enqueue(object : Callback<TotalUsersResponse> {
                     override fun onResponse(
                         call: Call<TotalUsersResponse>,
@@ -227,7 +228,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
             val params = LoginRequest(email = email, password = password)
 
-            RetroClient.apiService.loginUser(params)
+            RetroClient.apiService.loginUser(AppData.loginURL, params)
                 .enqueue(object : Callback<UserResponse> {
                     override fun onResponse(
                         call: Call<UserResponse>,
@@ -305,7 +306,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                 flatNo = flat
             )
 
-            RetroClient.apiService.registerUser(params)
+            RetroClient.apiService.registerUser(AppData.registerURL, params)
                 .enqueue(object : Callback<UserResponse> {
                     override fun onResponse(
                         call: Call<UserResponse>,
@@ -372,7 +373,7 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
 
-            RetroClient.apiService.getCommunities()
+            RetroClient.apiService.getCommunities(AppData.communityURL)
                 .enqueue(object : Callback<CommunityResponse> {
                     override fun onResponse(
                         call: Call<CommunityResponse>,

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.flower.FlowerData
 import com.flower.basket.orderflower.data.flower.FlowerResponse
@@ -82,7 +83,7 @@ class HomeFragment : ParentFragment() {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(parentActivity)
 
-            RetroClient.apiService.getFlowersList()
+            RetroClient.apiService.getFlowersList(AppData.allFlowersURL)
                 .enqueue(object : Callback<FlowerResponse> {
                     override fun onResponse(
                         call: Call<FlowerResponse>,

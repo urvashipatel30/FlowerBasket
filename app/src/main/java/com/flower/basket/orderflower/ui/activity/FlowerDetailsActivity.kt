@@ -9,6 +9,7 @@ import android.view.View.OnClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.Day
@@ -307,7 +308,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                 subscriptionEndDate = subscriptionEndDate
             )
 
-            RetroClient.apiService.placeOrder(params)
+            RetroClient.apiService.placeOrder(AppData.addSubscriptionURL, params)
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

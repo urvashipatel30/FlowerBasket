@@ -5,12 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.OnClickListener
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.data.user.UpdatePasswordRequest
+import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.databinding.ActivityChangePasswordBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.views.dialog.AppAlertDialog
@@ -75,7 +76,10 @@ class ChangePasswordActivity : ParentActivity(), OnClickListener {
                 password = newPassword
             )
 
-            RetroClient.apiService.changePassword(userDetails?.id!!, params)
+            RetroClient.apiService.changePassword(
+                "${AppData.changePasswordURL}/${userDetails?.id!!}",
+                params
+            )
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,
@@ -105,6 +109,18 @@ class ChangePasswordActivity : ParentActivity(), OnClickListener {
                                     AppPersistence.keys.USER_DATA,
                                     json
                                 )
+
+                                if (AppPreference(activity).getPreference(AppPersistence.keys.IS_REMEMBER_USER) as Boolean) {
+                                    AppPreference(activity).setPreference(
+                                        AppPersistence.keys.USER_PASSWORD,
+                                        newPassword
+                                    )
+                                } else {
+                                    AppPreference(activity).setPreference(
+                                        AppPersistence.keys.USER_PASSWORD,
+                                        ""
+                                    )
+                                }
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.success))

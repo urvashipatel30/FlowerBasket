@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
@@ -77,7 +78,7 @@ class OrdersFragment : ParentFragment() {
 
             val userDetails = AppPreference(activity).getUserDetails()
 
-            RetroClient.apiService.getAllOrders(userDetails?.id.toString())
+            RetroClient.apiService.getAllOrders("${AppData.allOrderURL}/${userDetails?.id.toString()}")
                 .enqueue(object : Callback<OrderResponse> {
                     override fun onResponse(
                         call: Call<OrderResponse>,
@@ -85,7 +86,6 @@ class OrdersFragment : ParentFragment() {
                     ) {
                         parentActivity.dismissLoader()
 
-                        // if response is not successful
                         if (!response.isSuccessful) {
                             errorMsg = response.message()
                             showList(false, errorMsg)
@@ -96,7 +96,6 @@ class OrdersFragment : ParentFragment() {
 
                         if (orderResponse != null) {
                             if (orderResponse.succeeded) {
-                                // Handle the retrieved orders data
                                 ordersList =
                                     orderResponse.data as ArrayList<OrderData>
 
@@ -157,7 +156,7 @@ class OrdersFragment : ParentFragment() {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            RetroClient.apiService.generateOrders()
+            RetroClient.apiService.generateOrders(AppData.generateOrderURL)
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,
@@ -229,7 +228,10 @@ class OrdersFragment : ParentFragment() {
 
             val params = ChangeOrderStatusRequest(orderStatus = OrderStatus.CANCELED.value)
 
-            RetroClient.apiService.changeOrderStatus(orderData?.id!!, params)
+            RetroClient.apiService.changeOrderStatus(
+                "${AppData.updateOrderStatusURL}/${orderData.id}",
+                params
+            )
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

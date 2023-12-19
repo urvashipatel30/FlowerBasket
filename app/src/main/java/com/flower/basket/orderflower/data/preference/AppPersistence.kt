@@ -51,7 +51,7 @@ class AppPersistence private constructor(context: Context) {
     }
 
     companion object {
-        private const val KEY = "dpix_pref"
+        private const val KEY = "flower_basket_pref"
         private var mAppPersistance: AppPersistence? = null
 
         @JvmStatic

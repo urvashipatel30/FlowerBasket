@@ -10,6 +10,7 @@ import android.view.View.OnClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.Day
@@ -176,7 +177,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
 
-            RetroClient.apiService.getSubscriptionsDetail(subscriptionData?.id.toString())
+            RetroClient.apiService.getSubscriptionsDetail("${AppData.subscriptionURL}/${subscriptionData?.id.toString()}")
                 .enqueue(object : Callback<SubscriptionItemResponse> {
                     override fun onResponse(
                         call: Call<SubscriptionItemResponse>,
@@ -354,7 +355,7 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                 interval = selectedDaysInterval
             )
 
-            RetroClient.apiService.updateSubscription(subscriptionData?.id!!, params)
+            RetroClient.apiService.updateSubscription("${AppData.updateSubscriptionURL}/${subscriptionData?.id!!}", params)
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

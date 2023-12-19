@@ -5,9 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.WindowManager
-import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.ActivitySplashBinding
@@ -59,29 +57,29 @@ class SplashActivity : ParentActivity() {
     }
 
     private fun encryptAppStrings() {
-        Log.e("encryptAppStrings: ", "Community GetAll => ${AppData.scrambleData("api/Community/GetAll")}")
-        Log.e("encryptAppStrings: ", "register => ${AppData.scrambleData("api/Users/register")}")
-        Log.e("encryptAppStrings: ", "login => ${AppData.scrambleData("api/Users/login")}")
-        Log.e("encryptAppStrings: ", "Users GetAll => ${AppData.scrambleData("api/Users/GetAll")}")
-        Log.e("encryptAppStrings: ", "Users Update => ${AppData.scrambleData("api/Users/Update/{id}")}")
-        Log.e("encryptAppStrings: ", "ChangePassword => ${AppData.scrambleData("api/Users/ChangePassword/{id}")}")
+//        Log.e("encryptAppStrings: ", "Community GetAll => ${AppData.scrambleData("api/Community/GetAll")}")
+//        Log.e("encryptAppStrings: ", "register => ${AppData.scrambleData("api/Users/register")}")
+//        Log.e("encryptAppStrings: ", "login => ${AppData.scrambleData("api/Users/login")}")
+//        Log.e("encryptAppStrings: ", "Users GetAll => ${AppData.scrambleData("api/Users/GetAll")}")
+//        Log.e("encryptAppStrings: ", "Users Update => ${AppData.scrambleData("api/Users/Update")}")
+//        Log.e("encryptAppStrings: ", "ChangePassword => ${AppData.scrambleData("api/Users/ChangePassword")}")
 
-        Log.e("encryptAppStrings: ", "Flowers GetAll => ${AppData.scrambleData("api/Flowers/GetAll")}")
+//        Log.e("encryptAppStrings: ", "Flowers GetAll => ${AppData.scrambleData("api/Flowers/GetAll")}")
 
-        Log.e("encryptAppStrings: ", "Subscriptions Add => ${AppData.scrambleData("api/Subscriptions/Add")}")
-        Log.e("encryptAppStrings: ", "Subscriptions GetAll => ${AppData.scrambleData("api/Subscriptions/GetAll/{id}")}")
-        Log.e("encryptAppStrings: ", "Subscriptions Get => ${AppData.scrambleData("api/Subscriptions/Get/{id}")}")
-        Log.e("encryptAppStrings: ", "Subscriptions Update => ${AppData.scrambleData("api/Subscriptions/Update/{id}")}")
-        Log.e("encryptAppStrings: ", "Subscriptions ManageVacationMode => ${AppData.scrambleData("api/Subscriptions/ManageVacationMode/{id}")}")
-        Log.e("encryptAppStrings: ", "Subscriptions Delete => ${AppData.scrambleData("api/Subscriptions/Delete/{id}")}")
+//        Log.e("encryptAppStrings: ", "Subscriptions Add => ${AppData.scrambleData("api/Subscriptions/Add")}")
+//        Log.e("encryptAppStrings: ", "Subscriptions GetAll => ${AppData.scrambleData("api/Subscriptions/GetAll")}")
+//        Log.e("encryptAppStrings: ", "Subscriptions Get => ${AppData.scrambleData("api/Subscriptions/Get")}")
+//        Log.e("encryptAppStrings: ", "Subscriptions Update => ${AppData.scrambleData("api/Subscriptions/Update")}")
+//        Log.e("encryptAppStrings: ", "Subscriptions ManageVacationMode => ${AppData.scrambleData("api/Subscriptions/ManageVacationMode")}")
+//        Log.e("encryptAppStrings: ", "Subscriptions Delete => ${AppData.scrambleData("api/Subscriptions/Delete")}")
 
-        Log.e("encryptAppStrings: ", "Order GetAll => ${AppData.scrambleData("api/Order/GetAll/{id}")}")
-        Log.e("encryptAppStrings: ", "Order GenerateOrder => ${AppData.scrambleData("api/Order/GenerateOrder")}")
-        Log.e("encryptAppStrings: ", "Order UpdateOrderStatus => ${AppData.scrambleData("api/Order/UpdateOrderStatus/{id}")}")
+//        Log.e("encryptAppStrings: ", "Order GetAll => ${AppData.scrambleData("api/Order/GetAll")}")
+//        Log.e("encryptAppStrings: ", "Order GenerateOrder => ${AppData.scrambleData("api/Order/GenerateOrder")}")
+//        Log.e("encryptAppStrings: ", "Order UpdateOrderStatus => ${AppData.scrambleData("api/Order/UpdateOrderStatus")}")
 
-        Log.e("encryptAppStrings: ", "Vendor GetVendorByCommunity => ${AppData.scrambleData("api/Vendor/GetVendorByCommunity/{id}")}")
-        Log.e("encryptAppStrings: ", "Flowers Update => ${AppData.scrambleData("api/Flowers/Update/{id}")}")
-        Log.e("encryptAppStrings: ", "Vendor GetAllOrders => ${AppData.scrambleData("api/Vendor/GetAllOrders/{communityId}")}")
-        Log.e("encryptAppStrings: ", "Vendor GetTotalFlowers => ${AppData.scrambleData("api/Vendor/GetTotalFlowers/{communityId}")}")
+//        Log.e("encryptAppStrings: ", "Vendor GetVendorByCommunity => ${AppData.scrambleData("api/Vendor/GetVendorByCommunity")}")
+//        Log.e("encryptAppStrings: ", "Flowers Update => ${AppData.scrambleData("api/Flowers/Update")}")
+//        Log.e("encryptAppStrings: ", "Vendor GetAllOrders => ${AppData.scrambleData("api/Vendor/GetAllOrders")}")
+//        Log.e("encryptAppStrings: ", "Vendor GetTotalFlowers => ${AppData.scrambleData("api/Vendor/GetTotalFlowers")}")
     }
 }

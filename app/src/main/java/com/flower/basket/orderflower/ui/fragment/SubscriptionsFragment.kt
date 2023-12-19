@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
@@ -89,7 +90,7 @@ class SubscriptionsFragment : ParentFragment() {
 
             val userDetails = AppPreference(activity).getUserDetails()
 
-            RetroClient.apiService.getAllSubscriptions(userDetails?.id.toString())
+            RetroClient.apiService.getAllSubscriptions("${AppData.allSubscriptionURL}/${userDetails?.id.toString()}")
                 .enqueue(object : Callback<SubscriptionListResponse> {
                     override fun onResponse(
                         call: Call<SubscriptionListResponse>,
@@ -236,7 +237,10 @@ class SubscriptionsFragment : ParentFragment() {
                 isActive = isActive
             )
 
-            RetroClient.apiService.changeSubscriptionStatus(subscriptionData?.id!!, params)
+            RetroClient.apiService.changeSubscriptionStatus(
+                "${AppData.manageVacationModeURL}/${subscriptionData.id}",
+                params
+            )
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,
@@ -335,7 +339,7 @@ class SubscriptionsFragment : ParentFragment() {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            RetroClient.apiService.deleteSubscription(subscriptionData?.id!!)
+            RetroClient.apiService.deleteSubscription("${AppData.deleteSubscriptionURL}/${subscriptionData.id}")
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

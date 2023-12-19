@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
@@ -117,7 +118,10 @@ class ReportFragment : ParentFragment(), OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            RetroClient.apiService.getReport(userDetails?.communityId!!, dateToSend)
+            RetroClient.apiService.getReport(
+                "${AppData.vendorReportOrdersURL}/${userDetails?.communityId!!}",
+                dateToSend
+            )
                 .enqueue(object : Callback<ReportResponse> {
                     override fun onResponse(
                         call: Call<ReportResponse>,
@@ -205,7 +209,7 @@ class ReportFragment : ParentFragment(), OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            RetroClient.apiService.generateOrders()
+            RetroClient.apiService.generateOrders(AppData.generateOrderURL)
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,
@@ -272,7 +276,10 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
             val params = ChangeOrderStatusRequest(orderStatus = OrderStatus.DELIVERED.value)
 
-            RetroClient.apiService.changeOrderStatus(reportData.orderId, params)
+            RetroClient.apiService.changeOrderStatus(
+                "${AppData.updateOrderStatusURL}/${reportData.orderId}",
+                params
+            )
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

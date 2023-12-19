@@ -5,7 +5,6 @@
 #include <android/log.h>
 
 const char *APP_PACKAGE = "com.flower.basket.orderflower";
-const std::string CommURL = "api/Community/GetAll";
 
 //std::string APP_DIR = "/data/user/0/com.flower.basket.orderflower/";
 //std::string FILES_DIR = "files/";
@@ -13,8 +12,7 @@ const std::string CommURL = "api/Community/GetAll";
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_MainActivity_getTune(JNIEnv *env,
-                                                                             jobject clazz) {
-    // TODO: implement getTune()
+                                                                 jobject clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -40,7 +38,6 @@ extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_EditorActivity_tailpiece(
         JNIEnv *env, jobject clazz) {
-    // TODO: implement getCommandTail()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -64,8 +61,7 @@ Java_com_flower_basket_orderflower_activity_EditorActivity_tailpiece(
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_SplashActivity_getData(JNIEnv *env,
-                                                                               jobject clazz) {
-    // TODO: implement getData()
+                                                                   jobject clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -89,8 +85,7 @@ Java_com_flower_basket_orderflower_activity_SplashActivity_getData(JNIEnv *env,
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_SplashActivity_getUniqueID(JNIEnv *env,
-                                                                                   jobject clazz) {
-    // TODO: implement getUniqueID()
+                                                                       jobject clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -114,8 +109,7 @@ Java_com_flower_basket_orderflower_activity_SplashActivity_getUniqueID(JNIEnv *e
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_SplashActivity_getUData(JNIEnv *env,
-                                                                                jobject clazz) {
-    // TODO: implement getUserData()
+                                                                    jobject clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -139,8 +133,7 @@ Java_com_flower_basket_orderflower_activity_SplashActivity_getUData(JNIEnv *env,
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_SplashActivity_getUsers(JNIEnv *env,
-                                                                                jobject clazz) {
-    // TODO: implement getUsers()
+                                                                    jobject clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -164,8 +157,7 @@ Java_com_flower_basket_orderflower_activity_SplashActivity_getUsers(JNIEnv *env,
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_SplashActivity_getTotal(JNIEnv *env,
-                                                                                jobject clazz) {
-    // TODO: implement getTotal()
+                                                                    jobject clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -191,7 +183,6 @@ JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_preference_AppPreference_dataStr(
         JNIEnv *env,
         jobject clazz) {
-    // TODO: implement dataStr()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -220,8 +211,7 @@ Java_com_flower_basket_orderflower_preference_AppPreference_dataStr(
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_utilities_AESHelper_getIV(JNIEnv *env,
-                                                                         jclass clazz) {
-    // TODO: implement getIV()
+                                                             jclass clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -245,8 +235,7 @@ Java_com_flower_basket_orderflower_utilities_AESHelper_getIV(JNIEnv *env,
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_utilities_AESHelper_getPointer(JNIEnv *env,
-                                                                              jclass clazz) {
-    // TODO: implement getPointer()
+                                                                  jclass clazz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -272,7 +261,6 @@ JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_MainActivity_00024Companion_getPhotos(
         JNIEnv *env, jobject thiz, jstring basePath) {
 
-    // TODO: implement getPhotoDir()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -300,7 +288,6 @@ extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_MainActivity_00024Companion_getContent(
         JNIEnv *env, jobject thiz, jstring basePath) {
-    // TODO: implement getVideoContent()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -328,7 +315,6 @@ extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_MainActivity_00024Companion_getTune(
         JNIEnv *env, jobject thiz) {
-    // TODO: implement getTune()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -354,7 +340,6 @@ extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_activity_VideoEditorActivity_00024Companion_tailpiece(
         JNIEnv *env, jobject thiz) {
-    // TODO: implement getCommandTail()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -378,7 +363,6 @@ Java_com_flower_basket_orderflower_activity_VideoEditorActivity_00024Companion_t
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_api_AppData_getKey(JNIEnv *env, jobject thiz) {
-    // TODO: implement getKey()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -403,7 +387,6 @@ Java_com_flower_basket_orderflower_api_AppData_getKey(JNIEnv *env, jobject thiz)
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_api_AppData_getIV(JNIEnv *env, jobject thiz) {
-    // TODO: implement getIV()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -427,7 +410,6 @@ Java_com_flower_basket_orderflower_api_AppData_getIV(JNIEnv *env, jobject thiz) 
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_api_RetroClient_baseURL(JNIEnv *env, jobject thiz) {
-    // TODO: implement baseURL()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -453,7 +435,6 @@ Java_com_flower_basket_orderflower_api_RetroClient_baseURL(JNIEnv *env, jobject 
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_api_RetroClient_headerPrecedence(JNIEnv *env, jobject thiz) {
-    // TODO: implement tokenPrecedence()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -477,7 +458,6 @@ Java_com_flower_basket_orderflower_api_RetroClient_headerPrecedence(JNIEnv *env,
 extern "C"
 JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_api_RetroClient_headerName(JNIEnv *env, jobject thiz) {
-    // TODO: implement headerName()
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -501,8 +481,7 @@ Java_com_flower_basket_orderflower_api_RetroClient_headerName(JNIEnv *env, jobje
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_flower_basket_orderflower_api_AppData_getCommunityURL(JNIEnv *env, jobject thiz) {
-    // TODO: implement getCommunityURL()
+Java_com_flower_basket_orderflower_api_AppData_getCommunity(JNIEnv *env, jobject thiz) {
     pid_t pid = getpid();
     char path[64] = {0};
     sprintf(path, "/proc/%d/cmdline", pid);
@@ -515,6 +494,476 @@ Java_com_flower_basket_orderflower_api_AppData_getCommunityURL(JNIEnv *env, jobj
 
         if (strcmp(application_id, APP_PACKAGE) == 0) {
             url = "N8XK/IDNd0CViqtmaMkSeU/u1ObGA7SHEjmFzRhuJuc=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getRegister(JNIEnv *env, jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "IPuHa0cCtcgUolVHIV3Fi1q161q+ePIEgSMItrfPx6M=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getLogin(JNIEnv *env, jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "oW+PLhkeux359Q8HW4Hipw==";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getAllUsers(JNIEnv *env, jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "Tm9p/SEfd2+qevYa7r7G/ex153yqQdM8azRNq4VG29s=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getUpdateUser(JNIEnv *env, jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "FZM4CP8OKAF1WE6VlQ8IjuxY8RMgUUsjDX5bXB61wNA=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getChangePassword(JNIEnv *env, jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "Jstf1PiBL30lLYPH1fYDP9wdLXP+vn+dtlNuZoDWtuM=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getAllFlowers(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "VVxujt07nsexZMi5EoEuBynicJFnj5RPqWzWHGl03sU=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getAddSubscription(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "iUK7sinKK2p4AGUEz7C+bgRIlGTbUGBwYXnYORo3pA0=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getAllSubscriptions(JNIEnv *env,
+                                                                   jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "iUK7sinKK2p4AGUEz7C+bjyivd98i3l9LudwORncErA=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getSubscription(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "iUK7sinKK2p4AGUEz7C+buJOIHanw/g0Uf4P/UFi33A=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getUpdateSubscription(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "iUK7sinKK2p4AGUEz7C+bpg1cYYZxoJ8aaEutUMg1JU=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getManageVacationMode(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "iUK7sinKK2p4AGUEz7C+brUPfkjQTK8kwb1YeIZ49V2t4oIbndMR903t9Nh/C5Hh";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getDeleteSubscription(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "iUK7sinKK2p4AGUEz7C+brLd7GVuu/nsh67kAyn4ZcU=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getAllOrders(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "B0I85C5sXarAibvgeW3HtPBUfkqVKh06ebBkK4rhlLw=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getGenerateOrder(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "ArDio8fy/1JHquXti7ggVuRi4OoBxCwTjJlv/PWwaR4=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getUpdateOrderStatus(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "0EkW7FlcwFhNFSn8MtmKsGEQkISY9aszW1UDO/5W020=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getVendor(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "MoBLoVVAInL+rr3zXQMZvVXGHvYhk8RoNa0Awb59RhY=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getUpdateFlower(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "bkMDETnBL896nZVQFo+Af2RxvmHjZr4lmzz5Qfvc0jI=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getReportOrders(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "woQgZ7qKOtZX2XzI2JUboFjhIuMcZRhb+EBxWuK3e5o=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getTotalFlowers(JNIEnv *env, jobject thiz) {
+
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "/nZhga++h+OdPVGyujq2qaXHeOAE8RVKPq9jvAqT0oc=";
         } else {
             __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
         }

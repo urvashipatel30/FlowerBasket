@@ -9,6 +9,7 @@ import android.view.View.OnClickListener
 import androidx.activity.OnBackPressedCallback
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
@@ -145,7 +146,7 @@ class ReportOrderDetailsActivity : ParentActivity(), OnClickListener {
 
             val params = ChangeOrderStatusRequest(orderStatus = OrderStatus.DELIVERED.value)
 
-            RetroClient.apiService.changeOrderStatus(reportData.orderId, params)
+            RetroClient.apiService.changeOrderStatus("${AppData.updateOrderStatusURL}/${reportData.orderId}", params)
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.data.vendor.VendorContactResponse
@@ -89,7 +90,7 @@ class HelpFragment : ParentFragment() {
 
             val userDetails = AppPreference(activity).getUserDetails()
 
-            RetroClient.apiService.getVendorContact(userDetails?.communityId!!)
+            RetroClient.apiService.getVendorContact("${AppData.vendorURL}/${userDetails?.communityId!!}")
                 .enqueue(object : Callback<VendorContactResponse> {
                     override fun onResponse(
                         call: Call<VendorContactResponse>,

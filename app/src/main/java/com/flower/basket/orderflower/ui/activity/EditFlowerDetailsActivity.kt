@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.flower.FlowerData
@@ -101,7 +102,10 @@ class EditFlowerDetailsActivity : ParentActivity(), OnClickListener {
                 imageUrl = imgURL
             )
 
-            RetroClient.apiService.updateFlower(flowerData?.id!!, params)
+            RetroClient.apiService.updateFlower(
+                "${AppData.updateFlowerURL}/${flowerData?.id!!}",
+                params
+            )
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,

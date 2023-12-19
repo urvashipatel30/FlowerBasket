@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
+import com.flower.basket.orderflower.api.AppData
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.data.totalflowers.TotalFlowersData
@@ -55,7 +56,7 @@ class TotalFlowerActivity : ParentActivity(), View.OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
 
-            RetroClient.apiService.getTotalFlowers(userDetails!!.communityId, dateToSend)
+            RetroClient.apiService.getTotalFlowers("${AppData.totalFlowersURL}/${userDetails!!.communityId}", dateToSend)
                 .enqueue(object : Callback<TotalFlowersResponse> {
                     override fun onResponse(
                         call: Call<TotalFlowersResponse>,
