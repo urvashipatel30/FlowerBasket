@@ -2,12 +2,9 @@ package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
@@ -127,13 +124,11 @@ class EditFlowerDetailsActivity : ParentActivity(), OnClickListener {
                             if (flowerResponse.succeeded) {
                                 // Update password in current stored json data
                                 val flowerDataID = flowerResponse.data
-                                Log.e("onResponse: ", "flowerDataID => $flowerDataID")
 
                                 flowerData?.name = flowerName
                                 flowerData?.teluguName = teluguName
                                 flowerData?.loosePrice = loosePrice
                                 flowerData?.moraPrice = moraPrice
-                                Log.e("onResponse: ", "flowerData => $flowerData")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.success))

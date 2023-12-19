@@ -40,6 +40,11 @@ android {
             )
         }
     }
+    externalNativeBuild {
+        cmake {
+            path = File("CMakeLists.txt")
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

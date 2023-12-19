@@ -3,12 +3,10 @@ package com.flower.basket.orderflower.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
@@ -34,7 +32,6 @@ class SettingsFragment : ParentFragment(), OnClickListener {
 
         activity = requireActivity()
         parentActivity = activity as DashboardActivity
-        Log.e("onCreateView: ", "Settings activity => $activity")
 
         binding.backLayout.ivBackAction.setOnClickListener(this)
         binding.llMyProfile.setOnClickListener(this)

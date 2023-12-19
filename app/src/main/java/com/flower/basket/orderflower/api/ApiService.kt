@@ -1,22 +1,23 @@
 package com.flower.basket.orderflower.api
 
 import com.flower.basket.orderflower.data.APIResponse
-import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
 import com.flower.basket.orderflower.data.community.CommunityResponse
-import com.flower.basket.orderflower.data.flower.UpdateFlowerRequest
-import com.flower.basket.orderflower.data.user.UpdateUserRequest
 import com.flower.basket.orderflower.data.flower.FlowerResponse
-import com.flower.basket.orderflower.data.user.LoginRequest
+import com.flower.basket.orderflower.data.flower.UpdateFlowerRequest
+import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
 import com.flower.basket.orderflower.data.order.OrderRequest
 import com.flower.basket.orderflower.data.order.OrderResponse
 import com.flower.basket.orderflower.data.report.ReportResponse
 import com.flower.basket.orderflower.data.subscription.SubscriptionItemResponse
 import com.flower.basket.orderflower.data.subscription.SubscriptionListResponse
 import com.flower.basket.orderflower.data.subscription.SubscriptionStatusRequest
-import com.flower.basket.orderflower.data.user.UpdatePasswordRequest
 import com.flower.basket.orderflower.data.subscription.UpdateSubscriptionRequest
 import com.flower.basket.orderflower.data.totalflowers.TotalFlowersResponse
+import com.flower.basket.orderflower.data.user.LoginRequest
 import com.flower.basket.orderflower.data.user.RegistrationRequest
+import com.flower.basket.orderflower.data.user.TotalUsersResponse
+import com.flower.basket.orderflower.data.user.UpdatePasswordRequest
+import com.flower.basket.orderflower.data.user.UpdateUserRequest
 import com.flower.basket.orderflower.data.user.UserResponse
 import com.flower.basket.orderflower.data.vendor.VendorContactResponse
 import retrofit2.Call
@@ -31,6 +32,9 @@ interface ApiService {
 
     @POST("api/Users/login")
     fun loginUser(@Body loginParams: LoginRequest): Call<UserResponse>
+
+    @GET("api/Users/GetAll")
+    fun getUsersList(): Call<TotalUsersResponse>
 
     @PUT("api/Users/Update/{id}")
     fun updateUser(
@@ -106,9 +110,15 @@ interface ApiService {
 
     //Report List for vendor
     @GET("/api/Vendor/GetAllOrders/{communityId}/")
-    fun getReport(@Path("communityId") id: Int, @Query("dateTime") date: String): Call<ReportResponse>
+    fun getReport(
+        @Path("communityId") id: Int,
+        @Query("dateTime") date: String
+    ): Call<ReportResponse>
 
     //Total Flowers List for vendor
     @GET("/api/Vendor/GetTotalFlowers/{communityId}/")
-    fun getTotalFlowers(@Path("communityId") id: Int, @Query("dateTime") date: String): Call<TotalFlowersResponse>
+    fun getTotalFlowers(
+        @Path("communityId") id: Int,
+        @Query("dateTime") date: String
+    ): Call<TotalFlowersResponse>
 }

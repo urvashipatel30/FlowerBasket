@@ -6,14 +6,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
-import com.flower.basket.orderflower.data.vendor.VendorContactResponse
 import com.flower.basket.orderflower.data.preference.AppPreference
+import com.flower.basket.orderflower.data.vendor.VendorContactResponse
 import com.flower.basket.orderflower.databinding.FragmentHelpBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.utils.NetworkUtils
@@ -97,10 +96,6 @@ class HelpFragment : ParentFragment() {
                         response: Response<VendorContactResponse>
                     ) {
                         parentActivity.dismissLoader()
-                        Log.e(
-                            "getVendorDetail: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -114,26 +109,18 @@ class HelpFragment : ParentFragment() {
                         }
 
                         val vendorResponse = response.body()
-                        Log.e(
-                            "getVendorDetail: ",
-                            "Response => $vendorResponse"
-                        )
-                        Log.e(
-                            "getVendorDetail: ",
-                            "succeeded => ${vendorResponse?.succeeded}"
-                        )
 
                         if (vendorResponse != null) {
                             if (vendorResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val vendorData = vendorResponse.data
-                                Log.e("getVendorDetail: ", "vendorData => $vendorData")
 
                                 binding.llVendorContact.visibility = View.VISIBLE
                                 binding.apply {
                                     tvVendorName.text = vendorData.userName
                                     tvVendorEmailID.text = vendorData.email
-                                    tvVendorPhoneNumber.text = vendorData.mobileNumber.replace("+91", "+91 ")
+                                    tvVendorPhoneNumber.text =
+                                        vendorData.mobileNumber.replace("+91", "+91 ")
                                 }
 
                             } else {
@@ -172,7 +159,8 @@ class HelpFragment : ParentFragment() {
     private fun openWhatsApp(num: String) {
         val isAppInstalled = appInstalledOrNot(wpPackage)
         if (isAppInstalled) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=$num"))
+            val intent =
+                Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone=$num"))
             startActivity(intent)
         } else {
             openPlayStore(wpPackage)

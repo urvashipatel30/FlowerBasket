@@ -3,16 +3,13 @@ package com.flower.basket.orderflower.ui.activity
 import android.app.Activity
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.widget.TextView
-import androidx.core.view.updatePadding
 import androidx.viewpager2.widget.ViewPager2
 import com.flower.basket.orderflower.R
-import com.flower.basket.orderflower.ui.adapter.DashboardPagerAdapter
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
-import com.flower.basket.orderflower.databinding.ActivityDashboardBinding
 import com.flower.basket.orderflower.databinding.ActivitySwipeDashboardBinding
+import com.flower.basket.orderflower.ui.adapter.DashboardPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -112,7 +109,6 @@ class SwipeDashboardActivity : ParentActivity() {
 
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
-                    Log.e("onPageSelected: ", "position => $position")
                     if (isVendor) {
                         when (position) {
                             0 -> binding.bottomNavigation.selectedItemId = R.id.home_item

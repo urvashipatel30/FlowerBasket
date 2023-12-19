@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
@@ -22,7 +21,7 @@ class AppAlertDialog(val activity: Activity, alertType: Int) : Dialog(
     activity, R.style.alert_dialog
 ), View.OnClickListener {
 
-//    private lateinit var activity: Activity
+    //    private lateinit var activity: Activity
     private var mDialogView: View? = null
     private val mModalInAnim: AnimationSet
     private val mModalOutAnim: AnimationSet
@@ -80,7 +79,6 @@ class AppAlertDialog(val activity: Activity, alertType: Int) : Dialog(
     }
 
     constructor(activity: Activity) : this(activity, NORMAL_TYPE) {
-        Log.e("constructor: ", "activity => $activity")
 //        this.activity = activity
     }
 

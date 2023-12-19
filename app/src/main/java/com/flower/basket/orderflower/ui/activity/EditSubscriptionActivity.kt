@@ -5,12 +5,8 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
@@ -141,7 +137,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         daysAdapter =
             DaysAdapter(daysList, isFromEdit = true, object : DaysAdapter.DaySelectionCallback {
                 override fun onDaysSelected(selectedDays: String) {
-                    Log.e("onDaysSelected: ", "Selected days: $selectedDays")
                     selectedDaysInterval = selectedDays
                 }
             })
@@ -197,13 +192,10 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                         }
 
                         val itemResponse = response.body()
-                        Log.e("onResponse: ", "Subscription itemResponse => $itemResponse")
-
                         if (itemResponse != null) {
                             if (itemResponse.succeeded) {
                                 // Handle the retrieved subscription data
                                 subscriptionData = itemResponse.data
-                                Log.e("onResponse: ", "subscriptionData => ${subscriptionData}")
 
                                 if (subscriptionData != null) {
                                     showDetail(true)
@@ -259,8 +251,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
 //            mora -> (subscriptionData?.qty?.times(moraQty)).toString()
 //            else -> (subscriptionData?.qty?.times(gramsQty)).toString()
 //        }
-
-        Log.e("setDefaultQuantity: ", "Final Qty => ${binding.tvQuantity.text.toString()}")
     }
 
     private fun setFlowerPrice(flowerTypePosition: Int) {
@@ -339,7 +329,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
         val qtyText = binding.tvQuantity.text.toString().toInt()
 //        quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
         quantityToOrder = qtyText
-        Log.e("updateSubscription: ", "quantityToOrder => $quantityToOrder")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             binding.btnOrder.isEnabled = false
@@ -364,7 +353,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                 qty = quantityToOrder,
                 interval = selectedDaysInterval
             )
-            Log.e("placeOrder: ", "updateSubscriptions Data => $params")
 
             RetroClient.apiService.updateSubscription(subscriptionData?.id!!, params)
                 .enqueue(object : Callback<APIResponse> {
@@ -376,10 +364,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                         isPlaceOrderClickable = true
 
                         dismissLoader()
-                        Log.e(
-                            "updateSubscriptions: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -396,7 +380,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
                             if (subscriptionResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val subscriptionID = subscriptionResponse.data
-                                Log.e("updateSubscriptions: ", "subscriptionID => $subscriptionID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.success_updated))
@@ -487,7 +470,6 @@ class EditSubscriptionActivity : ParentActivity(), OnClickListener {
             val formattedDate = dateFormat.format(selectedCalendar.time)
             binding.tvEndDate.text = formattedDate
 
-            Log.e("showDatePicker: ", "endDate => ${binding.tvEndDate.text}")
             binding.ivRemoveEndDate.visibility = View.VISIBLE
 
         }, year, month, day)

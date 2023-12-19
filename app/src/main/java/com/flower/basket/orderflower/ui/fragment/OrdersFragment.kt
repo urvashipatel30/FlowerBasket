@@ -2,11 +2,9 @@ package com.flower.basket.orderflower.ui.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
@@ -45,7 +43,6 @@ class OrdersFragment : ParentFragment() {
 
         activity = requireActivity()
         parentActivity = activity as DashboardActivity
-        Log.e("onCreateView: ", "Orders activity => $activity")
 
         binding.rvOrders.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -96,14 +93,12 @@ class OrdersFragment : ParentFragment() {
                         }
 
                         val orderResponse = response.body()
-                        Log.e("onResponse: ", "orderResponse => $orderResponse")
 
                         if (orderResponse != null) {
                             if (orderResponse.succeeded) {
                                 // Handle the retrieved orders data
                                 ordersList =
                                     orderResponse.data as ArrayList<OrderData>
-                                Log.e("onResponse: ", "order List => ${ordersList.size}")
 
                                 if (ordersList.isNotEmpty()) {
                                     showList(true)
@@ -168,55 +163,44 @@ class OrdersFragment : ParentFragment() {
                         call: Call<APIResponse>,
                         response: Response<APIResponse>
                     ) {
-//                        parentActivity.dismissLoader()
-                        Log.e(
-                            "generateOrder: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
-
-                        // if response is not successful
                         if (!response.isSuccessful) {
-                            parentActivity.showDialog(
-                                activity,
-                                dialogType = AppAlertDialog.ERROR_TYPE,
-                                msg = response.message() ?: getString(R.string.error_went_wrong)
-                            )
-                            return
-                        }
+                            parentActivity.dismissLoader()
+//                            parentActivity.showDialog(
+//                                activity,
+//                                dialogType = AppAlertDialog.ERROR_TYPE,
+//                                msg = response.message() ?: getString(R.string.error_went_wrong)
+//                            )
+                        } else {
+                            val generateOrderResponse = response.body()
+                            if (generateOrderResponse != null) {
 
-                        val generateOrderResponse = response.body()
-                        if (generateOrderResponse != null) {
-                            Log.e(
-                                "generateOrder: ",
-                                "response => ${generateOrderResponse.succeeded}, ${generateOrderResponse.data}"
-                            )
-
-                            if (generateOrderResponse.succeeded) {
+                                if (generateOrderResponse.succeeded) {
 //                                parentActivity.showDialog(
 //                                    activity,
 //                                    dialogType = AppAlertDialog.SUCCESS_TYPE,
 //                                    msg = generateOrderResponse.message
 //                                )
-                            } else {
-                                parentActivity.showDialog(
-                                    activity,
-                                    dialogType = AppAlertDialog.ERROR_TYPE,
-                                    title = getString(R.string.failed),
-                                    msg = generateOrderResponse.message
-                                )
+                                } else {
+                                    parentActivity.dismissLoader()
+//                                    parentActivity.showDialog(
+//                                        activity,
+//                                        dialogType = AppAlertDialog.ERROR_TYPE,
+//                                        title = getString(R.string.failed),
+//                                        msg = generateOrderResponse.message
+//                                    )
+                                }
                             }
                         }
-
                         getOrdersList()
                     }
 
                     override fun onFailure(call: Call<APIResponse>, t: Throwable) {
                         parentActivity.dismissLoader()
-                        parentActivity.showDialog(
-                            activity,
-                            dialogType = AppAlertDialog.ERROR_TYPE,
-                            msg = t.message ?: getString(R.string.error_went_wrong)
-                        )
+//                        parentActivity.showDialog(
+//                            activity,
+//                            dialogType = AppAlertDialog.ERROR_TYPE,
+//                            msg = t.message ?: getString(R.string.error_went_wrong)
+//                        )
                     }
                 })
         } else {
@@ -252,10 +236,6 @@ class OrdersFragment : ParentFragment() {
                         response: Response<APIResponse>
                     ) {
                         parentActivity.dismissLoader()
-                        Log.e(
-                            "cancelOrder: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -268,20 +248,11 @@ class OrdersFragment : ParentFragment() {
                         }
 
                         val cancelOrderResponse = response.body()
-                        Log.e(
-                            "cancelOrder: ",
-                            "Response => $cancelOrderResponse"
-                        )
-                        Log.e(
-                            "cancelOrder: ",
-                            "succeeded => ${cancelOrderResponse?.succeeded}"
-                        )
 
                         if (cancelOrderResponse != null) {
                             if (cancelOrderResponse.succeeded) {
                                 // Handle the retrieved data
                                 val orderID = cancelOrderResponse.data
-                                Log.e("cancelOrder: ", "orderID => $orderID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.status_cancelled))
@@ -328,10 +299,6 @@ class OrdersFragment : ParentFragment() {
 
     private fun updateStatus(orderId: String?, orderStatus: Int) {
         val itemToUpdate = ordersList.find { it.id == orderId }
-        Log.e(
-            "updateStatus: ",
-            "itemToUpdate => $itemToUpdate"
-        )
 
         // Update the status if the order from the list is matched
         itemToUpdate?.let {

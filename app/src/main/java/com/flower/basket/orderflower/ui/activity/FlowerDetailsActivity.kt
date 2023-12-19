@@ -3,19 +3,9 @@ package com.flower.basket.orderflower.ui.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.ViewGroup
-import android.view.WindowManager
-import androidx.annotation.Nullable
-import androidx.core.content.ContextCompat
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
@@ -181,7 +171,6 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                 isFromEdit = false,
                 object : DaysAdapter.DaySelectionCallback {
                     override fun onDaysSelected(selectedDays: String) {
-                        Log.e("onDaysSelected: ", "Selected days: $selectedDays")
                         selectedDaysInterval = selectedDays
                     }
                 })
@@ -284,12 +273,10 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         val qtyText = binding.tvQuantity.text.toString().toInt()
 //        quantityToOrder = if (flowerType == looseFlower) qtyText / gramsQty else qtyText / moraQty
         quantityToOrder = qtyText
-        Log.e("placeOrder: ", "quantityToOrder => $quantityToOrder")
 
         if (subscriptionEndDate != null) {
             subscriptionEndDate = Utils().convertDateToISO8601(subscriptionEndDate!!)
         }
-        Log.e("placeOrder: ", "subscriptionEndDate => $subscriptionEndDate")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             binding.llOrderBtn.isEnabled = false
@@ -319,7 +306,6 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                 interval = selectedDaysInterval,
                 subscriptionEndDate = subscriptionEndDate
             )
-            Log.e("placeOrder: ", "OrderData => $params")
 
             RetroClient.apiService.placeOrder(params)
                 .enqueue(object : Callback<APIResponse> {
@@ -331,7 +317,6 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                         isPlaceOrderClickable = true
 
                         dismissLoader()
-                        Log.e("placeOrder: ", "response => $response, ${response.isSuccessful}")
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -344,14 +329,11 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
                         }
 
                         val orderResponse = response.body()
-                        Log.e("placeOrder: ", "orderResponse => $orderResponse")
-                        Log.e("placeOrder: ", "succeeded => ${orderResponse?.succeeded}")
 
                         if (orderResponse != null) {
                             if (orderResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val orderId = orderResponse.data
-                                Log.e("onResponse: ", "orderId => $orderId")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.success))
@@ -441,8 +423,6 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
             subscriptionEndDate = selectedCalendar.time.toString()
             val formattedDate = dateFormat.format(selectedCalendar.time)
             binding.tvEndDate.text = formattedDate
-
-            Log.e("showDatePicker: ", "endDate => ${binding.tvEndDate.text}")
 
             binding.ivRemoveEndDate.visibility =
                 if (buyOption == SubscriptionType.Subscribe.value) View.VISIBLE else View.GONE

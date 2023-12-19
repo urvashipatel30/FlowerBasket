@@ -3,19 +3,17 @@ package com.flower.basket.orderflower.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.flower.FlowerData
 import com.flower.basket.orderflower.data.flower.FlowerResponse
-import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.data.preference.AppPreference
+import com.flower.basket.orderflower.data.user.UserData
 import com.flower.basket.orderflower.databinding.FragmentHomeBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.EditFlowerDetailsActivity
@@ -53,10 +51,8 @@ class HomeFragment : ParentFragment() {
 
         activity = requireActivity()
         parentActivity = activity as DashboardActivity
-        Log.e("onCreateView: ", "Home activity => $activity")
 
         userDetails = AppPreference(activity).getUserDetails()
-        Log.e("onCreateView: ", "User id => ${userDetails?.id}")
         binding.tvUsername.text = getString(R.string.welcome_name, userDetails?.userName)
 
         binding.rvFlowers.apply {

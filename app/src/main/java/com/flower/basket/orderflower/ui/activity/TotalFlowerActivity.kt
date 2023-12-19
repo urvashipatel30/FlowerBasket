@@ -2,14 +2,11 @@ package com.flower.basket.orderflower.ui.activity
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.preference.AppPreference
-import com.flower.basket.orderflower.data.report.ReportData
-import com.flower.basket.orderflower.data.report.ReportResponse
 import com.flower.basket.orderflower.data.totalflowers.TotalFlowersData
 import com.flower.basket.orderflower.data.totalflowers.TotalFlowersResponse
 import com.flower.basket.orderflower.databinding.ActivityTotalFlowersBinding
@@ -43,8 +40,6 @@ class TotalFlowerActivity : ParentActivity(), View.OnClickListener {
                 date = intent.getStringExtra("date").toString()
         }
 
-        Log.e("onCreate: ", "date => $date")
-
         binding.rvTotalFlowers.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             setHasFixedSize(true)
@@ -56,7 +51,6 @@ class TotalFlowerActivity : ParentActivity(), View.OnClickListener {
     private fun loadTotalFlowersList() {
         val userDetails = AppPreference(activity).getUserDetails()
         val dateToSend = Utils().convertToAPIDateFormat(date)
-        Log.e("loadTotalFlowers: ", "dateToSend => $dateToSend")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             showLoader(activity)
@@ -75,13 +69,11 @@ class TotalFlowerActivity : ParentActivity(), View.OnClickListener {
                         }
 
                         val totalFlowerResponse = response.body()
-                        Log.e("onResponse: ", "totalFlowerResponse => $totalFlowerResponse")
 
                         if (totalFlowerResponse != null) {
                             if (totalFlowerResponse.succeeded) {
                                 flowersList =
                                     totalFlowerResponse.data as ArrayList<TotalFlowersData>
-                                Log.e("onResponse: ", "Total Flowers List => ${flowersList.size}")
 
                                 if (flowersList.isNotEmpty()) {
                                     showList(true)

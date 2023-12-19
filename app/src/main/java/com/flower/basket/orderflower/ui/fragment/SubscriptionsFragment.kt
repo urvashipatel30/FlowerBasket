@@ -3,7 +3,6 @@ package com.flower.basket.orderflower.ui.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -14,10 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
+import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.data.subscription.SubscriptionListData
 import com.flower.basket.orderflower.data.subscription.SubscriptionListResponse
 import com.flower.basket.orderflower.data.subscription.SubscriptionStatusRequest
-import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentSubscriptionsBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.EditSubscriptionActivity
@@ -37,7 +36,7 @@ class SubscriptionsFragment : ParentFragment() {
 
     private var subscriptionList = ArrayList<SubscriptionListData>()
     private var filteredSubscriptionList: ArrayList<SubscriptionListData> =
-        ArrayList<SubscriptionListData>()
+        ArrayList()
     private lateinit var subscriptionAdapter: SubscriptionListAdapter
 
     private var errorMsg: String? = null
@@ -56,7 +55,6 @@ class SubscriptionsFragment : ParentFragment() {
 
         activity = requireActivity()
         parentActivity = activity as DashboardActivity
-        Log.e("onCreateView: ", "Subscriptions activity => $activity")
 
         binding.rvSubscriptions.apply {
             layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -107,17 +105,12 @@ class SubscriptionsFragment : ParentFragment() {
                         }
 
                         val subscriptionResponse = response.body()
-                        Log.e("onResponse: ", "subscriptionResponse => $subscriptionResponse")
 
                         if (subscriptionResponse != null) {
                             if (subscriptionResponse.succeeded) {
                                 // Handle the retrieved subscription data
                                 subscriptionList =
                                     subscriptionResponse.data as ArrayList<SubscriptionListData>
-                                Log.e(
-                                    "onResponse: ",
-                                    "subscription List => ${subscriptionList.size}"
-                                )
 
                                 filteredSubscriptionList =
                                     ArrayList(subscriptionList.filter { it.subscriptionType == 1 })
@@ -250,10 +243,6 @@ class SubscriptionsFragment : ParentFragment() {
                         response: Response<APIResponse>
                     ) {
                         parentActivity.dismissLoader()
-                        Log.e(
-                            "changeStatus: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -267,20 +256,11 @@ class SubscriptionsFragment : ParentFragment() {
                         }
 
                         val deletesubscriptionResponse = response.body()
-                        Log.e(
-                            "changeStatus: ",
-                            "Response => $deletesubscriptionResponse"
-                        )
-                        Log.e(
-                            "changeStatus: ",
-                            "succeeded => ${deletesubscriptionResponse?.succeeded}"
-                        )
 
                         if (deletesubscriptionResponse != null) {
                             if (deletesubscriptionResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val subscriptionID = deletesubscriptionResponse.data
-                                Log.e("changeStatus: ", "subscriptionID => $subscriptionID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(
@@ -331,10 +311,6 @@ class SubscriptionsFragment : ParentFragment() {
     private fun updateStatus(subscriptionId: String?, isActive: Boolean) {
         val itemToUpdate =
             filteredSubscriptionList.find { it.id == subscriptionId }
-        Log.e(
-            "changeStatus: ",
-            "onResponse itemToUpdate => $itemToUpdate"
-        )
 
         // Update the qty if the Subscription is matched
         itemToUpdate?.let {
@@ -378,16 +354,11 @@ class SubscriptionsFragment : ParentFragment() {
                         }
 
                         val deletesubscriptionResponse = response.body()
-                        Log.e(
-                            "delete subscription: ",
-                            "Response => $deletesubscriptionResponse"
-                        )
 
                         if (deletesubscriptionResponse != null) {
                             if (deletesubscriptionResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val subscriptionID = deletesubscriptionResponse.data
-                                Log.e("updateSubscriptions: ", "subscriptionID => $subscriptionID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.success_deleted))
@@ -399,10 +370,6 @@ class SubscriptionsFragment : ParentFragment() {
                                         val positionToRemove =
                                             filteredSubscriptionList.indexOfFirst { it.id == deletesubscriptionResponse.data }
                                         // Find the position of the item to be removed
-                                        Log.e(
-                                            "onResponse: ",
-                                            "positionToRemove => $positionToRemove"
-                                        )
                                         if (positionToRemove != -1) {
                                             // Remove the item from the list
                                             filteredSubscriptionList.removeAt(positionToRemove)
@@ -410,11 +377,6 @@ class SubscriptionsFragment : ParentFragment() {
                                             // Notify the adapter of the removed item
                                             subscriptionAdapter.notifyItemRemoved(positionToRemove)
                                         }
-
-                                        Log.e(
-                                            "onResponse: ",
-                                            "subscriptionList => ${filteredSubscriptionList.size}"
-                                        )
 
                                         if (filteredSubscriptionList.isEmpty()) showList(
                                             false,

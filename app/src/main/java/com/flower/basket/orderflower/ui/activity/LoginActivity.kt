@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.view.View.OnClickListener
@@ -19,12 +18,13 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.community.CommunityData
 import com.flower.basket.orderflower.data.community.CommunityResponse
-import com.flower.basket.orderflower.data.user.LoginRequest
-import com.flower.basket.orderflower.data.user.UserData
-import com.flower.basket.orderflower.data.user.RegistrationRequest
-import com.flower.basket.orderflower.data.user.UserResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
+import com.flower.basket.orderflower.data.user.LoginRequest
+import com.flower.basket.orderflower.data.user.RegistrationRequest
+import com.flower.basket.orderflower.data.user.TotalUsersResponse
+import com.flower.basket.orderflower.data.user.UserData
+import com.flower.basket.orderflower.data.user.UserResponse
 import com.flower.basket.orderflower.databinding.ActivityLoginBinding
 import com.flower.basket.orderflower.utils.NetworkUtils
 import com.flower.basket.orderflower.utils.UserType
@@ -59,7 +59,8 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -70,6 +71,38 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
 
         binding.radioGrp.setOnCheckedChangeListener(this)
         binding.radioGrpUserTypes.setOnCheckedChangeListener(this)
+
+        if (AppPreference(activity).getPreference(AppPersistence.keys.IS_REMEMBER_USER) != null) {
+            binding.cbRememberMe.isChecked =
+                AppPreference(activity).getPreference(AppPersistence.keys.IS_REMEMBER_USER) as Boolean
+        }
+
+        if (AppPreference(activity).getPreference(AppPersistence.keys.USER_EMAIL) != null) {
+            binding.edtLoginMail.setText(AppPreference(activity).getPreference(AppPersistence.keys.USER_EMAIL) as String)
+        }
+
+        if (AppPreference(activity).getPreference(AppPersistence.keys.USER_PASSWORD) != null) {
+            binding.edtLoginPassword.setText(AppPreference(activity).getPreference(AppPersistence.keys.USER_PASSWORD) as String)
+        }
+
+        binding.cbRememberMe.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            AppPreference(activity).setPreference(AppPersistence.keys.IS_REMEMBER_USER, isChecked)
+
+            if (isChecked) {
+                AppPreference(activity).setPreference(
+                    AppPersistence.keys.USER_EMAIL,
+                    binding.edtLoginMail.text.toString()
+                )
+                AppPreference(activity).setPreference(
+                    AppPersistence.keys.USER_PASSWORD,
+                    binding.edtLoginPassword.text.toString()
+                )
+            } else {
+                AppPreference(activity).setPreference(AppPersistence.keys.USER_EMAIL, "")
+                AppPreference(activity).setPreference(AppPersistence.keys.USER_PASSWORD, "")
+            }
+        }
 
         setTopTab()
         getCommunityList()
@@ -121,17 +154,54 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         }
     }
 
+    private fun loadTotalUsersList() {
+        if (NetworkUtils.isNetworkAvailable(activity)) {
+            showLoader(activity)
+
+            RetroClient.apiService.getUsersList()
+                .enqueue(object : Callback<TotalUsersResponse> {
+                    override fun onResponse(
+                        call: Call<TotalUsersResponse>,
+                        response: Response<TotalUsersResponse>
+                    ) {
+                        dismissLoader()
+                        if (!response.isSuccessful) {
+                            return
+                        }
+                        val totalFlowerResponse = response.body()
+                    }
+
+                    override fun onFailure(call: Call<TotalUsersResponse>, t: Throwable) {
+                        dismissLoader()
+                    }
+                })
+
+        }
+    }
+
     private fun openDashboard(
         userData: UserData,
         userResponse: UserResponse
     ) {
-        Log.e("onResponse: ", "userData => $userData")
-
         val json = Gson().toJson(userData)
         AppPreference(activity).setPreference(
             AppPersistence.keys.AUTH_TOKEN,
             userData.authToken
         )
+
+        if (binding.cbRememberMe.isChecked) {
+            AppPreference(activity).setPreference(
+                AppPersistence.keys.USER_EMAIL,
+                binding.edtLoginMail.text.toString()
+            )
+            AppPreference(activity).setPreference(
+                AppPersistence.keys.USER_PASSWORD,
+                binding.edtLoginPassword.text.toString()
+            )
+        } else {
+            AppPreference(activity).setPreference(AppPersistence.keys.USER_EMAIL, "")
+            AppPreference(activity).setPreference(AppPersistence.keys.USER_PASSWORD, "")
+        }
 
         AppPreference(activity).setPreference(
             AppPersistence.keys.USER_DATA,
@@ -164,7 +234,6 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                         response: Response<UserResponse>
                     ) {
                         dismissLoader()
-                        Log.e("onResponse: ", "response => $response, ${response.isSuccessful}")
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -177,12 +246,18 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                         }
 
                         val userResponse = response.body()
-                        Log.e("onResponse: ", "loginResponse => $userResponse")
 
                         if (userResponse != null) {
                             if (userResponse.succeeded) {
                                 // Handle the retrieved user data
                                 val userData = userResponse.data
+
+//                                AppPreference(activity).setPreference(
+//                                    AppPersistence.keys.AUTH_TOKEN,
+//                                    userData.authToken
+//                                )
+//                                loadTotalUsersList()
+
                                 openDashboard(userData, userResponse)
 
                             } else {
@@ -237,7 +312,6 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                         response: Response<UserResponse>
                     ) {
                         dismissLoader()
-                        Log.e("onResponse: ", "response => $response, ${response.isSuccessful}")
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -250,7 +324,6 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
                         }
 
                         val userResponse = response.body()
-                        Log.e("onResponse: ", "userResponse => $userResponse")
 
                         if (userResponse != null) {
                             if (userResponse.succeeded) {

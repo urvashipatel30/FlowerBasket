@@ -4,10 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
-import android.view.WindowManager
 import androidx.activity.OnBackPressedCallback
 import com.bumptech.glide.Glide
 import com.flower.basket.orderflower.R
@@ -154,10 +152,6 @@ class ReportOrderDetailsActivity : ParentActivity(), OnClickListener {
                         response: Response<APIResponse>
                     ) {
                         dismissLoader()
-                        Log.e(
-                            "deliveredOrder: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -170,20 +164,11 @@ class ReportOrderDetailsActivity : ParentActivity(), OnClickListener {
                         }
 
                         val deliveredOrderResponse = response.body()
-                        Log.e(
-                            "deliveredOrder: ",
-                            "Response => $deliveredOrderResponse"
-                        )
-                        Log.e(
-                            "deliveredOrder: ",
-                            "succeeded => ${deliveredOrderResponse?.succeeded}"
-                        )
 
                         if (deliveredOrderResponse != null) {
                             if (deliveredOrderResponse.succeeded) {
                                 // Handle the retrieved data
                                 val orderID = deliveredOrderResponse.data
-                                Log.e("deliveredOrder: ", "orderID => $orderID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.status_delivered))

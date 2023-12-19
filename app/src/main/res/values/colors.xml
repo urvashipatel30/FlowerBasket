@@ -52,7 +52,7 @@
 
     <color name="userTypeRadioBtnColor">#DCFFFFFF</color>
 
-    <color name="disabled_checkbox">#83FFFFFF</color>
+    <color name="disabled_checkbox">#C5FFFFFF</color>
     <color name="text_remember_me">#94FFFFFF</color>
 
     <!-- TODO Toolbar -->

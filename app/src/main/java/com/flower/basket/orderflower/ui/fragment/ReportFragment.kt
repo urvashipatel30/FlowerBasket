@@ -6,7 +6,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -19,11 +18,11 @@ import com.flower.basket.orderflower.R
 import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.order.ChangeOrderStatusRequest
+import com.flower.basket.orderflower.data.preference.AppPersistence
+import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.data.report.ReportData
 import com.flower.basket.orderflower.data.report.ReportDataToSend
 import com.flower.basket.orderflower.data.report.ReportResponse
-import com.flower.basket.orderflower.data.preference.AppPersistence
-import com.flower.basket.orderflower.data.preference.AppPreference
 import com.flower.basket.orderflower.databinding.FragmentReportBinding
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
 import com.flower.basket.orderflower.ui.activity.ReportOrderDetailsActivity
@@ -75,7 +74,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
         activity = requireActivity()
         parentActivity = activity as DashboardActivity
-        Log.e("onCreateView: ", "Report activity => $activity")
 
         binding.tvSelectedDate.text = getFormattedCurrentDate()
 
@@ -115,7 +113,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
         val userDetails = AppPreference(activity).getUserDetails()
         val dateToSend = Utils().convertToAPIDateFormat(selectedDate)
-        Log.e("loadReport: ", "dateToSend => $dateToSend")
 
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
@@ -134,16 +131,13 @@ class ReportFragment : ParentFragment(), OnClickListener {
                         }
 
                         val reportResponse = response.body()
-                        Log.e("onResponse: ", "reportResponse => $reportResponse")
 
                         if (reportResponse != null) {
                             if (reportResponse.succeeded) {
                                 reportListJSON =
                                     reportResponse.data.toString().replace("ReportData", "")
-                                Log.e("onResponse: ", "reportListJSON => $reportListJSON")
 
                                 reportList = reportResponse.data as ArrayList<ReportData>
-                                Log.e("onResponse: ", "report List => ${reportList.size}")
 
                                 if (reportList.isNotEmpty()) {
                                     showList(true)
@@ -217,11 +211,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
                         call: Call<APIResponse>,
                         response: Response<APIResponse>
                     ) {
-                        Log.e(
-                            "generateOrder: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
-
                         // if response is not successful
                         if (!response.isSuccessful) {
                             parentActivity.showDialog(
@@ -234,10 +223,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
                         val generateOrderResponse = response.body()
                         if (generateOrderResponse != null) {
-                            Log.e(
-                                "generateOrder: ",
-                                "response => ${generateOrderResponse.succeeded}, ${generateOrderResponse.data}"
-                            )
 
                             if (!generateOrderResponse.succeeded) {
                                 parentActivity.showDialog(
@@ -294,10 +279,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
                         response: Response<APIResponse>
                     ) {
                         parentActivity.dismissLoader()
-                        Log.e(
-                            "deliveredOrder: ",
-                            "response => $response, ${response.isSuccessful}"
-                        )
 
                         // if response is not successful
                         if (!response.isSuccessful) {
@@ -310,20 +291,11 @@ class ReportFragment : ParentFragment(), OnClickListener {
                         }
 
                         val deliveredOrderResponse = response.body()
-                        Log.e(
-                            "deliveredOrder: ",
-                            "Response => $deliveredOrderResponse"
-                        )
-                        Log.e(
-                            "deliveredOrder: ",
-                            "succeeded => ${deliveredOrderResponse?.succeeded}"
-                        )
 
                         if (deliveredOrderResponse != null) {
                             if (deliveredOrderResponse.succeeded) {
                                 // Handle the retrieved data
                                 val orderID = deliveredOrderResponse.data
-                                Log.e("deliveredOrder: ", "orderID => $orderID")
 
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.status_delivered))
@@ -370,10 +342,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
 
     private fun updateStatus(orderId: String?, orderStatus: Int) {
         val itemToUpdate = reportList.find { it.orderId == orderId }
-        Log.e(
-            "updateStatus: ",
-            "itemToUpdate => $itemToUpdate"
-        )
 
         // Update the status if the order from the list is matched
         itemToUpdate?.let {
@@ -408,7 +376,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
         val reportListToSend = reportList.map { it.toReportDataToSend().data }
 
         val jsonFormatString = Gson().toJson(reportListToSend)
-        Log.e("onClick: ", "jsonFormatString => $jsonFormatString")
 
         if (reportList.size > 0) {
             val jsonArray = JSONArray(jsonFormatString)
@@ -511,8 +478,6 @@ class ReportFragment : ParentFragment(), OnClickListener {
             val selectedDate = dateFormat.format(selectedCalendar.time)
             binding.tvSelectedDate.text = selectedDate
 
-            Log.e("showDatePicker: ", "Selected Date => ${binding.tvSelectedDate.text}")
-
             loadReport()
 
         }, year, month, day)
@@ -556,12 +521,11 @@ class ReportFragment : ParentFragment(), OnClickListener {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             val intentData = result.data
-            Log.e("launcher: ", "result.resultCode => ${result.resultCode}")
+
             when (result.resultCode) {
                 Activity.RESULT_OK -> {
                     if (intentData != null) {
                         baseDocumentTreeUri = intentData.data
-                        Log.e("launcher: ", "baseDocumentTreeUri => $baseDocumentTreeUri")
                         val takeFlags =
                             Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
 
