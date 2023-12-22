@@ -207,6 +207,37 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llDeleteAccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/HomeTextBoxStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.flower.basket.orderflower.views.ThemeText
+                        style="@style/SettingsFieldTextStyle"
+                        android:layout_weight="1"
+                        android:text="@string/delete_my_account" />
+
+                    <ImageView
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:adjustViewBounds="true"
+                        android:rotation="180"
+                        android:src="@drawable/ic_back_arrow"
+                        app:tint="@color/themeColor" />
+
+                </LinearLayout>
+
+                <View style="@style/DividerStyle" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <androidx.cardview.widget.CardView

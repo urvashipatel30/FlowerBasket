@@ -98,7 +98,6 @@ class SubscriptionsFragment : ParentFragment() {
                     ) {
                         parentActivity.dismissLoader()
 
-                        // if response is not successful
                         if (!response.isSuccessful) {
                             errorMsg = response.message()
                             showList(false, errorMsg)

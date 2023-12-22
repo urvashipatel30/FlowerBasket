@@ -101,7 +101,6 @@ class HomeFragment : ParentFragment() {
                         val flowerResponse = response.body()
                         if (flowerResponse != null) {
                             if (flowerResponse.succeeded) {
-                                // Handle the retrieved flowers data
                                 flowerList = flowerResponse.data as ArrayList<FlowerData>
 
                                 if (flowerList.isNotEmpty()) {

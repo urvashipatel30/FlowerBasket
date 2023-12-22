@@ -3,7 +3,7 @@
 
     <string name="splash_title"><u>Flower\nBasket</u></string>
     <string name="splash_subtitle">Flowers for every prayers</string>
-<!--    <string name="splash_subtitle">Flowers from the heart</string>-->
+    <!--    <string name="splash_subtitle">Flowers from the heart</string>-->
     <!--    <string name="splash_subtitle">basket full of flowers is like, \na garden in your arms.</string>-->
 
     <!-- Dialog -->
@@ -135,11 +135,16 @@
     <string name="change_color_scheme">Change Color Scheme</string>
     <string name="change_password">Change Password</string>
     <string name="logout">Logout</string>
+    <string name="delete_my_account">Delete My Account</string>
 
     <string name="success_user_detail_updated">Details updated successfully!</string>
 
     <string name="confirm">Confirm</string>
     <string name="confirm_logout">Are you sure want to logout?</string>
+
+    <string name="delete_account">Delete Account?</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_delete_account">This will delete all your account data &amp; you can not retrieve any data from this account in the future!</string>
 
 
     <!-- Subscription Screen -->

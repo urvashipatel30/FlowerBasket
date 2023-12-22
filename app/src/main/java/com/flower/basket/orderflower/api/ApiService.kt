@@ -51,6 +51,10 @@ interface ApiService {
         @Body params: UpdatePasswordRequest
     ): Call<APIResponse>
 
+
+    @GET
+    fun deleteUser(@Url url: String): Call<APIResponse>
+
     @GET
     fun getFlowersList(@Url url: String): Call<FlowerResponse>
 
