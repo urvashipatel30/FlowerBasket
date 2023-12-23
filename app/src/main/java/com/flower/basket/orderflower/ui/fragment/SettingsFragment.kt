@@ -13,7 +13,6 @@ import com.flower.basket.orderflower.api.RetroClient
 import com.flower.basket.orderflower.data.APIResponse
 import com.flower.basket.orderflower.data.preference.AppPersistence
 import com.flower.basket.orderflower.data.preference.AppPreference
-import com.flower.basket.orderflower.data.report.ReportResponse
 import com.flower.basket.orderflower.databinding.FragmentSettingsBinding
 import com.flower.basket.orderflower.ui.activity.ChangePasswordActivity
 import com.flower.basket.orderflower.ui.activity.DashboardActivity
@@ -74,11 +73,7 @@ class SettingsFragment : ParentFragment(), OnClickListener {
                     .setConfirmText(getString(R.string.logout))
                     .setConfirmClickListener { appAlertDialog ->
 
-                        AppPreference(activity).setPreference(AppPersistence.keys.AUTH_TOKEN, "")
-                        AppPreference(activity).setPreference(AppPersistence.keys.USER_DATA, "")
-                        AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, false)
-                        AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)
-
+                        clearAllData()
                         appAlertDialog.dismissWithAnimation()
 
                         val intent = Intent(activity, LoginActivity::class.java)
@@ -102,6 +97,7 @@ class SettingsFragment : ParentFragment(), OnClickListener {
                     .setContentText(getString(R.string.confirm_delete_account))
                     .setConfirmText(getString(R.string.delete))
                     .setConfirmClickListener { appAlertDialog ->
+                        appAlertDialog.dismissWithAnimation()
                         deleteUser()
                     }
                     .setCancelText(activity.getString(R.string.dialog_cancel))
@@ -121,7 +117,7 @@ class SettingsFragment : ParentFragment(), OnClickListener {
         if (NetworkUtils.isNetworkAvailable(activity)) {
             parentActivity.showLoader(activity)
 
-            RetroClient.apiService.deleteUser("${AppData.vendorReportOrdersURL}/${userDetails?.id!!}")
+            RetroClient.apiService.deleteUser("${AppData.deleteUserURL}/${userDetails?.id}")
                 .enqueue(object : Callback<APIResponse> {
                     override fun onResponse(
                         call: Call<APIResponse>,
@@ -144,17 +140,23 @@ class SettingsFragment : ParentFragment(), OnClickListener {
                             if (deleteUserResponse.succeeded) {
                                 AppAlertDialog(activity, AppAlertDialog.SUCCESS_TYPE)
                                     .setTitleText(getString(R.string.success))
-                                    .setContentText(deleteUserResponse.message)
+                                    .setContentText(getString(R.string.success_delete_account))
                                     .setConfirmText(getString(R.string.dialog_ok))
                                     .setConfirmClickListener { appAlertDialog ->
 
-                                        AppPreference(activity).setPreference(AppPersistence.keys.AUTH_TOKEN, "")
-                                        AppPreference(activity).setPreference(AppPersistence.keys.USER_DATA, "")
-                                        AppPreference(activity).setPreference(AppPersistence.keys.USER_EMAIL, "")
-                                        AppPreference(activity).setPreference(AppPersistence.keys.USER_PASSWORD, "")
-                                        AppPreference(activity).setPreference(AppPersistence.keys.IS_REMEMBER_USER, false)
-                                        AppPreference(activity).setPreference(AppPersistence.keys.IS_LOGIN, false)
-                                        AppPreference(activity).setPreference(AppPersistence.keys.IS_VENDOR, false)
+                                        clearAllData()
+                                        AppPreference(activity).setPreference(
+                                            AppPersistence.keys.USER_EMAIL,
+                                            ""
+                                        )
+                                        AppPreference(activity).setPreference(
+                                            AppPersistence.keys.USER_PASSWORD,
+                                            ""
+                                        )
+                                        AppPreference(activity).setPreference(
+                                            AppPersistence.keys.IS_REMEMBER_USER,
+                                            false
+                                        )
 
                                         appAlertDialog.dismissWithAnimation()
 
@@ -194,5 +196,24 @@ class SettingsFragment : ParentFragment(), OnClickListener {
                 msg = getString(R.string.error_internet_msg)
             )
         }
+    }
+
+    private fun clearAllData() {
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.AUTH_TOKEN,
+            ""
+        )
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.USER_DATA,
+            ""
+        )
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.IS_LOGIN,
+            false
+        )
+        AppPreference(activity).setPreference(
+            AppPersistence.keys.IS_VENDOR,
+            false
+        )
     }
 }

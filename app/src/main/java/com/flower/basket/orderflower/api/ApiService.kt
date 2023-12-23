@@ -52,7 +52,7 @@ interface ApiService {
     ): Call<APIResponse>
 
 
-    @GET
+    @PUT
     fun deleteUser(@Url url: String): Call<APIResponse>
 
     @GET

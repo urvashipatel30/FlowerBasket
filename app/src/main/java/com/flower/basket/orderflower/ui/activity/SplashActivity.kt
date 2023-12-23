@@ -63,6 +63,7 @@ class SplashActivity : ParentActivity() {
 //        Log.e("encryptAppStrings: ", "Users GetAll => ${AppData.scrambleData("api/Users/GetAll")}")
 //        Log.e("encryptAppStrings: ", "Users Update => ${AppData.scrambleData("api/Users/Update")}")
 //        Log.e("encryptAppStrings: ", "ChangePassword => ${AppData.scrambleData("api/Users/ChangePassword")}")
+//        Log.e("encryptAppStrings: ", "Delete User => ${AppData.scrambleData("api/Users/DeleteUserAccount")}")
 
 //        Log.e("encryptAppStrings: ", "Flowers GetAll => ${AppData.scrambleData("api/Flowers/GetAll")}")
 

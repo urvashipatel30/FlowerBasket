@@ -121,7 +121,7 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
                 binding.tvStartLabel.text = getString(R.string.orders_on)
                 binding.tvEndsLabel.text = getString(R.string.delivers_on)
-                binding.tvEndDate.text = getFormattedTomorrowDate()
+                binding.tvEndDate.text = getFormattedPossibleDate()
 
                 binding.btnOrder.text = getString(R.string.order)
             }
@@ -388,9 +388,16 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
         return dateFormat.format(calendar.time)
     }
 
-    private fun getFormattedTomorrowDate(): String {
+    private fun getFormattedPossibleDate(): String {
         val calendar = Calendar.getInstance()
-        calendar.add(Calendar.DAY_OF_YEAR, 1) // Add one day to get tomorrow's date
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
+
+        if (currentHour >= 20) {
+            calendar.add(Calendar.DAY_OF_MONTH, 2)
+        } else {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
         subscriptionEndDate = calendar.time.toString()
 
         val dateFormat = SimpleDateFormat("E, MMM dd yyyy", Locale.US)
@@ -400,17 +407,28 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
     private fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val initialDateStr = binding.tvEndDate.text.toString()
+        val currentHour = calendar.get(Calendar.HOUR_OF_DAY)
 
         if (initialDateStr != "") {
             val initialDate = dateFormat.parse(initialDateStr)
 
             if (initialDate != null)
                 calendar.time = initialDate
-            else
-                calendar.add(Calendar.DAY_OF_YEAR, 1)
-
+            else {
+                // Check if it's 8 PM or beyond
+                if (currentHour >= 20) {
+                    calendar.add(Calendar.DAY_OF_MONTH, 2)
+                } else {
+                    calendar.add(Calendar.DAY_OF_MONTH, 1)
+                }
+            }
         } else {
-            calendar.add(Calendar.DAY_OF_YEAR, 1)
+            // Check if it's 8 PM or beyond
+            if (currentHour >= 20) {
+                calendar.add(Calendar.DAY_OF_MONTH, 2)
+            } else {
+                calendar.add(Calendar.DAY_OF_MONTH, 1)
+            }
         }
 
         val year = calendar.get(Calendar.YEAR)
@@ -432,7 +450,14 @@ class FlowerDetailsActivity : ParentActivity(), OnClickListener {
 
         // Set the minimum date to tomorrow
         val tomorrow = Calendar.getInstance()
-        tomorrow.add(Calendar.DAY_OF_YEAR, 1)
+        val currentHourForMinimum = tomorrow.get(Calendar.HOUR_OF_DAY)
+
+        // Check if it's 8 PM or beyond
+        if (currentHourForMinimum >= 20) {
+            tomorrow.add(Calendar.DAY_OF_MONTH, 2)
+        } else {
+            tomorrow.add(Calendar.DAY_OF_MONTH, 1)
+        }
         datePickerDialog.datePicker.minDate = tomorrow.timeInMillis
 
         datePickerDialog.show()

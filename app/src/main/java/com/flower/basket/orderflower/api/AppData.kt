@@ -21,6 +21,7 @@ object AppData {
     val allUsersURL = getData(getAllUsers())
     val updateUserURL = getData(getUpdateUser())
     val changePasswordURL = getData(getChangePassword())
+    val deleteUserURL = getData(getDeleteUser())
     val allFlowersURL = getData(getAllFlowers())
     val addSubscriptionURL = getData(getAddSubscription())
     val allSubscriptionURL = getData(getAllSubscriptions())
@@ -45,6 +46,7 @@ object AppData {
     private external fun getLogin(): String
     private external fun getAllUsers(): String
     private external fun getUpdateUser(): String
+    private external fun getDeleteUser(): String
     private external fun getChangePassword(): String
     private external fun getAllFlowers(): String
     private external fun getAddSubscription(): String

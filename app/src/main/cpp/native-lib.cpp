@@ -601,6 +601,30 @@ Java_com_flower_basket_orderflower_api_AppData_getUpdateUser(JNIEnv *env, jobjec
 
 extern "C"
 JNIEXPORT jstring JNICALL
+Java_com_flower_basket_orderflower_api_AppData_getDeleteUser(JNIEnv *env, jobject thiz) {
+    pid_t pid = getpid();
+    char path[64] = {0};
+    sprintf(path, "/proc/%d/cmdline", pid);
+    FILE *cmdline = fopen(path, "r");
+
+    std::string url;
+    if (cmdline) {
+        char application_id[100] = {0};
+        fread(application_id, sizeof(application_id), 1, cmdline);
+
+        if (strcmp(application_id, APP_PACKAGE) == 0) {
+            url = "4ZAMbZrLt3aP/PW5YoYSFflYRfQOcCBSB52NzssQR/Q=";
+        } else {
+            __android_log_print(ANDROID_LOG_ERROR, "Error", "Data not matched");
+        }
+        fclose(cmdline);
+    }
+
+    return env->NewStringUTF(url.c_str());
+}
+
+extern "C"
+JNIEXPORT jstring JNICALL
 Java_com_flower_basket_orderflower_api_AppData_getChangePassword(JNIEnv *env, jobject thiz) {
     pid_t pid = getpid();
     char path[64] = {0};

@@ -145,6 +145,7 @@
     <string name="delete_account">Delete Account?</string>
     <string name="delete">Delete</string>
     <string name="confirm_delete_account">This will delete all your account data &amp; you can not retrieve any data from this account in the future!</string>
+    <string name="success_delete_account">User account deleted successfully.</string>
 
 
     <!-- Subscription Screen -->

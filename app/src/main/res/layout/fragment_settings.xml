@@ -222,7 +222,8 @@
                     <com.flower.basket.orderflower.views.ThemeText
                         style="@style/SettingsFieldTextStyle"
                         android:layout_weight="1"
-                        android:text="@string/delete_my_account" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:text="@string/delete_my_account"/>
 
                     <ImageView
                         android:layout_width="@dimen/_15sdp"
