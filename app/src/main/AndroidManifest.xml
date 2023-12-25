@@ -6,9 +6,13 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-<!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"-->
-<!--        android:maxSdkVersion="32" />-->
-<!--    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />-->
+    <!--    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"-->
+    <!--        android:maxSdkVersion="32" />-->
+    <!--    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />-->
+
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
 
     <queries>
         <package android:name="com.whatsapp" />
@@ -22,8 +26,8 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppTheme"
         android:usesCleartextTraffic="true"
@@ -66,8 +70,8 @@
         <activity
             android:name=".ui.activity.EditSubscriptionActivity"
             android:exported="true"
-            android:theme="@style/TranslucentStatusBar_Theme"
             android:screenOrientation="portrait"
+            android:theme="@style/TranslucentStatusBar_Theme"
             tools:ignore="LockedOrientationActivity" />
 
         <activity
