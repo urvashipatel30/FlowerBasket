@@ -444,8 +444,9 @@ class ReportFragment : ParentFragment(), OnClickListener {
     private fun openWhatsapp(file: File) {
         val initialDateStr = binding.tvSelectedDate.text.toString()
 
-        val phoneNumber = "917096870086" // Replace with the desired phone number
-//        val fileUri = Uri.fromFile(file) // Replace with the actual file path
+        val userDetails = AppPreference(activity).getUserDetails()
+
+        val phoneNumber = "91${userDetails?.mobileNumber}"
         val fileUri = FileProvider.getUriForFile(activity, "${activity.packageName}.provider", file)
 
         val intent = Intent("android.intent.action.SEND")

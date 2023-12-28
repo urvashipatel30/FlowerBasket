@@ -51,12 +51,12 @@ class HelpFragment : ParentFragment() {
         }
 
         binding.tvAppPhoneNumber.setOnClickListener {
-            val number = binding.tvAppPhoneNumber.text.toString().replace("+91 ", "")
+            val number = binding.tvAppPhoneNumber.text.toString().replace("+91 ", "91")
             openWhatsApp(number)
         }
 
         binding.tvVendorPhoneNumber.setOnClickListener {
-            val number = binding.tvVendorPhoneNumber.text.toString().replace("+91 ", "")
+            val number = binding.tvVendorPhoneNumber.text.toString().replace("+91 ", "91")
             openWhatsApp(number)
         }
 
