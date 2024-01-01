@@ -51,6 +51,7 @@
             android:name=".ui.activity.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/TranslucentStatusBar_Theme"
             tools:ignore="LockedOrientationActivity" />
 

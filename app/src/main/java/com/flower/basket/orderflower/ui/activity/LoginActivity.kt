@@ -58,10 +58,10 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+//            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+//        )
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -69,6 +69,9 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         activity = this@LoginActivity
         binding.btnSignup.setOnClickListener(this)
         binding.btnLogin.setOnClickListener(this)
+
+        binding.llLogin.visibility = View.VISIBLE
+        binding.llSignup.visibility = View.GONE
 
         binding.radioGrp.setOnCheckedChangeListener(this)
         binding.radioGrpUserTypes.setOnCheckedChangeListener(this)
@@ -549,14 +552,16 @@ class LoginActivity : ParentActivity(), OnClickListener, OnCheckedChangeListener
         } else if (!(communityList?.any { it.name == community }!!)) {
             showDialog(activity, msg = getString(R.string.error_community_match))
             false
-        } else if (!isValidField(block)) {
-            showDialog(activity, msg = getString(R.string.error_enter_block))
-            binding.edtBlock.requestFocus()
-            false
-        } else if (!isValidField(flat)) {
-            showDialog(activity, msg = getString(R.string.error_enter_flat))
-            binding.edtFlat.requestFocus()
-            false
+        } else if (userType == UserType.User.value) {
+            if (!isValidField(block)) {
+                showDialog(activity, msg = getString(R.string.error_enter_block))
+                binding.edtBlock.requestFocus()
+                false
+            } else if (!isValidField(flat)) {
+                showDialog(activity, msg = getString(R.string.error_enter_flat))
+                binding.edtFlat.requestFocus()
+                false
+            } else true
         } else true
     }
 

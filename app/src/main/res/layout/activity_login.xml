@@ -3,17 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/loginBg"
-    android:fitsSystemWindows="false"
-    android:layout_height="match_parent">
-
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:adjustViewBounds="true"-->
-<!--        android:rotation="180"-->
-<!--        android:scaleType="centerCrop"-->
-<!--        android:src="@drawable/ic_login_bg" />-->
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -33,12 +25,12 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
         android:src="@drawable/ic_login_bottom"
-        app:layout_constraintTop_toBottomOf="@+id/textBottomLayoutTopGuideline"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBottomLayoutTopGuideline" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -93,7 +85,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="visible"
-                tools:visibility="visible">
+                tools:visibility="gone">
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtLoginMail"
@@ -102,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/email_id"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress" />
 
                 <com.flower.basket.orderflower.views.ThemeEditView
                     android:id="@+id/edtLoginPassword"
@@ -128,10 +120,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dip"
-                    android:gravity="right">
+                    android:gravity="right"
+                    android:visibility="gone">
 
                     <com.flower.basket.orderflower.views.ThemeText
                         android:id="@+id/tvForgotPassword"
@@ -154,177 +146,186 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <ScrollView
                 android:id="@+id/llSignup"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="@dimen/_13sdp"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
                 android:gravity="center"
                 android:orientation="vertical"
                 android:visibility="gone"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginHorizontal="@dimen/_13sdp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
-                    <com.flower.basket.orderflower.views.ThemeText
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/user_type"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_13ssp" />
-
-                    <RadioGroup
-                        android:id="@+id/radioGrpUserTypes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="top"
+                        android:layout_marginHorizontal="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/rbUser"
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/user_type"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/_13ssp" />
+
+                        <RadioGroup
+                            android:id="@+id/radioGrpUserTypes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:buttonTint="@color/userTypeRadioBtnColor"
-                            android:checked="true"
-                            android:fontFamily="@font/pangram_regular"
-                            android:text="@string/user"
-                            android:textColor="@color/userTypeRadioBtnColor"
-                            android:textSize="@dimen/_12ssp" />
+                            android:gravity="top"
+                            android:orientation="horizontal">
 
-                        <RadioButton
-                            android:id="@+id/rbVendor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_20sdp"
-                            android:buttonTint="@color/userTypeRadioBtnColor"
-                            android:fontFamily="@font/pangram_regular"
-                            android:text="@string/vendor"
-                            android:textColor="@color/userTypeRadioBtnColor"
-                            android:textSize="@dimen/_12ssp" />
-                    </RadioGroup>
+                            <RadioButton
+                                android:id="@+id/rbUser"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:buttonTint="@color/userTypeRadioBtnColor"
+                                android:checked="true"
+                                android:fontFamily="@font/pangram_regular"
+                                android:text="@string/user"
+                                android:textColor="@color/userTypeRadioBtnColor"
+                                android:textSize="@dimen/_12ssp" />
 
-                </LinearLayout>
+                            <RadioButton
+                                android:id="@+id/rbVendor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_20sdp"
+                                android:buttonTint="@color/userTypeRadioBtnColor"
+                                android:fontFamily="@font/pangram_regular"
+                                android:text="@string/vendor"
+                                android:textColor="@color/userTypeRadioBtnColor"
+                                android:textSize="@dimen/_12ssp" />
+                        </RadioGroup>
 
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtSignupName"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/name"
-                    android:imeOptions="actionNext"
-                    android:inputType="text" />
-
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtSignupMail"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/email_id"
-                    android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress" />
-
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtSignupPassword"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/password"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPassword" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <com.flower.basket.orderflower.views.ThemeText
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rounded_square_corner_white"
-                        android:gravity="center"
-                        android:paddingHorizontal="@dimen/_10sdp"
-                        android:text="+91"
-                        android:textColor="@color/white" />
+                    </LinearLayout>
 
                     <com.flower.basket.orderflower.views.ThemeEditView
-                        android:id="@+id/edtMobile"
+                        android:id="@+id/edtSignupName"
                         style="@style/LoginFieldsStyle"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/_13sdp"
-                        android:layout_marginStart="@dimen/_7sdp"
-                        android:layout_weight="1"
-                        android:hint="@string/mobile_no"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/name"
                         android:imeOptions="actionNext"
-                        android:inputType="number"
-                        android:maxLength="10" />
+                        android:inputType="text" />
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtSignupMail"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/email_id"
+                        android:imeOptions="actionNext"
+                        android:inputType="textEmailAddress" />
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtSignupPassword"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/password"
+                        android:imeOptions="actionNext"
+                        android:inputType="textPassword" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <com.flower.basket.orderflower.views.ThemeText
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/rounded_square_corner_white"
+                            android:gravity="center"
+                            android:paddingHorizontal="@dimen/_10sdp"
+                            android:text="+91"
+                            android:textColor="@color/white" />
+
+                        <com.flower.basket.orderflower.views.ThemeEditView
+                            android:id="@+id/edtMobile"
+                            style="@style/LoginFieldsStyle"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_13sdp"
+                            android:layout_marginStart="@dimen/_7sdp"
+                            android:layout_weight="1"
+                            android:hint="@string/mobile_no"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="10" />
+
+                    </LinearLayout>
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtCommunity"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/community"
+                        android:imeOptions="actionNext"
+                        android:inputType="text"
+                        android:visibility="gone" />
+
+                    <!-- By setting the android:completionThreshold attribute to 1,
+                        it will display the dropdown as soon as start typing a single character-->
+                    <AutoCompleteTextView
+                        android:id="@+id/autoTextCommunity"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:completionThreshold="1"
+                        android:fontFamily="@font/pangram_regular"
+                        android:hint="@string/search_community" />
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtBlock"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/block"
+                        android:imeOptions="actionNext"
+                        android:inputType="text" />
+
+                    <com.flower.basket.orderflower.views.ThemeEditView
+                        android:id="@+id/edtFlat"
+                        style="@style/LoginFieldsStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_15sdp"
+                        android:hint="@string/flat"
+                        android:imeOptions="actionDone"
+                        android:inputType="number" />
+
+                    <com.flower.basket.orderflower.views.ThemeButton
+                        android:id="@+id/btnSignup"
+                        style="@style/LoginButtonStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:text="@string/sign_up_btn" />
 
                 </LinearLayout>
 
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtCommunity"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/community"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:visibility="gone" />
-
-                <!-- By setting the android:completionThreshold attribute to 1,
-                    it will display the dropdown as soon as start typing a single character-->
-                <AutoCompleteTextView
-                    android:id="@+id/autoTextCommunity"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:completionThreshold="1"
-                    android:fontFamily="@font/pangram_regular"
-                    android:hint="@string/search_community" />
-
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtBlock"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/block"
-                    android:imeOptions="actionNext"
-                    android:inputType="text" />
-
-                <com.flower.basket.orderflower.views.ThemeEditView
-                    android:id="@+id/edtFlat"
-                    style="@style/LoginFieldsStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:hint="@string/flat"
-                    android:imeOptions="actionDone"
-                    android:inputType="number" />
-
-                <com.flower.basket.orderflower.views.ThemeButton
-                    android:id="@+id/btnSignup"
-                    style="@style/LoginButtonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:text="@string/sign_up_btn" />
-
-            </LinearLayout>
+            </ScrollView>
 
         </LinearLayout>
 
